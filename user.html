@@ -1,0 +1,341 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web bán giày</title>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="icon" type="image/x-icon" href="/assets/img/logo.png">
+</head>
+
+<body>
+    <div id="main">
+        <div id="header">
+            <div id="top-header">
+                <div id="order">
+                    <i class="far fa-bell"></i>
+                    <a href="#" onclick="showOrder();">Đơn Hàng</a>
+                    <div id="main-order">
+                        <table id="order-table">
+                            <thead>
+                                <th>STT</th>
+                                <th>Mã Đơn Hàng</th>
+                                <th>Sản Phẩm</th>
+                                <th>Thành Tiền</th>
+                                <th>Trạng Thái</th>
+                                <th>Action</th>
+                            </thead>
+                            <tbody id="order-body">
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="user" onclick="showInfo();">
+
+                </div>
+                <div id="sign-in" onclick="showDangNhap();">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <a href="#">Đăng nhập</a>
+                </div>
+                <div id="hotline">
+                    <i class="fas fa-phone"></i>
+                    <span>Hotline <a href="#">0909300746</a></span>
+                </div>
+            </div>
+            <div id="main-header">
+                <div id="logo">
+                    <img src="/assets/img/logo.png"></img>
+                    <div id="tilte">
+                        <div style="font-size: 30px;font-weight: 700;">Sneaker Shop</div>
+                        <div style="font-size: 14px;">You're King In Your Way.!!!</div>
+                    </div>
+                </div>
+
+                <ul id="nav">
+                    <li> <a href="#" id="gioiThieu" onclick="hienThi(this);">Giới thiệu</a></li>
+                    <li> <a href="#Nike" id="Nike" onclick="hienThi(this);">Nike</a></li>
+                    <li> <a href="#Adidas" id="Adidas" onclick="hienThi(this);">Adidas</a></li>
+                    <li> <a href="#Jordan" id="Jordan" onclick="hienThi(this);">Jordan</a></li>
+                    <li> <a href="#Men" id="Men" onclick="hienThi(this);">Men</a></li>
+                    <li> <a href="#Bitis" id="Bitis" onclick="hienThi(this);">Bitis Hunter</a></li>
+                    <li> <a href="#" id="lienHe" onclick="hienThi(this);">Liên Hệ</a></li>
+                </ul>
+                <div id="search-main">
+
+                </div>
+                <div id="shop">
+                    <i class="shop fas fa-shopping-cart" onclick="showShop();">
+                        <div id="quantity">0</div>
+                        <div id="showShop">
+                            <table>
+                                <thead>
+                                    <th>STT</th>
+                                    <th>Hình</th>
+                                    <th>Tên Sản Phẩm</th>
+                                    <th>Đơn Giá</th>
+                                    <th>Số Lượng</th>
+                                    <th>Thành Tiền</th>
+                                    <th>Chỉnh Sửa</th>
+                                </thead>
+                                <tbody id="showShopTable">
+
+                                </tbody>
+                                <tfoot>
+                                    <tr><th colspan="7" >Tổng Tiền:<span id="tongTien"> 0đ</span></th></tr>
+                                    <tr><th colspan="7"><button onclick="moDonHang();">Mua Hết!!!</button></th></tr>
+                                </tfoot>
+                                
+                            </table>
+                        </div>
+                    </i>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="donHang" onclick="huyDonHang();">
+            <div id="main-donhang">
+                <h3>Xác Nhận Đơn Hàng</h3>
+                <div id="mid-donhang">
+
+                </div>
+                <div id="bot-donhang">
+                    <button onclick="dongDonHang();">Hủy</button>
+                    <button onclick="muaHang();">Xác Nhận</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" onclick="hideDangNhap();">
+            <div class="modal-container">
+                <i class="fas fa-times close" onclick="hideDangNhap();"></i>
+                <div id="title">
+                    <h3 class="title-in">Đăng Ký</h3>
+                    <h3 class="title-up">Đăng nhập</h3>
+                </div>
+                <div id="main-form">
+                    <form id="sign-up" action="user.html" method="get" onsubmit="return dangKy();">
+                        <div class="sign-up">
+                            <div class="form-group">
+                                <label for="" class="h2">Họ Tên</label>
+                                <input type="text" name="Họ Tên" id="hoten" placeholder="Nhập vào họ tên" class="form-input">
+                                <div class="error-message"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="" class="h2">Số Điện Thoại</label>
+                                <input type="number" name="Số Điện Thoại" id="sdt" placeholder="Nhập vào số điện thoại" class="form-input">
+                                <div class="error-message"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="" class="h2">Tài Khoản</label>
+                                <input type="text" name="Tài Khoản" id="taikhoan" placeholder="Nhập vào tài khoản" class="form-input">
+                                <div class="error-message"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="" class="h2">Mật Khẩu</label>
+                                <input type="password" name="Mật Khẩu" id="matkhau" placeholder="Nhập vào mật khẩu" class="form-input">
+                                <div class="error-message"></div>
+                            </div>
+                        </div>
+
+                        <div class="button">
+                            <input type="submit" value="Đăng Ký" class="nut1"></input>
+                        </div>
+
+                    </form>
+
+
+                    <form id="sign-in" action="user.html" method="get">
+                        <div class="sign-in">
+                            <label for="" class="h2">Tài Khoản</label>
+                            <input id="tk" type="text" placeholder="Nhập vào tài khoản">
+                            <label for="" class="h2">Mật Khẩu</label>
+                            <input id="mk" type="password" placeholder="Nhập vào mật khẩu">
+                            <div class="error-message"></div>
+                        </div>
+
+                        <div class="button">
+                            <input type="button" value="Đăng Nhập" class="nut2" onclick="dangNhap();"></input>
+                        </div>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- <div id="chiTietSP">
+            <div id="main-chiTiet">
+                <i class="fas fa-times close"></i>
+                <h1>Chi Tiết Sản Phẩm</h1>
+                <div id="center">
+                    <img src="/assets/img/adidas/1.webp" alt="">
+                    <div id="chiTiet">
+                        <div id="title">
+                            <div id="favourite">Yêu Thích</div>
+                            <h3 id="name">Giày Adidas Hàng hiệu</h3>
+                        </div>
+                        <div id="sub-title">
+                            <div id="rate">
+                                <p id="rating">4.6</p>
+                                <i class="fas fa-star star"></i> <i class="fas fa-star star"></i> 
+                                <i class="fas fa-star star"></i> <i class="fas fa-star star"></i> 
+                                <i class="fas fa-star-half-alt star"></i>
+                            </div>
+
+                            <div id="border">
+                                <p id="danhGia">2,1k</p>
+                                <span class="sub">Đánh Giá</span>
+                            </div>
+                            <div id="buy">
+                                <p id="daBan">7,5k</p>
+                                <span class="sub">Đã Bán</span>
+                            </div>
+                            
+                        </div>
+                        <div id="Gia">
+                            1300000đ
+                        </div>
+                        <div id="bot">
+                            <div id="left">
+                                <div id="mauSac">
+                                    <p>Màu Sắc</p>
+                                </div>
+                                <div id="size">
+                                    <p>Size</p>
+                                </div>
+                                <div id="SoLuongSanPham">
+                                    <p>Số lượng</p>
+                                </div>
+                            </div>
+
+                            <div id="right">
+                                <div id="mauSac">
+                                    <div id="do">
+
+                                    </div>
+                                    <div id="trang">
+
+                                    </div>
+                                    <div id="den">
+                                        
+                                    </div>
+                                </div>
+                                <div id="size">
+                                    <p>Size</p>
+                                </div>
+                                <div id="SoLuongSanPham">
+                                    <p>Số lượng</p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+
+        <div id="container" style=" margin-top: 50px;margin-left: 30px;margin-bottom: 50px;">
+            <h2 class="gioiThieu">BÁN GIÀY THỂ THAO SNEAKER CHÍNH HÃNG TẠI TPHCM - SneakerShop GIỚI THIỆU</h2>
+            <p class="gioiThieu">Nỗi sợ vì mua phải giày kém chất lượng, giày fake, từ nay không còn lo lắng nữa vì đã có #SneakerShop.VN: hàng chính hãng nhập trực tiếp từ US, fullbox, nguyên tem.</p>
+            <p class="gioiThieu"><img class="gioiThieu" src="/assets/img/logo.png" alt="">
+                <h4 class="gioiThieu">SneakerShop</h4>✓15 Ngày Đổi Hàng ✓Giao Hàng Miễn Phí ✓Thanh Toán Khi Nhận Hàng ✓Bảo Hành Hàng Chính Hãng.!!!</p>
+            <p class="gioiThieu">Đến với "SneakerShop.VN” quý khách hàng sẽ có những sản phẩm ưng ý nhất, chất lượng phục vụ tốt và giá thành tốt nhất, cùng những “ Chương Trình Khuyến Mãi Đặc Biệt”.</p>
+            <p class="gioiThieu">Tìm được cửa hàng giày khiến mình an tâm rất khó luôn đó mọi người ơi. Hổng nói nổi vui như nào khi gặp được SneakerShop luôn á, Sản phẩm chất lượng mà các dịch vụ đi kèm hấp dẫn nữa. Dân mê giày làm sao cưỡng lại KINGSHOES đây!</p>
+            <img class="gioiThieu" src="/assets/img/gioithieu1.jpg" alt="">
+            <p class="gioiThieu">Cửa Hàng Bán Giày Sneaker Chính Hãng Tại HCM - SneakerShop Giới thiệu</p>
+            <img class="gioiThieu" src="/assets/img/gioithieu2.jpg" alt="">
+            <h3 class="gioiThieu">SneakerShop CHUẨN GIÀY REAL - DEAL SIÊU KHỦNG</h3>
+            <p class="gioiThieu">Cửa Hàng KING SHOES là một trong những nơi sưu tầm có khối lượng giày hiếm siêu khủng. Có những mẫu giày cực kì hype được giới sưu tầm săn lùng , thậm chí bạn sẽ bắt gặp nhiều mẫu lạ mới mà hiếm shop nào có. Có những mẫu chỉ có độc nhất 1
+                đôi. Ngoài ra những mẫu đang rất HOT trên thị trường sneaker về liên tục nên các bạn cứ yên tâm không sợ hết hàng.</p>
+            <img class="gioiThieu" src="/assets/img/gioithieu3.jpg" alt="">
+            <p class="gioiThieu">Cửa Hàng Bán Giày Sneaker Chính Hãng Tại HCM - SneakerShop Giới thiệu</p>
+            <img class="gioiThieu" src="/assets/img/gioithieu4.jpg" alt="">
+            <p class="gioiThieu">Cửa Hàng Bán Giày Sneaker Adidas, Nike Chính Hãng tại tpHCM 100% Authentic nhập trực tiếp từ US, UK, JAPAN @ SneakerShop.VN nhiệm vụ mang hàng chính hãng đến tay người tiêu dùng Việt Nam !!! 192/2 Nguyễn Thái Bình, Phường 12, Quận Tân Bình,
+                Thành phố Hồ Chí Minh. </p>
+            <img class="gioiThieu" src="/assets/img/gioithieu5.jpg" alt="">
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div id="footer">
+            <div id="top-footer">
+                <img src="/assets/img/logo.png">
+                <div id="contact-info">
+                    <h3>Thông Tin Liên Hệ</h3>
+                    <p>SneakerShop.VN Trang Thông Tin Chính Thức</p>
+                    <p>Địa Chỉ: 192/2 Nguyễn Thái Bình, Phường 12, <br> Quận Tân Bình, Thành Phố Hồ Chí Minh</p>
+                    <p>Email: <a href="https://mail.google.com/mail/u/0/?tab=wm#inbox">tn6609092@gmail.com</a></p>
+                    <p>Hotline Bán Hàng: 0909.300.746 - 0909.45.0001</p>
+                    <p>Hotline CSKH: 0902.368.001</p>
+                    <i class="fab fa-facebook"></i>
+                    <a href="https://www.youtube.com/"><i class="fab fa-youtube"></i></a>
+                    <a href="https://www.facebook.com/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.twitter.com/"><i class="fab fa-twitter"></i></a>
+
+                </div>
+                <div id="more">
+                    <div id="support">
+                        <h3>Hỗ Trợ Khách Hàng</h3>
+                        <p><a href="#">Chăm sóc khách hàng</a></p>
+                        <p><a href="#">Chăm sóc khách hàng</a></p>
+                        <p><a href="#">Chăm sóc khách hàng</a></p>
+
+                    </div>
+                    <div id="policy">
+                        <h3>Chính Sách</h3>
+                        <p><a href="#">Chế độ bảo hành</a></p>
+                        <p><a href="#">Chính sách đổi hàng</a></p>
+                        <p><a href="#">Chính sách giao nhận</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="bot-footer">
+                <hr>
+                <p>© All rights reserved. Thiết kế website
+                    <img src="/assets/img/logo.png">
+                    <a href="#">SneakerShop</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/user.js"></script>
+</body>
+
+</html>
