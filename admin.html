@@ -1,0 +1,163 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web bán giày</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+    integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="icon" type="image/x-icon" href="/assets/img/logo.png">
+</head>
+<body>
+    <div id="main">
+        <div id="header" >
+            <div id="top-header" >
+                <div id="user">
+                    <i class="fas fa-cog"></i>
+                    <a href="#">Admin</a>
+                </div>
+                <div id="sign-out" style="margin-left: 10px;">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <a href="/user.html">Đăng Xuất</a>
+                </div>
+            </div>
+            <div id="main-header" style="z-index: 1">
+                <div id="logo">
+                    <img src="/assets/img/logo.png"></img>
+                    <div id="tilte">
+                        <div style="font-size: 30px;font-weight: 700;">Sneaker Shop</div>
+                        <div style="font-size: 14px;">You're King In Your Way.!!!</div>
+                    </div>
+                </div>
+
+                <ul id="nav">
+                    <li> <a href="#trangchu" id="trangchu" onclick="hienThiTrangAdmin(this);">Trang Chủ</a></li>
+                    <li> <a href="#quanlyuser" id="quanlyuser" onclick="hienThiTrangAdmin(this);">Quản lý User</a></li>
+                    <li> <a href="#quanlysanpham" id="quanlysanpham" onclick="hienThiTrangAdmin(this);">Quản lý sản phẩm</a></li>
+                    <li> <a href="#quanlydonhang" id="quanlydonhang" onclick="hienThiTrangAdmin(this);">Quản lý đơn hàng</a></li>
+                    <li> <a href="#thongkekinhdoanh" id="thongkekinhdoanh" onclick="hienThiTrangAdmin(this);">Thống kê kinh doanh</a></li>
+                </ul>
+
+            </div>
+        </div>
+
+        
+
+
+
+        <div id="container">
+
+
+            
+
+        </div>
+
+        <div id="editSP">
+            <div id="main-edit" >
+                <h1>Chỉnh Sửa Thông Tin Sản Phẩm</h1>
+                <i class="fas fa-times" onclick="closeEdit();"></i>
+                <form action="" id="form-edit">
+                    <div class="form-group">
+                        <label for="">Hãng</label>
+                    <select name="" class="hangsp">
+                        <option value="Nike">Nike</option>
+                        <option value="Adidas">Adidas</option>
+                        <option value="Jordan">Jordan</option>
+                        <option value="Men">Men</option>
+                        <option value="Bitis">Bitis Hunter</option>
+                    </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Tên Sản Phẩm</label>
+                        <input type="text" name="" class="tensp" value="">
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">ID Sản Phẩm</label>
+                        <input type="text" name="" class="idsp" value="">
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Hình Sản Phẩm</label>
+                        <input class="hinhsp" type="image" src="">
+                        <input type="file" accept=".jpg, .png, .webp, .jpeg" onchange="doiHinh(event);">  
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Số Lượng Sản Phẩm</label>
+                        <input type="number" name="" class="slsp" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Giá Sản Phẩm</label>
+                        <input type="text" name="" class="giasp" value="">
+                    </div>
+                    
+                    <button id="setting" onclick="thietlapEdit();">Thiết Lập</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="deleteSP" onclick="closeDelete();">
+            <div id="main-delete">
+                <h1>Xác Nhận Xóa Sản Phẩm</h1>
+                <div id="thongtin">
+                    
+                </div>
+                <p>Bạn có muốn xóa không?</p>
+                <div id="btn">
+                    <button onclick="closeDelete();">Hủy</button>
+                    <button onclick="thietlapDelete();">Xác Nhận</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="addSP">
+            <div id="main-add">
+                <h1>Thêm Sản Phẩm</h1>
+                <form action="" id="form-add">
+                    <div class="formAdd-group">
+                        <label for="">Hãng</label>
+                        <select name="" class="hangsp">
+                        <option value="Nike">Nike</option>
+                        <option value="Adidas">Adidas</option>
+                        <option value="Jordan">Jordan</option>
+                        <option value="Men">Men</option>
+                        <option value="Bitis">Bitis Hunter</option>
+                    </select>
+                    </div>
+                    <div class="formAdd-group">
+                        <label for="">Tên Sản Phẩm</label>
+                        <input type="text" name="" class="tensp" value="">
+                        <div class="error"></div>
+                    </div>
+                    <div class="formAdd-group">
+                        <label for="">ID Sản Phẩm</label>
+                        <input type="text" name="" class="idsp" value="">
+                        <div class="error"></div>
+                    </div>
+                    <div class="formAdd-group">
+                        <label for="">Hình Sản Phẩm</label>
+                        <input class="hinhsp" type="image" src="" style="display: none;">
+                        <input type="file" accept=".jpg, .png, .webp, .jpeg" onchange="doiHinh1(event);">  
+                    </div>
+                    <div class="formAdd-group">
+                        <label for="">Số Lượng Sản Phẩm</label>
+                        <input type="number" name="" class="slsp" value="">
+                    </div>
+                    <div class="formAdd-group">
+                        <label for="">Giá Sản Phẩm</label>
+                        <input type="text" name="" class="giasp" value="">
+                    </div>
+                    <div id="btn">
+                        <button onclick="closeAdd();">Hủy</button>
+                        <button id="setting" onclick="thietlapAdd();">Thêm</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/admin.js"></script>
+</body>
+</html>
