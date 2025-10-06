@@ -1,0 +1,1124 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+a {
+    text-decoration: none;
+    color: #000;
+}
+/* ---------------------------Header-------------------------------- */
+#header {
+    display: contents; /*Cho position sticky bám dính dựa trên thẻ body khi sroll chứ không còn là thẻ cha nữa */
+}
+#header #top-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    position: relative;
+}
+
+#header #top-header #sign-in:hover a{
+    color: red;
+}
+#top-header #sign-in,
+#top-header #user,
+#top-header #order{
+    border-right: 1px solid #ccc;
+    padding-right: 10px;
+    margin-left: 10px;
+} 
+#header #top-header #hotline {
+    margin-left: 10px;
+}
+
+#header #top-header #hotline:hover a{
+    color: red;
+}
+
+#top-header #infomation {
+    position: absolute;
+    z-index: 1;
+    display: none;
+    background-color: #fff;
+    box-shadow: 0 0 10px;
+    min-width: 200px;
+    min-height: 100px;
+}
+
+#top-header #order {
+    position: relative;
+    display: none;
+}
+
+#top-header #main-order {
+    position: absolute;
+    right: 0;
+    z-index: 1;
+    display: none;
+    background-color: #fff;
+    box-shadow: 0 0 10px;
+    min-width: 700px;
+}
+
+#main-order #order-table {
+    text-align: center;
+    padding: 10px;
+}
+
+#main-order #order-table th,
+#main-order #order-table td {
+    border: 1px solid #ccc;
+}
+
+#hotline span a {
+    font-weight: 1000;
+}
+#header #main-header {
+    border-top: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px;
+    padding-top: 10px;
+    display: flex;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#header #main-header #logo {
+    margin-left: 30px;
+}
+
+#main-header #logo img{
+    border-radius: 50%;
+    width: 70px;
+    float: left;
+}
+#main-header #logo #tilte {
+    float: left;
+    height: 100%;
+    margin-left: 5px;
+}
+
+#header #main-header #nav {
+    text-align: center;
+    line-height: 70px;
+    flex: 1;
+    
+}
+
+#header #main-header #nav li:hover a{
+    background-color: #000;
+    color: #fff;
+    border-radius: 30px;
+    transition: background-color 0.5s;
+}
+
+#main-header #nav li {
+    display: inline-block;
+    font-size: 25px;
+    font-weight: 700;
+    padding: 0 15px;
+}
+
+#header #main-header #search-main {
+    position: relative;
+    padding: 20px 0;
+}
+
+#main-header #search-main #search{
+    margin-right: 10px;
+    border-radius: 100px;
+    height: 40px;
+    background-color: #ccc;
+    border: none;
+    padding: 10px;
+}
+
+#main-header #search-main i{
+    position: absolute;
+    top: 32px;
+    right: 20px;
+}
+
+
+
+#main-header #shop i {
+    margin-right: 30px;
+    border: 1px solid #ccc;
+    background-color: #ccc;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 50%;
+    margin-top: 18px;
+    position: relative;
+    cursor: pointer;
+}
+
+
+
+#shop i #quantity {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 15px;
+    border: 1px solid #000;
+    background-color: #000;
+    color: #fff;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+
+#shop i #showShop {
+    position: absolute;
+    top: 55px;
+    right: -30px;
+    background-color: #fff;
+    box-shadow: 0 0 10px;
+    max-height: 400px;
+    min-width: 700px;
+    display: none;
+    overflow:scroll;
+} 
+
+#showShop th,
+#showShop td {
+    border: 1px solid #000;
+    text-align: center;
+}
+#showShop img {
+    width: 100px;
+}
+
+#donHang {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#donHang #main-donhang {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    min-width: 300px;
+    text-align: center;
+    font-size: 20px;
+}
+
+#main-donhang h3 {
+    background-color: #e74c3c;
+    padding: 10px;
+}
+
+#main-donhang #mid-donhang {
+    margin: 10px 0;
+}
+
+#main-donhang #mid-donhang > * {
+    padding: 5px 0;
+}
+
+
+#mid-donhang #sanpham-mua li {
+    padding: 3px 0;
+    display: flex;
+    margin: 0 30px;
+}
+
+#sanpham-mua li .tensp-mua {
+    width: 70%;
+    word-wrap: break-word;
+    text-align: left;
+}
+
+#sanpham-mua li .slsp-mua {
+    width: 30%;
+    text-align: right;
+}
+
+#main-donhang #mid-donhang #sanpham-mua {
+    list-style: none;
+}
+
+#main-donhang #bot-donhang {
+    display: flex;
+}
+
+#main-donhang #bot-donhang button {
+    flex: 1;
+    border: none;
+    cursor: pointer;
+    height: 40px;
+    font-weight: 700;
+    background-color: #d35400;
+}
+/*------------------Form Đăng Ký------------------*/
+.modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+}
+.modal-container{
+    width: 60%;
+    height: 70%;
+    border: 1px solid #fff;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: modalFadeIn ease 0.5s;
+
+}
+.modal.open {
+    display: block;
+}
+
+.close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    cursor: pointer;
+}
+
+#title {
+    display: flex;
+    justify-content: center;
+}
+.title-in,.title-up {
+    flex: 1;
+    font-size: 50px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#main-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#main-form form .sign-up,
+#main-form form .sign-in{
+    display: flex;
+    flex-direction: column;
+}
+.form-group label{
+    display: block;
+}
+
+#main-form form{
+    margin-top: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+
+}
+.sign-in input,
+.sign-up input{
+    display: block;
+    background-color: rgba(189, 195, 199,0.4);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    width: 250px;
+    
+}
+.h2{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.button input{
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    height: 40px;
+    width: 250px;
+}
+.nut1{
+    background-color: rgba(231, 76, 60,1.0);
+
+}
+.nut2{
+    background-color: rgba(46, 204, 113,1.0);
+
+}
+
+
+@keyframes modalFadeIn {
+    from {
+        transform: translate(-60%,-60%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%,-50%);
+        opacity: 1;
+    }
+}
+
+/*-----------------------------------------------*/
+
+/* ----------------------------------------------------------------- */
+
+/* ---------------------------Content-------------------------------- */
+
+/* ---------------Giới Thiệu---------------*/
+
+.gioiThieu {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 70%;
+}
+
+/* ----------------------------------------*/
+
+/*------------------Sản Phẩm------------------ */
+#content {
+    display: flex; 
+    justify-content:flex-start; 
+    flex-wrap: wrap;
+}
+#content .item-group {
+    padding: 30px;
+    width: 25%;
+    border: 1px solid #ccc;
+}
+#content .item-group img{
+    width: 100%;
+    height: 70%;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+#content .item-group h4 {
+    text-align:center;
+    margin: 10px 0;
+}
+.item-group .bot-item {
+    display: flex;
+    align-items: center;
+}
+.item-group .bot-item .price {
+    flex: 1;
+    color: red;
+    font-size: 20px;
+    text-align: center;
+}
+.item-group .bot-item button {
+    border: none;
+    background-color: red;
+    font-size: 20px;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#container #sotrang {
+    display: flex;
+    justify-content: center;
+    margin: 50px auto;
+}
+
+#container #sotrang li{
+    display: inline;
+    margin: 10px;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+
+#container #sotrang li:active {
+    color: #fff;
+    background-color: red;
+}
+/* ----------------------------------------*/
+
+
+/*------------------Chi Tiế Sản Phẩm------------------ */
+#main #chiTietSP {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#main #chiTietSP #main-chiTiet {
+    width: 70%;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+}
+
+#main-chiTiet h1 {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+#main-chiTiet .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+}
+
+#main-chiTiet #center {
+    display: flex;
+}
+
+#main-chiTiet #center img{
+    width: 40%;
+}
+
+#main-chiTiet #center #chiTiet {
+    flex: 1;
+}
+#chiTiet #title {
+    display: flex;
+    padding: 10px;
+}
+#chiTiet #title #favourite {
+    background-color: #e74c3c;
+    color: #fff;
+    display: inline-block;
+    padding: 2px;
+    font-size: small;
+}
+#chiTiet #title #name {
+    display: inline-block;
+    flex: 1;
+    margin-left: 10px;
+}
+
+#chiTiet #sub-title {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+#sub-title #rate #rating {
+    display: inline-block;
+    color: #e74c3c;
+    font-size: 20px;
+    border-bottom: 1px solid #e74c3c;
+}
+
+#sub-title #rate .star {
+    color: #e74c3c;
+    
+}
+
+#sub-title #border #danhGia {
+    color: #000;
+    border-bottom: 1px solid #000;
+    padding-bottom: 3px;
+    display: inline-block;
+    font-size: 20px;
+    padding-left: 5px;
+}
+
+
+#sub-title #buy #daBan {
+    display: inline-block;
+    font-size: 20px;
+}
+
+#sub-title .sub {
+    font-size: 15px;
+    color: rgba(0, 0, 0, 0.416);
+}
+
+#chiTiet #sub-title #border {
+    display: inline-block;
+    padding: 20px;
+}
+
+#chiTiet #Gia {
+    font-size: 50px;
+    color: #e74c3c;
+    margin-left: 40px;
+}
+
+#chiTiet #bot {
+    display: flex;
+    margin-left: 50px;
+}
+
+#chiTiet #bot #left {
+    display: flex;
+    flex-direction: column;
+    color: #ccc;
+}
+
+#chiTiet #bot #right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#bot #right #mauSac {
+    display: flex;
+}
+
+#right #mauSac #do {
+    background-color: red;
+    width: 100px;
+}
+/*---------------------------------------------------- */
+
+
+
+/* ---------------Liên Hệ---------------*/
+#container #main {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+#main #leftmain {
+    flex: 1;
+    margin-right: 50px;
+    background-color: rgba(189, 195, 199,0.3);
+    padding: 20px;
+}
+
+#leftmain > * {
+    margin: 10px 0;
+}
+#leftmain > a {
+    display: block;
+}
+
+#leftmain > a:hover {
+    color: red;
+}
+
+#main #rightmain {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#rightmain > * {
+    margin: 15px 0;
+}
+
+#rightmain input {
+    height: 50px;
+    border: 1p solid #ccc;
+    padding: 10px;
+    font-size: 15px;
+}
+
+#rightmain #box {
+    display: flex;
+}
+#rightmain #box input {
+    flex: 1;
+}
+
+#main #rightmain #button {
+    display: flex;
+}
+
+#rightmain #button button {
+    flex: 1;
+    border: none;
+    height: 50px;
+    cursor: pointer;
+}
+
+/* ----------------------------------------*/
+
+
+
+/* -----------------Content Admin------------------*/
+
+
+/* ----------------QuanlyUser-------------------*/
+#container #quanlyuser {
+    text-align: center;
+    width: 60%;
+    margin: 50px 50px;
+    position: relative;
+    line-height: 60px;
+    left: 15%;
+}
+
+#container #quanlyuser th{
+    border-bottom: 1px solid #000;
+    font-size: 30px;
+}
+#container #quanlyuser tbody tr {
+    margin-top: 5px;
+    border-bottom: 1px solid #000;
+    font-size: 20px;
+}
+
+#container #quanlyuser tbody tr:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* ---------------------------------------------*/
+
+
+/* ----------------QuanlySanPham-------------------*/
+
+
+#container .content {
+    max-height: 600px;
+    overflow: scroll;
+}
+
+#container .content #quanlysanpham {
+    text-align: center;
+    width: 1100px;
+    height: 200px;
+    margin: 50px 50px;
+    position: relative;
+    line-height: 60px;
+    left: 15%;
+}
+
+.content #quanlysanpham th{
+    border-bottom: 1px solid #000;
+    font-size: 20px;
+}
+
+.content #quanlysanpham tbody tr {
+    margin-top: 5px;
+    border-bottom: 1px solid #000;
+    font-size: 15px;
+}
+
+.content #quanlysanpham tfoot {
+    text-align: left;
+}
+
+#quanlysanpham tbody tr img {
+    width: 100px;
+}
+
+.content #quanlysanpham tbody tr:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+
+tbody tr .action {
+    display: flex;
+    align-items: center;
+    height: 120px;
+    padding: 10px;
+}
+
+tbody tr .action button {
+    flex: 1;
+    margin: 0 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+tbody #themSp {
+    cursor: pointer;
+}
+
+
+/* ------------------------------------------------*/
+
+
+/* ----------------QuanlyDonHang-------------------*/
+#container .content #title-daXuLy,
+#container .content #title-chuaXuLy {
+    text-align: center;
+    margin: 50px 50px;
+}
+#container .content #quanlydonhang-daXuLy,
+#container .content #quanlydonhang-chuaXuLy {
+    text-align: center;
+    width: 1200px;
+    height: 200px;
+    position: relative;
+    line-height: 60px;
+    left: 10%;
+}
+
+.content #quanlydonhang-daXuLy th,
+.content #quanlydonhang-chuaXuLy th{
+    border-bottom: 1px solid #000;
+    font-size: 20px;
+}
+
+.content #quanlydonhang-daXuLy tbody tr,
+.content #quanlydonhang-chuaXuLy tbody tr {
+    margin-top: 5px;
+    border-bottom: 1px solid #000;
+    font-size: 15px;
+}
+
+.content #quanlydonhang-daXuLy tbody td,
+.content #quanlydonhang-chuaXuLy tbody td {
+    border-bottom: 1px solid #000;
+}
+
+.content #quanlydonhang-chuaXuLy tbody tr td button {
+    width: 100%;
+    border: none;
+    padding: 10px;
+    background-color: #e74c3c;
+    color: #fff;
+    cursor: pointer;
+}
+
+.content #quanlydonhang-chuaXuLy tfoot tr td button {
+    width: 100%;
+    border: none;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px;
+    background-color: #e74c3c;
+    color: #fff;
+    cursor: pointer;
+}
+
+/* ------------------------------------------------*/
+
+
+/* ----------------------Edit------------------------- */
+
+#editSP {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    z-index: 1;
+}
+
+#editSP #main-edit {
+    width: 50%;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+#editSP #main-edit h1 {
+    text-align: center;
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 10px;
+}
+
+#editSP #main-edit i {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#editSP #main-edit .form-group {
+    margin: 20px;
+}
+
+
+
+#editSP #main-edit .hinhsp {
+    width: 100px;
+}
+
+#editSP #main-edit #setting {
+    width: 100%;
+    cursor: pointer;
+    padding: 10px;
+    color: #fff;
+    background-color: #e74c3c;
+    border: none;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+/* --------------------------------------------------- */
+
+/* ----------------------DeleteSP------------------------- */
+#deleteSP {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+}
+
+#deleteSP #main-delete {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+}
+
+
+#deleteSP #main-delete h1 {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 20px;
+}
+
+
+#deleteSP #main-delete p {
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+}
+
+#deleteSP #main-delete #btn {
+    display: flex;
+}
+
+#deleteSP #main-delete #thongtin {
+    text-align: center;
+    
+}
+
+#main-delete #btn button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* ------------------------------------------------------- */
+
+
+
+/* ----------------------AddSP------------------------- */
+
+#addSP {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+}
+
+#addSP #main-add {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    width: 70%;
+}
+
+#addSP #main-add h1 {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+
+#addSP #main-add .formAdd-group {
+    margin: 20px;
+}
+
+
+
+#addSP #main-add .hinhsp {
+    width: 100px;
+}
+
+#addSP #main-add #btn {
+    display: flex;
+}
+
+#addSP #main-add #btn button {
+    flex: 1;
+    cursor: pointer;
+    padding: 10px;
+    color: #fff;
+    background-color: #e74c3c;
+    border: none;
+    font-size: 20px;
+    font-weight: 700;
+}
+/* ---------------------------------------------------- */
+
+
+/* ------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ------------------------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ------------------------------------------------------------------ */
+
+
+
+
+/* ---------------------------Footer-------------------------------- */
+#footer {
+    color: #fff;
+    background-color: #000;
+}
+#footer a {
+    color: #fff;
+}
+#footer #top-footer {
+    display: flex;
+}
+
+#footer #top-footer img {
+    width: 300px;
+    flex: 1;
+}
+#footer #top-footer #contact-info {
+    margin-left: 200px;
+}
+#top-footer #contact-info p,
+#top-footer #contact-info h3,
+#top-footer #contact-info i{
+    margin: 20px 10px;
+    color: #fff;
+}
+
+#top-footer #contact-info p:hover a,
+#bot-footer p a:hover {
+    color: tomato;
+}
+
+#top-footer #contact-info i:hover{
+    color:tomato;
+}
+
+#footer #top-footer #more {
+    display: flex;
+    margin-left: 200px;
+}
+
+#top-footer #more #support {
+    margin-right: 50px;
+}
+#more #support p,
+#more #support h3{
+    margin: 20px 10px; 
+}
+#more #policy p,
+#more #policy h3{
+    margin: 20px 10px; 
+}
+#top-footer #contact-info p,
+#top-footer #contact-info p a,
+#top-footer #contact-info i,
+#more #support a,
+#more #policy a {
+    color: #ccc;
+}
+
+#more #support p:hover a,
+#more #policy p:hover a {
+    color: tomato;
+}
+#footer #bot-footer p img{
+    height: 30px;
+}
+#bot-footer hr {
+    width: 80%;
+    margin: 20px auto;
+    opacity: 0.3;
+}
+#bot-footer p {
+    text-align: center;
+}
+/* ----------------------------------------------------------------- */
