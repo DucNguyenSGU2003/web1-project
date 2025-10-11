@@ -255,6 +255,7 @@ function thietlapEdit() {
     var checkId = document.querySelector(".idsp").parentElement.querySelector(".error-message").innerText;
     var checkTen = document.querySelector(".tensp").parentElement.querySelector(".error-message").innerText;
     var checkHinh = document.querySelector(".hinhsp").parentElement.querySelector(".error-message").innerText;
+    console.log(checkId, checkTen, checkHinh);
     var Nike = JSON.parse(localStorage.getItem("nike"));
     var Adidas = JSON.parse(localStorage.getItem("adidas"));
     var Jordan = JSON.parse(localStorage.getItem("jordan"));

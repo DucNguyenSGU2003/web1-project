@@ -1,3 +1,6 @@
+import { showInfoToast } from './toast.js';
+// import { showInfoToast } from './toast.js';
+// import { showInfoToast } from './toast.js';
 //Tài Khoản Admin---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 var adminTk = "admin";
 var adminMk = "1111";
@@ -391,30 +394,6 @@ function hienThi(obJ) {
 
 
 
-
-
-
-// function hienThiSanPham1Trang(mang) {
-//     var s = "";
-//     for (var i = 0; i < mang.length; i++) {
-//             s += 
-//                 `<div class="item-group">
-//                     <img src="${mang[i].img}">
-//                     <h4>${mang[i].name}</h4>
-//                     <div class="bot-item">
-//                         <p class="price">${mang[i].price}đ</p>
-//                         <button>Thêm Vào Giỏ</button>
-//                     </div>
-//                 </div>`
-//     }
-//     document.getElementById("content").innerHTML = s;
-// }
-
-
-
-
-
-
 var currentPage = 1;
 var perPage = 8;
 var mangTam = [];
@@ -496,26 +475,41 @@ function renderPageNumber(mang) {
 }
 
 function renderProduct(mang) {
-    // location.href = "#content";
     var s = "";
     for (var i = 0; i < mang.length; i++) {
+        var price = `Giá: ${mang[i].price} VNĐ`;
         s +=
             `<div class="item-group">
-                    <img class="img" src="${mang[i].img}" onclick="chiTietSP(this);">
+
+
+             <div class="bot-item">
+                        <div class="bot-item-details1">
+                             <img class="img" src="${mang[i].img}" onclick="chiTietSP(this);">
                     <h4 class="name">${mang[i].name}</h4>
-                    <div class="bot-item">
-                        <p>SL: <span class ="quantity">${mang[i].quantity}</span></p>
-                        <p class="price">${mang[i].price}</p><span>đ</span>
-                        <button onclick="addProduct(this);"><i class="fas fa-cart-arrow-down"></i>Thêm Vào Giỏ</button>
+                  
+                        </div>
                     </div>
-                </div>`
+                    
+
+                    <div class="bot-item">
+                        <div class="bot-item-details">
+                            <p>Số lượng: <span class ="quantity">${mang[i].quantity}</span></p>
+                           <p class="">${price}</p>
+                        </div>
+                        <button onclick="addProduct(this);"><i class="fas fa-cart-arrow-down button-add-product"></i><br>Thêm sản phẩm vào giỏ hàng</button>
+                    </div>
+                    
+                </div>
+               
+
+                
+                `
+
     }
     document.getElementById("content").innerHTML = s;
 }
 
-function chiTietSP(img) {
 
-}
 
 function search() {
     var url = window.location.href;
@@ -566,7 +560,7 @@ function showShop() {
     }
     // Chưa thì bắt đăng nhập
     else {
-        alert("Cần đăng nhập trước khi xem giỏ hàng");
+        // showInfoToast('Cần đăng nhập trước khi xem giỏ hàng!')
         showDangNhap();
     }
 }
@@ -678,7 +672,7 @@ function addProduct(button) {
     }
     // chưa đăng nhập ==> bắt đăng nhập
     else {
-        alert("Cần đăng nhập trước khi thêm giỏ hàng");
+        showInfoToast('Cần đăng nhập trước khi thêm giỏ hàng!')
         showDangNhap();
     }
 }
