@@ -1,7 +1,7 @@
 // 📄 toast.js
 
 // ===== Hàm gốc tạo toast =====
-function toast({ title = "", message = "", type = "info", duration = 3000 }) {
+ function toast({ title = "", message = "", type = "info", duration = 3000 }) {
   const main = document.getElementById("toast");
   if (!main) return;
 
@@ -62,7 +62,7 @@ function toast({ title = "", message = "", type = "info", duration = 3000 }) {
 }
 
 // Thông tin
- export  function showInfoToast(message) {
+  function showInfoToast(message) {
   toast({
     title: "Thông tin",
     message,
@@ -90,3 +90,5 @@ function toast({ title = "", message = "", type = "info", duration = 3000 }) {
     duration: 5000,
   });
 }
+
+

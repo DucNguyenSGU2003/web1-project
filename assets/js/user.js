@@ -1,6 +1,4 @@
-import { showInfoToast } from './toast.js';
-// import { showInfoToast } from './toast.js';
-// import { showInfoToast } from './toast.js';
+
 //Tài Khoản Admin---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 var adminTk = "admin";
 var adminMk = "1111";
@@ -560,7 +558,7 @@ function showShop() {
     }
     // Chưa thì bắt đăng nhập
     else {
-        // showInfoToast('Cần đăng nhập trước khi xem giỏ hàng!')
+        showInfoToast('Cần đăng nhập trước khi xem giỏ hàng!')
         showDangNhap();
     }
 }
