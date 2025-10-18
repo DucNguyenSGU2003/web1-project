@@ -1,3 +1,8 @@
+input[type="text"],input[type="password"],input[type="button"] {
+border-radius: 7px;
+}
+
+
 :root{
     --size-chu-sp: 15px ;
 }
@@ -19,7 +24,7 @@ a {
 #header #top-header {
     display: flex;
     justify-content: flex-end;
-    padding: 20px;
+    padding: 5px;
     position: relative;
 }
 
@@ -265,7 +270,7 @@ a {
     font-weight: 700;
     background-color: #d35400;
 }
-/*------------------Form Đăng Ký------------------*/
+/*------------------Form Đăng nhập------------------*/
 .modal {
     position: fixed;
     top: 0;
@@ -276,20 +281,25 @@ a {
     display: none;
 }
 .modal-container{
-    width: 60%;
-    height: 70%;
-    border: 1px solid #fff;
+    width: 400px;
+    height: 400px;
+    border: 2px solid #fff;
     background-color: #fff;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     animation: modalFadeIn ease 0.5s;
+    border-radius: 15px;
 
 }
 .modal.open {
     display: block;
 }
+button {
+    border-radius: 15px;
+}
+
 
 .close{
     position: absolute;

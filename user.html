@@ -117,11 +117,90 @@
             </div>
         </div>
 
+
+
+
+
+
+
+
         <div class="modal" onclick="hideDangNhap();">
             <div class="modal-container">
                 <i class="fas fa-times close" onclick="hideDangNhap();"></i>
                 <div id="title">
-                    <h3 class="title-in">Đăng Ký</h3>
+                    <!-- <h3 class="title-in">Đăng Ký</h3> -->
+                    <h3 class="title-up">Đăng nhập</h3>
+                </div>
+                <div id="main-form">
+                    <!-- <form id="sign-up" action="user.html" method="get" onsubmit="return dangKy();">
+                        <div class="sign-up">
+                            <div class="form-group">
+                                <label for="" class="h2">Họ Tên</label>
+                                <input type="text" name="Họ Tên" id="hoten" placeholder="Nhập vào họ tên" class="form-input">
+                                <div class="error-message"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="" class="h2">Số Điện Thoại</label>
+                                <input type="number" name="Số Điện Thoại" id="sdt" placeholder="Nhập vào số điện thoại" class="form-input">
+                                <div class="error-message"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="" class="h2">Tài Khoản</label>
+                                <input type="text" name="Tài Khoản" id="taikhoan" placeholder="Nhập vào tài khoản" class="form-input">
+                                <div class="error-message"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="" class="h2">Mật Khẩu</label>
+                                <input type="password" name="Mật Khẩu" id="matkhau" placeholder="Nhập vào mật khẩu" class="form-input">
+                                <div class="error-message"></div>
+                            </div>
+                        </div>
+
+                        <div class="button">
+                            <input type="submit" value="Đăng Ký" class="nut1"></input>
+                        </div>
+
+                    </form> -->
+
+
+                    <form id="sign-in" action="user.html" method="get">
+                        <div class="sign-in">
+                            <label for="" class="h2">Tài Khoản</label>
+                            <input id="tk" type="text" placeholder="Nhập vào tài khoản">
+                            <label for="" class="h2">Mật Khẩu</label>
+                            <input id="mk" type="password" placeholder="Nhập vào mật khẩu">
+                            <div class="error-message"></div>
+                        </div>
+
+                        <div class="button">
+                            <input type="button" value="Đăng Nhập" class="nut2" onclick="dangNhap();"></input>
+                        </div>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+
+        
+<!-- form đăng ký -->
+
+
+  <div class="register-modal" onclick="hideDangNhap();">
+            <div class="register-modal-container">
+                <i class="fas fa-times close" onclick="hideDangNhap();"></i>
+                <div id="title">
+                    <!-- <h3 class="title-in">Đăng Ký</h3> -->
                     <h3 class="title-up">Đăng nhập</h3>
                 </div>
                 <div id="main-form">
@@ -159,7 +238,7 @@
                     </form>
 
 
-                    <form id="sign-in" action="user.html" method="get">
+                    <!-- <form id="sign-in" action="user.html" method="get">
                         <div class="sign-in">
                             <label for="" class="h2">Tài Khoản</label>
                             <input id="tk" type="text" placeholder="Nhập vào tài khoản">
@@ -172,7 +251,7 @@
                             <input type="button" value="Đăng Nhập" class="nut2" onclick="dangNhap();"></input>
                         </div>
 
-                    </form>
+                    </form> -->
 
 
                 </div>
@@ -183,77 +262,11 @@
         </div>
 
 
-        <!-- <div id="chiTietSP">
-            <div id="main-chiTiet">
-                <i class="fas fa-times close"></i>
-                <h1>Chi Tiết Sản Phẩm</h1>
-                <div id="center">
-                    <img src="/assets/img/adidas/1.webp" alt="">
-                    <div id="chiTiet">
-                        <div id="title">
-                            <div id="favourite">Yêu Thích</div>
-                            <h3 id="name">Giày Adidas Hàng hiệu</h3>
-                        </div>
-                        <div id="sub-title">
-                            <div id="rate">
-                                <p id="rating">4.6</p>
-                                <i class="fas fa-star star"></i> <i class="fas fa-star star"></i> 
-                                <i class="fas fa-star star"></i> <i class="fas fa-star star"></i> 
-                                <i class="fas fa-star-half-alt star"></i>
-                            </div>
+<!-- end form đăng ký -->
 
-                            <div id="border">
-                                <p id="danhGia">2,1k</p>
-                                <span class="sub">Đánh Giá</span>
-                            </div>
-                            <div id="buy">
-                                <p id="daBan">7,5k</p>
-                                <span class="sub">Đã Bán</span>
-                            </div>
-                            
-                        </div>
-                        <div id="Gia">
-                            1300000đ
-                        </div>
-                        <div id="bot">
-                            <div id="left">
-                                <div id="mauSac">
-                                    <p>Màu Sắc</p>
-                                </div>
-                                <div id="size">
-                                    <p>Size</p>
-                                </div>
-                                <div id="SoLuongSanPham">
-                                    <p>Số lượng</p>
-                                </div>
-                            </div>
 
-                            <div id="right">
-                                <div id="mauSac">
-                                    <div id="do">
 
-                                    </div>
-                                    <div id="trang">
-
-                                    </div>
-                                    <div id="den">
-                                        
-                                    </div>
-                                </div>
-                                <div id="size">
-                                    <p>Size</p>
-                                </div>
-                                <div id="SoLuongSanPham">
-                                    <p>Số lượng</p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
+    
 <div class="home">
     <div id="container" style=" margin-top: 50px;margin-left: 30px;margin-bottom: 50px;">
         <h2 class="gioiThieu">BÁN GIÀY THỂ THAO SNEAKER CHÍNH HÃNG TẠI TPHCM - SneakerShop GIỚI THIỆU</h2>

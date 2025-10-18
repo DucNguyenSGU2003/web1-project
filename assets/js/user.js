@@ -71,7 +71,7 @@ function dangKy() {
             matkhau: matkhau.value,
         })
         localStorage.setItem("listTaiKhoan", JSON.stringify(listTaiKhoan));
-        alert("Đăng Ký thành công!");
+        showSuccessToast("Đăng Ký thành công!");
 
         // khi tạo tài khoản ==> tạo luôn kho lưu trữ giỏ hàng cho khách
         listGioHang.push({
@@ -242,6 +242,7 @@ modalContainer.addEventListener('click', function(event) {
 var mang = [1];
 
 function hienThi(obJ) {
+    currentPage = 1;
     var a = obJ;
     switch (a.id) {
         case "gioiThieu":
@@ -393,7 +394,7 @@ function hienThi(obJ) {
 
 
 var currentPage = 1;
-var perPage = 8;
+var perPage = 10;
 var mangTam = [];
 var totalPage = 0;
 var arr = [];
@@ -414,6 +415,7 @@ function hienThiSanPhamPhanTrang(brand, mang) {
     }
     mangTam = mang.slice((currentPage - 1) * perPage, (currentPage - 1) * perPage + perPage);
     renderProduct(mangTam);
+    
     renderPageNumber(mang);
 }
 
@@ -478,8 +480,6 @@ function renderProduct(mang) {
         var price = `Giá: ${mang[i].price} VNĐ`;
         s +=
             `<div class="item-group">
-
-
              <div class="bot-item">
                         <div class="bot-item-details1">
                              <img class="img" src="${mang[i].img}" onclick="chiTietSP(this);">
@@ -487,8 +487,6 @@ function renderProduct(mang) {
                   
                         </div>
                     </div>
-                    
-
                     <div class="bot-item">
                         <div class="bot-item-details">
                             <p>Số lượng: <span class ="quantity">${mang[i].quantity}</span></p>
@@ -498,11 +496,16 @@ function renderProduct(mang) {
                     </div>
                     
                 </div>
-               
-
-                
                 `
 
+    }
+    if(s == '')
+    {
+        s = '<h3 style="margin:auto">Không có sản phẩm để hiển thị</h3>'
+    }
+    if(mang.length == 0)
+    {
+        document.getElementById('main').style.margin = 0
     }
     document.getElementById("content").innerHTML = s;
 }
@@ -558,8 +561,8 @@ function showShop() {
     }
     // Chưa thì bắt đăng nhập
     else {
-        showInfoToast('Cần đăng nhập trước khi xem giỏ hàng!')
-        showDangNhap();
+        showWarningToast('Cần đăng nhập trước khi xem giỏ hàng!')
+        // showDangNhap();
     }
 }
 
@@ -670,8 +673,8 @@ function addProduct(button) {
     }
     // chưa đăng nhập ==> bắt đăng nhập
     else {
-        showInfoToast('Cần đăng nhập trước khi thêm giỏ hàng!')
-        showDangNhap();
+        showWarningToast('Vui lòng đăng nhập trước khi thêm giỏ hàng!')
+        // showDangNhap();
     }
 }
 
