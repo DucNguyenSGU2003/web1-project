@@ -2,11 +2,6 @@ input[type="submit"],input[type="text"],input[type="password"],input[type="butto
 border-radius: 7px;
 }
 
-
-
-
-
-
 :root{
     --size-chu-sp: 15px ;
 
@@ -17,6 +12,7 @@ border-radius: 7px;
     padding: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
+    color: black;
 }
 a {
     text-decoration: none;
@@ -36,6 +32,10 @@ a {
 #header #top-header #sign-in:hover a{
     color: red;
 }
+#header #top-header #register:hover a{
+    color: red;
+}
+
 
 #register 
 {
@@ -127,13 +127,20 @@ a {
     text-align: center;
     line-height: 70px;
     flex: 1;
+
     
+}
+
+#header #main-header #nav li
+{
+ box-sizing: padding-box;
 }
 
 #header #main-header #nav li:hover a{
     background-color: #d35400;
     color: #fff;
-    border-radius: 30px;
+    border-radius: 10px;
+   
     transition: background-color 0.5s;
 }
 
@@ -413,6 +420,10 @@ button {
 .register-modal.open {
     display: block;
 }
+
+.register-modal input[type="submit"]{
+    background-color: rgb(78, 136, 245)
+}
 button {
     border-radius: 15px;
 }
@@ -546,7 +557,9 @@ button {
     cursor: pointer;
 }
 
-
+.button-add-product{
+    color: white;
+}
 
 #content .item-group h4 {
     text-align:center;
@@ -564,7 +577,7 @@ button {
 
 
 
-.item-group .bot-item .price {
+.bot-item.bot-item .price {
     flex: 1;
     color: red;
     font-size: 20px;
