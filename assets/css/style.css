@@ -1,10 +1,15 @@
-input[type="text"],input[type="password"],input[type="button"] {
+input[type="submit"],input[type="text"],input[type="password"],input[type="button"] {
 border-radius: 7px;
 }
 
 
+
+
+
+
 :root{
     --size-chu-sp: 15px ;
+
 }
 
 * {
@@ -15,11 +20,11 @@ border-radius: 7px;
 }
 a {
     text-decoration: none;
-    color: #000;
 }
 /* ---------------------------Header-------------------------------- */
 #header {
-    display: contents; /*Cho position sticky bám dính dựa trên thẻ body khi sroll chứ không còn là thẻ cha nữa */
+    display: contents;
+    color: var(--color-main); /*Cho position sticky bám dính dựa trên thẻ body khi sroll chứ không còn là thẻ cha nữa */
 }
 #header #top-header {
     display: flex;
@@ -31,7 +36,14 @@ a {
 #header #top-header #sign-in:hover a{
     color: red;
 }
-#top-header #sign-in,
+
+#register 
+{
+    border-right: 1px solid #ccc;
+    padding-right: 10px;
+    margin-left: 10px;
+}  
+ #top-header #sign-in,
 #top-header #user,
 #top-header #order{
     border-right: 1px solid #ccc;
@@ -88,7 +100,7 @@ a {
     border-top: 1px solid #ccc;
     background-color: #fff;
     box-shadow: 0px 0px 10px;
-    padding-top: 10px;
+    padding: 5px 0px;
     display: flex;
     position: sticky;
     top: 0;
@@ -119,7 +131,7 @@ a {
 }
 
 #header #main-header #nav li:hover a{
-    background-color: #000;
+    background-color: #d35400;
     color: #fff;
     border-radius: 30px;
     transition: background-color 0.5s;
@@ -372,6 +384,112 @@ button {
     background-color: rgba(46, 204, 113,1.0);
 
 }
+
+
+
+/* -----------------Đăng ký ----------------------- */
+.register-modal {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+}
+.register-modal-container{
+    width: 450px;
+    height: 550px;
+    border: 2px solid #fff;
+    background-color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: modalFadeIn ease 0.5s;
+    border-radius: 15px;
+
+}
+.register-modal.open {
+    display: block;
+}
+button {
+    border-radius: 15px;
+}
+
+
+.close{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    cursor: pointer;
+}
+
+#title {
+    display: flex;
+    justify-content: center;
+}
+.title-in,.title-up {
+    flex: 1;
+    font-size: 50px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#main-form {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#main-form form .sign-up,
+#main-form form .sign-in{
+    display: flex;
+    flex-direction: column;
+}
+.form-group label{
+    display: block;
+}
+
+#main-form form{
+    margin-top: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+
+}
+.sign-in input,
+.sign-up input{
+    display: block;
+    background-color: rgba(189, 195, 199,0.4);
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    width: 250px;
+    
+}
+.h2{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.button input{
+    cursor: pointer;
+    color: #fff;
+    border: none;
+    height: 40px;
+    width: 250px;
+}
+.nut1{
+    background-color: rgba(231, 76, 60,1.0);
+
+}
+.nut2{
+    background-color: rgba(46, 204, 113,1.0);
+
+}
+/*  */
 
 
 @keyframes modalFadeIn {

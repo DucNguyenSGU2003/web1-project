@@ -10,6 +10,16 @@ function giay(productId,brand,img,name,price,quantity) {
     this.quantity = quantity;
 }
 
+
+
+function taikhoan(hoten,sdt,taikhoan,matkhau) {
+    this.hoten = hoten;
+    this.sdt = sdt;
+    this.taikhoan = taikhoan;
+    this.matkhau = matkhau;
+}
+
+
 var nike = [
     new giay("N01","Nike","/assets/img/nike/1.webp","Court Vision Low Next Nature",1380000,10),
     new giay("N02","Nike","/assets/img/nike/2.webp","Downshifter 12 - Đen/Trắng",1380000,10),
@@ -102,7 +112,7 @@ var bitis = [
 
 var sanPham = [nike,adidas,jordan,men,bitis];
 
-
+var listTaiKhoan  = [new taikhoan('Đức','123456575','duc','1')]
 //  tránh tạo đè ==> tạo 1 lần rồi thôi
 localStorage.getItem("nike") ? 1 : localStorage.setItem("nike", JSON.stringify(nike));
 localStorage.getItem("adidas") ? 1 : localStorage.setItem("adidas", JSON.stringify(adidas));
@@ -110,6 +120,7 @@ localStorage.getItem("jordan") ? 1 : localStorage.setItem("jordan", JSON.stringi
 localStorage.getItem("men") ? 1 : localStorage.setItem("men", JSON.stringify(men));
 localStorage.getItem("bitis") ? 1 : localStorage.setItem("bitis", JSON.stringify(bitis));
 localStorage.getItem("sanPham") ? 1 : localStorage.setItem("sanPham", JSON.stringify(sanPham));
+localStorage.getItem("listTaiKhoan") ? 1 : localStorage.setItem("listTaiKhoan", JSON.stringify(listTaiKhoan));
 
 
 

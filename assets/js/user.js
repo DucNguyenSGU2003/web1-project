@@ -117,7 +117,7 @@ function dangNhap() {
     // tài khoản đã tồn tại
     if (check) {
         document.getElementById("mk").parentElement.querySelector(".error-message").innerText = "";
-        alert("Đăng nhập thành công");
+        showSuccessToast("Đăng nhập thành công");
         hideDangNhap();
 
         var listTaiKhoan = localStorage.getItem("listTaiKhoan") ? JSON.parse(localStorage.getItem("listTaiKhoan")) : [];
@@ -148,6 +148,9 @@ function dangNhap() {
 
         // show Đơn hàng đã đặt
         document.getElementById("order").style.display = "block";
+
+        document.getElementById("register").style.display = "none";
+
         // cập nhật giỏ hàng cho khách hàng (lưu lại giỏ hàng của khách khi thoát)  
         var listGioHang = JSON.parse(localStorage.getItem("listGioHang"));
         var stt = 0;
@@ -219,8 +222,28 @@ function dangXuat() {
         console.log(document.getElementById("showShop").style.display);
     }
     document.getElementById("order").style.display = "none";
+     document.getElementById("register").style.display = "block";
+
 
 }
+
+var registerModal = document.querySelector(".register-modal");
+var registermModalContainer = document.querySelector(".register-modal-container");
+
+
+
+function showDangKy() {
+
+    registerModal.classList.add("open");
+}
+
+function hideDangKy() {
+    registerModal.classList.remove("open");
+}
+
+registermModalContainer.addEventListener('click', function(event) {
+    event.stopPropagation()
+})
 
 
 var modal = document.querySelector(".modal");
@@ -539,7 +562,6 @@ function search() {
 
 // Xử lý giỏ hàng
 var click = false;
-
 
 function showShop() {
     // kiểm tra đã đăng nhập chưa (muốn xem/thểm giỏ hàng thì cần phải đăng nhập)
