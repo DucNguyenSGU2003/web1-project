@@ -118,6 +118,8 @@ function dangNhap() {
     if (check) {
         document.getElementById("mk").parentElement.querySelector(".error-message").innerText = "";
         showSuccessToast("Đăng nhập thành công");
+       document.getElementById("tk").value= '';
+    document.getElementById("mk").value = '';
         hideDangNhap();
 var taiKhoan;
         var listTaiKhoan = localStorage.getItem("listTaiKhoan") ? JSON.parse(localStorage.getItem("listTaiKhoan")) : [];
@@ -267,16 +269,93 @@ modalContainer.addEventListener('click', function(event) {
 
 
 var mang = [1];
+function showDetailProduct(id) {
+  var arr = JSON.parse(localStorage.getItem('sanPham'));
+  var obj = arr.filter((item) => item.productId == id);
+var s='';
+obj.forEach(element => {
+  s += `<button class="size" onclick="selectSize(this)">${element.size}</button>`;
+});
+  var info = `
+  <div class="product-page">
+    <button class="btn-back" onclick="goBack()">← Quay lại</button>
+
+    <div class="product-container">
+      <div class="product-image">
+        <img src="${obj[0].img}" alt="${obj[0].name}" />
+      </div>
+
+      <div class="product-info">
+        <h1 class="product-title">${obj[0].name}</h1>
+
+        <div class="product-price">
+          <span class="new-price">${obj[0].price} VND</span>
+        </div>
+
+        <div class="product-size">
+          <p class="label">Size:</p>
+          <div class="size-options">
+        ${s}
+          </div>
+        </div>
+
+        <div class="product-quantity">
+          <p class="label">Số lượng</p>
+          <div class="quantity-controls">
+            <button class="btn-qty" onclick="changeQty(-1)">-</button>
+            <input 
+              type="number" 
+              value="1" 
+              class="input-qty" 
+              id="quantity-input"
+              min="1"
+              oninput="validateQty(this)"
+            />
+            <button class="btn-qty" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+
+        <button class="add-to-cart" onclick="addProductToCart('${id}')">Thêm vào giỏ hàng</button>
+      </div>
+    </div>
+  </div>`;
+
+  document.getElementById("container").innerHTML = info;
+}
+
+function selectSize(button) {
+  document.querySelectorAll('.size').forEach(btn => btn.classList.remove('active'));
+  button.classList.add('active');
+  const selectedSize = button.textContent.trim();
+  localStorage.setItem('selectedSize', selectedSize);
+}
+function changeQty(delta) {
+  const input = document.getElementById("quantity-input");
+  let current = parseInt(input.value) || 1;
+  current += delta;
+  if (current < 1) current = 1;
+  input.value = current;
+}
+
+function validateQty(input) {
+  let value = parseInt(input.value);
+  if (isNaN(value) || value < 1) {
+    input.value = 1;
+  }
+}
 
 
-function showDetailProduct(id){
 
-
+function goBack() {
+  // Quay lại danh sách sản phẩm (tùy cách bạn hiển thị danh sách ban đầu)
+  hienThi({id: localStorage.getItem('page')}) // hoặc gọi lại hàm hiển thị danh sách sản phẩm
 }
 
 function hienThi(obJ) {
     currentPage = 1;
     var a = obJ;
+    localStorage.setItem('page',a.id)
+
     switch (a.id) {
         case "gioiThieu":
             {
@@ -351,8 +430,6 @@ function hienThi(obJ) {
                 document.getElementById("container").outerHTML = s;
                 hienThiSanPhamPhanTrang(a.id, mang);
                 break;
-
-
             }
         case "Jordan":
             {
@@ -453,8 +530,34 @@ var mangTam = [];
 var totalPage = 0;
 var arr = [];
 
+
+
+function renderArrSP()
+{
+  var arr1  = JSON.parse(localStorage.getItem('sanPham'));
+    var list_sp  = []
+    var l = arr1.length;
+    for(var  i = 0 ; i< l ; i++)
+    {
+        var index =  list_sp.findIndex((item)=>{
+                return item.productId == arr1[i].productId
+        })
+        if(index >= 0 )
+        {
+            list_sp[index].quantity += parseFloat(arr1[i].quantity);
+        }else
+        {
+            list_sp.push(arr1[i]);
+        }
+            
+    }
+    return list_sp;
+}
+
 function hienThiSanPhamPhanTrang(brand, mang) {
-    var mang  = JSON.parse(localStorage.getItem('sanPham'));
+  
+    var mang = renderArrSP()
+
     if (brand === "Nike") {
      mang = mang.filter((item)=> item.productId[0] == 'N') 
        } else if (brand === "Adidas") {
@@ -542,9 +645,8 @@ function renderProduct(mang) {
              <div class="bot-item1">
              
                         <div class="bot-item-details1">
-                        <img class="img" src="${mang[i].img}" onclick="chiTietSP(this);">
+                        <img class="img" src="${mang[i].img}" onclick="showDetailProduct('${mang[i].productId}');">
                     <h4 class="name">${mang[i].name}</h4>
-                  
                         </div>
                     </div>
                     <div class="bot-item">
@@ -552,13 +654,11 @@ function renderProduct(mang) {
                         <p class="">${price}</p>
                         <p>Số lượng còn hàng: <b><span class ="quantity">${mang[i].quantity}</span></p></b>
                         </div>
-                          <button class="button-details-product" onclick="showDetailProduct(this);"><i class="fas fa-eye "></i><br>Chi tiết sản phẩm </button>
-                        <button class=" button-add-product" onclick="addProduct(this);"><i class="fas fa-cart-arrow-down "></i><br>Thêm vào giỏ hàng</button>
+                          <button class="button-details-product" onclick="showDetailProduct('${mang[i].productId}');"><i class="fas fa-eye "></i><br>Chi tiết sản phẩm </button>
+                        <!-- <button class=" button-add-product" onclick="addProduct(this);"><i class="fas fa-cart-arrow-down "></i><br>Thêm vào giỏ hàng</button> -->
                     </div>
-                    
                 </div>
                 `
-
     }
     if(s == '')
     {
@@ -566,7 +666,7 @@ function renderProduct(mang) {
     }
     // if(mang.length == 0)
     // {
-        document.getElementById('main').style.margin = 0
+      document.getElementById('main').style.margin = 0
     // }
     document.getElementById("content").innerHTML = s;
 }
@@ -577,7 +677,7 @@ function search() {
     var url = window.location.href;
     var id = url.split('#')[1];
     
-    arr = JSON.parse(localStorage.getItem("sanPham"));
+    arr = renderArrSP();
 // arr = arr.filter((item)=> item.productId[0] == id)
     if (id === "Nike") {
         arr = arr.filter((item)=> item.productId[0] == 'N')
@@ -765,6 +865,94 @@ function addProduct(button) {
         // showDangNhap();
     }
 }
+
+
+function addProductToCart(button) {
+    // kiểm tra đã đăng nhập chưa (thêm sản phẩm vào giỏ hàng cần phải đăngn nhập)
+
+    // đã đăng nhập
+    if (localStorage.getItem("userId") && localStorage.getItem("userId").innerText != "") {
+        if (document.getElementById("showShopTable").innerText === "") {
+            var stt = 0;
+        } else {
+            console.log("không rỗng");
+            var stt = parseInt(document.getElementById("showShopTable").lastElementChild.querySelector(".stt").innerText);
+        }
+       var id = button.parentElement.parentElement.querySelector(".productID").value
+
+        var obj = getObjectFromId(id);
+        var img =obj.img;
+        var name =obj.name;
+        var quantity = parseInt(obj.quantity);
+        var price = parseFloat(obj.price);
+        var thanhTien;
+        // Kiểm tra sản phẩm đã có trong giỏ hàng chưa 
+        var check = false;
+        var allTen = document.getElementById("showShopTable").querySelectorAll(".cotTen");
+        for (var ten of allTen) {
+            if (ten.innerText === name) { // nếu đã có ==> tăng số lượng, tăng thành tiền 
+                check = true;
+                var a = parseInt(ten.parentElement.querySelector(".soLuong").innerText);
+                // Kiểm tra số lượng của 1 sản phẩm trong giỏ hàng không được đặt quá số lượng của shop
+                if (a >= quantity) {
+                    console.log("quá ");
+                    return;
+                } else {
+                    console.log("chưa quá");
+                    ten.parentElement.querySelector(".soLuong").innerText = a + 1;
+                    thanhTien = (a + 1) * price;
+                    console.log("Thành Tiền", thanhTien);
+                    ten.parentElement.querySelector(".thanhTien").innerText = thanhTien + "đ";
+                }
+                // -------------------------------------------------------------------------------------
+            }
+        }
+
+
+        // nếu chưa ==> thêm vào giỏ hàng
+        if (!check) {
+            document.getElementById("quantity").innerText = stt + 1;
+            document.getElementById("showShopTable").innerHTML += `
+            <tr class="sanPham">
+                <td class="stt">${stt+1}</td>
+                <td><img class="hinh" src=${img}></td>
+                <td class="cotTen">${name}</td>
+                <td class="donGia">${price}đ</td>
+                <td class="soLuong">1</td>
+                <td class="thanhTien">${price}đ</td>
+                <td>
+                    <button onclick="deleteProduct(this);">Delete</button>
+                </td>
+            </tr>`;
+        }
+
+
+        // cập nhật lại tổng tiền các sản phẩm trong giỏ hàng
+        var arr = document.getElementById("showShopTable").querySelectorAll(".thanhTien");
+        var tongTien = 0;
+        for (var tien of arr) {
+            tongTien += parseInt(tien.innerText);
+        }
+        document.getElementById("tongTien").innerText = `${tongTien}đ`;
+
+
+        // cập nhật lại giỏ hàng của khách trong localStorage
+        var gioHang = {
+            img: img,
+            nameProduct: name,
+            price: price,
+            quantity: 1,
+            money: price,
+        }
+        ThemGioHang(gioHang, check);
+    }
+    // chưa đăng nhập ==> bắt đăng nhập
+    else {
+        showWarningToast('Vui lòng đăng nhập trước khi thêm giỏ hàng!')
+        // showDangNhap();
+    }
+}
+
 
 
 
@@ -997,4 +1185,4 @@ function huyDonHang(button) {
 
 
 
-hienThi({id:'FirstLoad'})
+// hienThi({id:'FirstLoad'})
