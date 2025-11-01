@@ -131,8 +131,8 @@ var taiKhoan;
                 sdt = tk.sdt;
                 taiKhoan = tk;
                 localStorage.setItem('userId',tk.taikhoan);
-                localStorage.setItem('listGioHang',taiKhoan.gioHang)
-                localStorage.setItem('listDaMua',taiKhoan.daMua)
+                localStorage.setItem('listGioHang',JSON.stringify(taiKhoan.gioHang))
+                localStorage.setItem('listDaMua',JSON.stringify(taiKhoan.daMua))
             }
         }
         // khi đã đăng nhập vào thì thay Đăng nhập ==> Đăng xuất
@@ -276,7 +276,14 @@ function showDetailProduct(id) {
   var obj = arr.filter((item) => item.productId == id);
 var s='';
 obj.forEach(element => {
-  s += `<button class="size" onclick="selectSize(this)">${element.size}</button>`;
+    var check = '';
+    if(element.quantity <1   )
+        check = ' disabled '
+  s += `<button class="size" 
+  
+ ${check}
+
+  onclick="selectSize(this)">${element.size}</button>`;
 });
   var info = `
   <div class="product-page">
@@ -331,6 +338,9 @@ obj.forEach(element => {
   </div>`;
 
   document.getElementById("container").innerHTML = info;
+
+  localStorage.removeItem('selectedSize')
+
 }
 
 function selectSize(button) {
@@ -779,13 +789,13 @@ function ThemGioHang(gioHang, check) {
 
 }
 
-function getObjectFromId(id)
+function getObjectToCartFromId(id,size)
 {
-    var arr = JSON.parse( localStorage.getItem('sanPham'))
+    var arr = JSON.parse(localStorage.getItem('sanPham'))
  
     var o = arr.filter(function(item)
 {
-    return item.productId == id;
+    return item.productId == id && item.size == parseFloat(size);
 })
 
 return o[0];
@@ -804,7 +814,7 @@ function addProduct(button) {
         }
        var id = button.parentElement.parentElement.querySelector(".productID").value
 
-        var obj = getObjectFromId(id);
+        var obj = getObjectToCartFromId(id);
         var img =obj.img;
         var name =obj.name;
         var quantity = parseInt(obj.quantity);
@@ -812,22 +822,23 @@ function addProduct(button) {
         var thanhTien;
         // Kiểm tra sản phẩm đã có trong giỏ hàng chưa 
         var check = false;
-        var allTen = document.getElementById("showShopTable").querySelectorAll(".cotTen");
+        // var allTen = document.getElementById("showShopTable").querySelectorAll(".cotTen");
         for (var ten of allTen) {
             if (ten.innerText === name) { // nếu đã có ==> tăng số lượng, tăng thành tiền 
                 check = true;
-                var a = parseInt(ten.parentElement.querySelector(".soLuong").innerText);
+                var a = parseInt(document.querySelector(".quantity-input").innerText);
                 // Kiểm tra số lượng của 1 sản phẩm trong giỏ hàng không được đặt quá số lượng của shop
                 if (a >= quantity) {
-                    console.log("quá ");
+                    showWarningToast('Số lượng vượt quá tồn kho')
                     return;
-                } else {
-                    console.log("chưa quá");
-                    ten.parentElement.querySelector(".soLuong").innerText = a + 1;
-                    thanhTien = (a + 1) * price;
-                    console.log("Thành Tiền", thanhTien);
-                    ten.parentElement.querySelector(".thanhTien").innerText = thanhTien + "đ";
-                }
+                } 
+                // else {
+                //     // console.log("chưa quá");
+                //     ten.parentElement.querySelector(".soLuong").innerText = a + 1;
+                //     thanhTien = (a + 1) * price;
+                //     console.log("Thành Tiền", thanhTien);
+                //     ten.parentElement.querySelector(".thanhTien").innerText = thanhTien + "đ";
+                // }
                 // -------------------------------------------------------------------------------------
             }
         }
@@ -839,7 +850,7 @@ function addProduct(button) {
             document.getElementById("showShopTable").innerHTML += `
             <tr class="sanPham">
                 <td class="stt">${stt+1}</td>
-                <td><img class="hinh" src=${img}></td>
+                <td><img class="hinh" src=${objimg}></td>
                 <td class="cotTen">${name}</td>
                 <td class="donGia">${price}đ</td>
                 <td class="soLuong">1</td>
@@ -880,18 +891,24 @@ function addProduct(button) {
 
 function addProductToCart(button) {
     // kiểm tra đã đăng nhập chưa (thêm sản phẩm vào giỏ hàng cần phải đăngn nhập)
+    if(!localStorage.selectedSize)
+      {
+        showWarningToast('Vui lòng chọn size giày');
+        return;
+      }
+
 
     // đã đăng nhập
     if (localStorage.getItem("userId") && localStorage.getItem("userId").innerText != "") {
         if (document.getElementById("showShopTable").innerText === "") {
-            var stt = 0;
+            // var stt = 0;
         } else {
             console.log("không rỗng");
-            var stt = parseInt(document.getElementById("showShopTable").lastElementChild.querySelector(".stt").innerText);
+            // var stt = parseInt(document.getElementById("showShopTable").lastElementChild.querySelector(".stt").innerText);
         }
-       var id = button.parentElement.parentElement.querySelector(".productID").value
+       var id = button
 
-        var obj = getObjectFromId(id);
+        var obj = getObjectToCartFromId(id,localStorage.selectedSize);
         var img =obj.img;
         var name =obj.name;
         var quantity = parseInt(obj.quantity);
@@ -922,7 +939,7 @@ function addProductToCart(button) {
 
         // nếu chưa ==> thêm vào giỏ hàng
         if (!check) {
-            document.getElementById("quantity").innerText = stt + 1;
+            // document.getElementById("quantity").innerText = stt + 1;
             document.getElementById("showShopTable").innerHTML += `
             <tr class="sanPham">
                 <td class="stt">${stt+1}</td>

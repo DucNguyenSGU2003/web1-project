@@ -26,7 +26,7 @@ function taikhoan(hoten,sdt,taikhoan,matkhau,gioHang=[],daMua=[]) {
 
 
 var nike = [
-    new giay("N01","Nike","/assets/img/nike/1.webp","Court Vision Low Next Nature",1380000,10),
+    new giay("N01","Nike","/assets/img/nike/1.webp","Court Vision Low Next Nature",1380000,0),
     new giay("N01","Nike","/assets/img/nike/1.webp","Court Vision Low Next Nature",1380000,10,40),
     new giay("N01","Nike","/assets/img/nike/1.webp","Court Vision Low Next Nature",1380000,10,41),
     new giay("N01","Nike","/assets/img/nike/1.webp","Court Vision Low Next Nature",1380000,10,42),
