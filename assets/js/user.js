@@ -118,6 +118,7 @@ function dangNhap() {
     if (check) {
         document.getElementById("mk").parentElement.querySelector(".error-message").innerText = "";
         showSuccessToast("Đăng nhập thành công");
+        hienThi({id:'FirstLoad'})
        document.getElementById("tk").value= '';
     document.getElementById("mk").value = '';
         hideDangNhap();
@@ -130,7 +131,8 @@ var taiKhoan;
                 sdt = tk.sdt;
                 taiKhoan = tk;
                 localStorage.setItem('userId',tk.taikhoan);
-
+                localStorage.setItem('listGioHang',taiKhoan.gioHang)
+                localStorage.setItem('listDaMua',taiKhoan.daMua)
             }
         }
         // khi đã đăng nhập vào thì thay Đăng nhập ==> Đăng xuất
@@ -289,8 +291,16 @@ obj.forEach(element => {
         <h1 class="product-title">${obj[0].name}</h1>
 
         <div class="product-price">
-          <span class="new-price">${obj[0].price} VND</span>
+          <span class="new-price">Giá: ${obj[0].price} VND</span>
+         
         </div>
+          <div class="product-price">
+         
+          <span class="new-price">  <p class="label">Số lượng tồn kho: ${obj[0].quantity}</p></span><br>
+        </div>
+
+          
+        
 
         <div class="product-size">
           <p class="label">Size:</p>
@@ -298,7 +308,7 @@ obj.forEach(element => {
         ${s}
           </div>
         </div>
-
+      
         <div class="product-quantity">
           <p class="label">Số lượng</p>
           <div class="quantity-controls">
@@ -357,7 +367,7 @@ function hienThi(obJ) {
     localStorage.setItem('page',a.id)
 
     switch (a.id) {
-        case "gioiThieu":
+        case "FirstLoad":
             {
                 // s =
                 // '<div id="container" style=" margin-top: 50px;margin-left: 30px;margin-bottom: 50px;">' +
@@ -675,7 +685,7 @@ function renderProduct(mang) {
 
 function search() {
     var url = window.location.href;
-    var id = url.split('#')[1];
+    var id = localStorage.getItem('page');
     
     arr = renderArrSP();
 // arr = arr.filter((item)=> item.productId[0] == id)
@@ -699,8 +709,8 @@ function search() {
     var search = arr.filter(function(value, index) {
         return value.name.toUpperCase().includes(valueSearchInput.toUpperCase());
     });
-
-    renderProduct(search);
+ mangTam = search.slice((currentPage - 1) * perPage, (currentPage - 1) * perPage + perPage);
+    renderProduct(mangTam);
     
     renderPageNumber(search);
 
@@ -749,6 +759,7 @@ function ThemGioHang(gioHang, check) {
                 break;
             } else { // sản phẩm chưa tồn tại trong giỏ 
                 listGioHang[i].giohang.push(gioHang);
+                
             }
 
         }
@@ -1185,4 +1196,5 @@ function huyDonHang(button) {
 
 
 
-// hienThi({id:'FirstLoad'})
+hienThi({id:'FirstLoad'})
+localStorage.setItem('page','FirstLoad')

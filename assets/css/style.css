@@ -1339,8 +1339,9 @@ tbody #themSp {
 
 .product-image img {
   width: 650px;
-  height: auto;
-  border-radius: 4px;
+  height: 650px;
+  border: #000 solid 1px;
+  border-radius: 30px;
   object-fit: cover;
   background-color: #f6f6f6;
 }

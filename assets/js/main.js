@@ -21,7 +21,7 @@ function taikhoan(hoten,sdt,taikhoan,matkhau,gioHang=[],daMua=[]) {
     this.taikhoan = taikhoan;
     this.matkhau = matkhau;
     this.gioHang=gioHang;
-    this.daMua = daMua
+    this.daMua = daMua;
 }
 
 
@@ -201,56 +201,4 @@ var listTaiKhoan  = [new taikhoan('Đức','123456575','duc','1')]
 // localStorage.getItem("bitis") ? 1 : localStorage.setItem("bitis", JSON.stringify(bitis));
 localStorage.getItem("sanPham") ? 1 : localStorage.setItem("sanPham", JSON.stringify(sanPham));
 localStorage.getItem("listTaiKhoan") ? 1 : localStorage.setItem("listTaiKhoan", JSON.stringify(listTaiKhoan));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
