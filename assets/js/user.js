@@ -119,13 +119,16 @@ function dangNhap() {
         document.getElementById("mk").parentElement.querySelector(".error-message").innerText = "";
         showSuccessToast("Đăng nhập thành công");
         hideDangNhap();
-
+var taiKhoan;
         var listTaiKhoan = localStorage.getItem("listTaiKhoan") ? JSON.parse(localStorage.getItem("listTaiKhoan")) : [];
         var hoten, sdt;
         for (const tk of listTaiKhoan) {
             if (tk.taikhoan === taikhoan) {
                 hoten = tk.hoten;
                 sdt = tk.sdt;
+                taiKhoan = tk;
+                localStorage.setItem('userId',tk.taikhoan);
+
             }
         }
         // khi đã đăng nhập vào thì thay Đăng nhập ==> Đăng xuất
@@ -223,6 +226,7 @@ function dangXuat() {
     }
     document.getElementById("order").style.display = "none";
      document.getElementById("register").style.display = "block";
+     localStorage.removeItem('userId')
 
 
 }
@@ -264,6 +268,12 @@ modalContainer.addEventListener('click', function(event) {
 
 var mang = [1];
 
+
+function showDetailProduct(id){
+
+
+}
+
 function hienThi(obJ) {
     currentPage = 1;
     var a = obJ;
@@ -297,23 +307,34 @@ function hienThi(obJ) {
                 // document.getElementById("container").outerHTML = s;
 
                  var s =
-                    `<div id="container">
-                <div id="content"></div>
-                <ul id="sotrang"></ul>
-            </div>`;
+                `<div id="container">
+                     <div id="content"></div>
+                     <ul id="sotrang"></ul>
+                </div>`;
                 document.getElementById("search-main").innerHTML = `<input type="text" placeholder="Nhập từ cần tìm" id="search" oninput="search()"></input><i class="fas fa-search"></i>`
                 document.getElementById("container").outerHTML = s;
                 hienThiSanPhamPhanTrang(a.id, mang);
                 break;
-
             }
-        case "Nike":
+              case "Nike":
             {
                 var s =
-                    `<div id="container">
-                <div id="content"></div>
-                <ul id="sotrang"></ul>
-            </div>`;
+                `<div id="container">
+                     <div id="content"></div>
+                     <ul id="sotrang"></ul>
+                </div>`;
+                document.getElementById("search-main").innerHTML = `<input type="text" placeholder="Nhập từ cần tìm" id="search" oninput="search()"></input><i class="fas fa-search"></i>`
+                document.getElementById("container").outerHTML = s;
+                hienThiSanPhamPhanTrang(a.id, mang);
+                break;
+            }
+        case "FirstLoad":
+            {
+                var s =
+                `<div id="container">
+                     <div id="content"></div>
+                     <ul id="sotrang"></ul>
+                </div>`;
                 document.getElementById("search-main").innerHTML = `<input type="text" placeholder="Nhập từ cần tìm" id="search" oninput="search()"></input><i class="fas fa-search"></i>`
                 document.getElementById("container").outerHTML = s;
                 hienThiSanPhamPhanTrang(a.id, mang);
@@ -322,10 +343,10 @@ function hienThi(obJ) {
         case "Adidas":
             {
                 var s =
-                    `<div id="container">
-                <div id="content"></div>
-                <ul id="sotrang"></ul>
-            </div>`;
+                `<div id="container">
+                     <div id="content"></div>
+                     <ul id="sotrang"></ul>
+                </div>`;
                 document.getElementById("search-main").innerHTML = `<input type="text" placeholder="Nhập từ cần tìm" id="search" oninput="search()"></input><i class="fas fa-search"></i>`
                 document.getElementById("container").outerHTML = s;
                 hienThiSanPhamPhanTrang(a.id, mang);
@@ -336,10 +357,10 @@ function hienThi(obJ) {
         case "Jordan":
             {
                 var s =
-                    `<div id="container">
-                <div id="content"></div>
-                <ul id="sotrang"></ul>
-            </div>`;
+                `<div id="container">
+                     <div id="content"></div>
+                     <ul id="sotrang"></ul>
+                </div>`;
                 document.getElementById("search-main").innerHTML = `<input type="text" placeholder="Nhập từ cần tìm" id="search" oninput="search()"></input><i class="fas fa-search"></i>`
                 document.getElementById("container").outerHTML = s;
                 hienThiSanPhamPhanTrang(a.id, mang);
@@ -350,10 +371,10 @@ function hienThi(obJ) {
         case "Men":
             {
                 var s =
-                    `<div id="container">
-                <div id="content"></div>
-                <ul id="sotrang"></ul>
-            </div>`;
+                `<div id="container">
+                     <div id="content"></div>
+                     <ul id="sotrang"></ul>
+                </div>`;
                 document.getElementById("search-main").innerHTML = `<input type="text" placeholder="Nhập từ cần tìm" id="search" oninput="search()"></input><i class="fas fa-search"></i>`
                 document.getElementById("container").outerHTML = s;
                 hienThiSanPhamPhanTrang(a.id, mang);
@@ -364,10 +385,10 @@ function hienThi(obJ) {
         case "Bitis":
             {
                 var s =
-                    `<div id="container">
-                <div id="content"></div>
-                <ul id="sotrang"></ul>
-            </div>`;
+                `<div id="container">
+                     <div id="content"></div>
+                     <ul id="sotrang"></ul>
+                </div>`;
                 document.getElementById("search-main").innerHTML = `<input type="text" placeholder="Nhập từ cần tìm" id="search" oninput="search()"></input><i class="fas fa-search"></i>`
                 document.getElementById("container").outerHTML = s;
                 hienThiSanPhamPhanTrang(a.id, mang);
@@ -433,18 +454,22 @@ var totalPage = 0;
 var arr = [];
 
 function hienThiSanPhamPhanTrang(brand, mang) {
+    var mang  = JSON.parse(localStorage.getItem('sanPham'));
     if (brand === "Nike") {
-        mang = JSON.parse(localStorage.getItem("nike"));
-    } else if (brand === "Adidas") {
-        mang = JSON.parse(localStorage.getItem("adidas"));
+     mang = mang.filter((item)=> item.productId[0] == 'N') 
+       } else if (brand === "Adidas") {
+        mang = mang.filter((item)=> item.productId[0] == 'A') 
     } else if (brand === "Jordan") {
-        mang = JSON.parse(localStorage.getItem("jordan"));
+        mang = mang.filter((item)=> item.productId[0] == 'J') 
     } else if (brand === "Men") {
-        mang = JSON.parse(localStorage.getItem("men"));
+        mang = mang.filter((item)=> item.productId[0] == 'M') 
     } else if (brand === "search") {
 
+    }
+    else if (brand === "FirstLoad") {
+
     } else {
-        mang = JSON.parse(localStorage.getItem("bitis"));
+        mang = mang.filter((item)=> item.productId[0] == 'B') 
     }
     mangTam = mang.slice((currentPage - 1) * perPage, (currentPage - 1) * perPage + perPage);
     renderProduct(mangTam);
@@ -510,24 +535,25 @@ function renderPageNumber(mang) {
 function renderProduct(mang) {
     var s = "";
     for (var i = 0; i < mang.length; i++) {
-        var price = `Giá: ${mang[i].price} VNĐ`;
+        var price = `Giá: <b>${mang[i].price}</b> VNĐ`;
         s +=
             `<div class="item-group ">
             <input style="visibility: hidden" class="productID" value ="${mang[i].productId}"></input>
              <div class="bot-item1">
              
                         <div class="bot-item-details1">
-                             <img class="img" src="${mang[i].img}" onclick="chiTietSP(this);">
+                        <img class="img" src="${mang[i].img}" onclick="chiTietSP(this);">
                     <h4 class="name">${mang[i].name}</h4>
                   
                         </div>
                     </div>
                     <div class="bot-item">
                         <div class="bot-item-details">
-                            <p>Số lượng: <span class ="quantity">${mang[i].quantity}</span></p>
-                           <p class="">${price}</p>
+                        <p class="">${price}</p>
+                        <p>Số lượng còn hàng: <b><span class ="quantity">${mang[i].quantity}</span></p></b>
                         </div>
-                        <button onclick="addProduct(this);"><i class="fas fa-cart-arrow-down button-add-product"></i><br>Thêm sản phẩm vào giỏ hàng</button>
+                          <button class="button-details-product" onclick="showDetailProduct(this);"><i class="fas fa-eye "></i><br>Chi tiết sản phẩm </button>
+                        <button class=" button-add-product" onclick="addProduct(this);"><i class="fas fa-cart-arrow-down "></i><br>Thêm vào giỏ hàng</button>
                     </div>
                     
                 </div>
@@ -538,10 +564,10 @@ function renderProduct(mang) {
     {
         s = '<h3 style="margin:auto">Không có sản phẩm để hiển thị</h3>'
     }
-    if(mang.length == 0)
-    {
+    // if(mang.length == 0)
+    // {
         document.getElementById('main').style.margin = 0
-    }
+    // }
     document.getElementById("content").innerHTML = s;
 }
 
@@ -550,25 +576,36 @@ function renderProduct(mang) {
 function search() {
     var url = window.location.href;
     var id = url.split('#')[1];
+    
+    arr = JSON.parse(localStorage.getItem("sanPham"));
+// arr = arr.filter((item)=> item.productId[0] == id)
     if (id === "Nike") {
-        arr = JSON.parse(localStorage.getItem("nike"));
-    } else if (id === "Adidas") {
-        arr = JSON.parse(localStorage.getItem("adidas"));
-    } else if (id === "Jordan") {
-        arr = JSON.parse(localStorage.getItem("jordan"));
-    } else if (id === "Men") {
-        arr = JSON.parse(localStorage.getItem("men"));
-    } else {
-        arr = JSON.parse(localStorage.getItem("bitis"));
+        arr = arr.filter((item)=> item.productId[0] == 'N')
+    } 
+    if (id == "Adidas") {
+       arr = arr.filter((item)=> item.productId[0] == 'A')
+    } 
+    if (id == "Jordan") {
+        arr = arr.filter((item)=> item.productId[0] == 'J')
+
+    } 
+    if (id == "Men") {
+        arr = arr.filter((item)=> item.productId[0] == 'M')
+    } 
+    if (id == "Bitis") {
+        arr = arr.filter((item)=> item.productId[0] == 'B')
     }
     var valueSearchInput = document.getElementById("search").value;
     var search = arr.filter(function(value, index) {
         return value.name.toUpperCase().includes(valueSearchInput.toUpperCase());
     });
 
+    renderProduct(search);
+    
+    renderPageNumber(search);
 
     // Xử lý phân trang tìm kiếm  
-    hienThiSanPhamPhanTrang("search", search);
+    // hienThiSanPhamPhanTrang("search", search);
 }
 
 
@@ -633,23 +670,8 @@ function ThemGioHang(gioHang, check) {
 
 function getObjectFromId(id)
 {
-    var arr = []
-    if(id[0]== 'N')
-    {
-        arr = JSON.parse(localStorage.nike)
-    }
-     if(id[0]== 'A')
-    {
-        arr = JSON.parse(localStorage.adidas)
-    }
-     if(id[0]== 'J')
-    {
-        arr = JSON.parse(localStorage.jordan)
-    }
-     if(id[0]== 'B')
-    {
-        arr = JSON.parse(localStorage.bitis)
-    }
+    var arr = JSON.parse( localStorage.getItem('sanPham'))
+ 
     var o = arr.filter(function(item)
 {
     return item.productId == id;
@@ -662,7 +684,7 @@ function addProduct(button) {
     // kiểm tra đã đăng nhập chưa (thêm sản phẩm vào giỏ hàng cần phải đăngn nhập)
 
     // đã đăng nhập
-    if (document.getElementById("user").innerText != "") {
+    if (localStorage.getItem("userId") && localStorage.getItem("userId").innerText != "") {
         if (document.getElementById("showShopTable").innerText === "") {
             var stt = 0;
         } else {
@@ -971,3 +993,8 @@ function huyDonHang(button) {
     }
     localStorage.setItem("listDonHang", JSON.stringify(listDonHang));
 }
+
+
+
+
+hienThi({id:'FirstLoad'})

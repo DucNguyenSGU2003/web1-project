@@ -544,21 +544,19 @@ button {
     gap: 10px; /* khoảng cách đều giữa các item */
 }
 #content .item-group {
-    padding: 30px;
+    /* padding: 30px; */
     width: 19%;
-    border: 1px solid #ccc;
-    border-radius: 20px;
+    border: 2px solid #ccc;
+    border-end-end-radius: 30px;
+    border-top-left-radius: 30px;
 }
 #content .item-group img{
     width: 100%;
-    height:70%;
+    height:80%;
     margin-bottom: 10px;
     cursor: pointer;
 }
 
-.button-add-product{
-    color: white;
-}
 
 #content .item-group h4 {
     text-align:center;
@@ -590,7 +588,20 @@ button {
     padding: 10px;
     border-radius: 3px;
     cursor: pointer;
-      flex-basis: 100%;
+      flex-basis: 50%;
+}
+
+
+
+.button-add-product {
+    color: white;
+    border-bottom-right-radius:30px !important;
+
+}
+.button-details-product {
+    color: white;
+    border-start-start-radius:30px !important;
+    background-color: rgb(253, 174, 4) !important;
 }
 
 .item-group .bot-item name {
@@ -600,8 +611,10 @@ height: 20% ;
 
 .bot-item-details1
 {
-   height: 400px;
+   height: 500px;
 }
+
+
 
 .bot-item-details
 {
@@ -609,6 +622,9 @@ height: 20% ;
     flex-direction: column;
     flex-wrap: wrap;
     align-items: space-around;
+    font-size: 20px;
+    margin-bottom: 5px;
+    padding-left: 10px;
 }
 
 #container #sotrang {
