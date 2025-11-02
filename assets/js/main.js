@@ -25,8 +25,21 @@ function taikhoan(hoten,sdt,taikhoan,matkhau,gioHang=[],daMua=[]) {
 }
 
 
+function gioHang(productId,brand,img,name,price,size,so_luong,date0,date2) {
+    this.productId = productId;
+    this.brand = brand;
+    this.img = img;
+    this.name = name;
+    this.price=price;
+    this.size = size;
+    this.so_luong = so_luong;
+    this.date0 = date0;
+    this.date2 = date2;
+}
+
+
 var nike = [
-    new giay("N01","Nike","/assets/img/nike/1.webp","Court Vision Low Next Nature",1380000,0),
+    new giay("N01","Nike","/assets/img/nike/1.webp","Court Vision Low Next Nature",1380000,5),
     new giay("N01","Nike","/assets/img/nike/1.webp","Court Vision Low Next Nature",1380000,10,40),
     new giay("N01","Nike","/assets/img/nike/1.webp","Court Vision Low Next Nature",1380000,10,41),
     new giay("N01","Nike","/assets/img/nike/1.webp","Court Vision Low Next Nature",1380000,10,42),
