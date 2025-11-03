@@ -1444,12 +1444,12 @@ function showOrder(id,size) {
       </div>
 
       <div class="order-input-row">
-        <input type="text" placeholder="Địa chỉ" value='${infoAcc.diachi}'>
+        <input type="text" id="dia_chi" placeholder="Địa chỉ" value='${infoAcc.diachi}'>
       </div>
       
      
       <div class="order-payment-buttons">
-      <button class="order-button order-button-cod" onclick="ThanhToan('${obj.id}','${obj.size}')">Thanh toán khi nhận hàng</button>
+      <button class="order-button order-button-cod" onclick="ThanhToan('${obj.productId}','${obj.size}')">Thanh toán khi nhận hàng</button>
       <button class="order-button order-button-online">Thanh toán qua tài khoản</button>
     </div>
     </div>
@@ -1487,7 +1487,13 @@ function showOrder(id,size) {
 
 function ThanhToan(id,size)
 {
-    
+    var dia_chi =  document.getElementById('dia_chi').value;
+    if(!dia_chi && dia_chi == '')
+    {
+        showWarningToast('Vui lòng nhập địa chỉ giao hàng!');
+        return;
+    }
+    var obj = renderCartById(id,size);
 }
 
 hienThi({id:'FirstLoad'})
