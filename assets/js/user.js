@@ -1305,7 +1305,7 @@ function showCart() {
     cart.forEach((item)=>{
         renderList +=`
         <div class="cart-item">
-                <i class="fas fa-trash-alt cart-delete"></i>
+                <i class="fas fa-trash-alt cart-delete" onclick="deleteCart('${item.productId}','${item.size}')"></i>
                 <div class="cart-item-info">
                 <img
                     src="${item.img}"
@@ -1326,16 +1326,20 @@ function showCart() {
                 <input class="qty-input" disabled type="text" value="${item.so_luong}" min="1" />
                 <button class="qty-btn" onclick="changeQtyCart(1,'${item.productId}','${item.size}')">+</button>
                 </div>
-                <button class="cart-submit-btn">Mua</button>
+                <button class="cart-submit-btn" onclick="orderProduct('${item.productId}','${item.size}')">Mua</button>
              
             </div>
             `
     })
+    if(renderList == '')
+    {
+        renderList = `<div style="text-align: center;"><b>Chưa có sản phẩm</b></div>`
+    }
     var renderCart = `
      <div class="cart-container">
         <div class="cart-page">
             <h1 class="cart-title">Giỏ hàng của bạn</h1>
-            <a href="#" class="cart-continue">Tiếp tục mua sắm</a>
+            <a href="#" class="cart-continue" onclick="goBack()">Tiếp tục mua sắm</a>
 
             <div class="cart-header">
             <span class="cart-header-product">SẢN PHẨM</span>
@@ -1386,9 +1390,21 @@ changeQtyCartById(id,size,x)
 
 
 function deleteCart(id,size) {
-// changeQtyCartById(id,size,x)
-alert('ducnc')
-}
+var arr = renderCartFromAcc();
+var index  = arr.findIndex((item) => item.productId == id && item.size == size)
+arr.splice(index, 1)
+
+var Accs = JSON.parse(localStorage.getItem('listTaiKhoan'));
+
+Accs.forEach(item=>{
+    if(item.taikhoan == localStorage.getItem('userId'))
+    {
+        item.gioHang = arr;
+    }
+})
+localStorage.setItem('listTaiKhoan',JSON.stringify(Accs))
+showCart();
+ }
 
 
 hienThi({id:'FirstLoad'})
