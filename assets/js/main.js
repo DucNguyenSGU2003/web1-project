@@ -15,11 +15,12 @@ function giay(productId,brand,img,name,price,quantity ,size=39) {
 
 
 
-function taikhoan(hoten,sdt,taikhoan,matkhau,gioHang=[],daMua=[]) {
+function taikhoan(hoten,sdt,taikhoan,matkhau,diachi="Q10 TPHCM",gioHang=[],daMua=[]) {
     this.hoten = hoten;
     this.sdt = sdt;
     this.taikhoan = taikhoan;
     this.matkhau = matkhau;
+    this.diachi = diachi;
     this.gioHang=gioHang;
     this.daMua = daMua;
 }

@@ -1326,7 +1326,7 @@ function showCart() {
                 <input class="qty-input" disabled type="text" value="${item.so_luong}" min="1" />
                 <button class="qty-btn" onclick="changeQtyCart(1,'${item.productId}','${item.size}')">+</button>
                 </div>
-                <button class="cart-submit-btn" onclick="orderProduct('${item.productId}','${item.size}')">Mua</button>
+                <button class="cart-submit-btn" onclick="showOrder('${item.productId}','${item.size}')">Mua</button>
              
             </div>
             `
@@ -1388,8 +1388,15 @@ changeQtyCartById(id,size,x)
 }
 
 
+function renderInfoAcc()
+{
+    var accs = JSON.parse(localStorage.getItem('listTaiKhoan'))
+    var index = accs.findIndex(item=> item.taikhoan == localStorage.getItem('userId'));
+    return accs[index];
+}
 
 function deleteCart(id,size) {
+    
 var arr = renderCartFromAcc();
 var index  = arr.findIndex((item) => item.productId == id && item.size == size)
 arr.splice(index, 1)
@@ -1406,6 +1413,82 @@ localStorage.setItem('listTaiKhoan',JSON.stringify(Accs))
 showCart();
  }
 
+
+
+
+ function renderCartById(id,size)
+ {
+       var carts = renderCartFromAcc();
+        var index = carts.findIndex(item=>{
+            return item.productId == id && item.size == size
+        })
+
+        return carts[index];
+
+ }
+function showOrder(id,size) {
+    // kiểm tra đã đăng nhập chưa (muốn xem/thểm giỏ hàng thì cần phải đăng nhập)
+    // Nếu đã đăng nhập
+    var infoAcc = renderInfoAcc();
+    var obj = renderCartById(id,size);
+    var total=obj.so_luong*obj.price;
+    var r =`<div class="order-container">
+    <div class="order-left">
+      <h3>Đặt hàng</h3>
+      <div class="order-input-row">
+        <input type="text" disabled placeholder="Tên" value='${infoAcc.hoten}'>
+      </div>
+
+    <div class="order-input-row">
+        <input type="text"  disabled placeholder="Điện thoại" value='${infoAcc.sdt}'>
+      </div>
+
+      <div class="order-input-row">
+        <input type="text" placeholder="Địa chỉ" value='${infoAcc.diachi}'>
+      </div>
+      
+     
+      <div class="order-payment-buttons">
+      <button class="order-button order-button-cod" onclick="ThanhToan('${obj.id}','${obj.size}')">Thanh toán khi nhận hàng</button>
+      <button class="order-button order-button-online">Thanh toán qua tài khoản</button>
+    </div>
+    </div>
+
+    <div class="order-right">
+      <div class="order-product">
+        <img src="${obj.img}" alt="">
+        <div class="order-product-info">
+          <p class="order-product-name">${obj.name}</p>
+          <p class="order-product-size">Size: ${obj.size}</p>
+        </div>
+        <span class="order-product-price">Giá: ${obj.price} VNĐ</span>
+      </div>
+     
+
+      <div class="order-summary">
+        <div class="order-summary-item">
+          <span>Tổng số lượng · ${obj.so_luong} mặt hàng</span>
+        </div>
+       
+
+        <div class="order-total">
+          <span>Tổng thanh toán</span>
+          <span>${total} VNĐ</span>
+        </div>
+
+      </div>
+    </div>
+  </div>`;
+
+  document.getElementById('container').innerHTML = r;
+   
+   
+}
+
+function ThanhToan(id,size)
+{
+    
+}
 
 hienThi({id:'FirstLoad'})
 localStorage.setItem('page','FirstLoad')
