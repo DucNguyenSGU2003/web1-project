@@ -186,6 +186,7 @@ var taiKhoan;
         console.log(stt);
         document.getElementById("quantity").innerText = stt;
         document.getElementById("tongTien").innerText = `${tongtien}đ`;
+           changeQuantityGioHang();
     }
     // tài khoản chưa tồn tại
     else {
@@ -936,6 +937,7 @@ function addProductToCart(button) {
 
                     localStorage.setItem('listTaiKhoan',JSON.stringify(listTaiKhoan));
                     showSuccessToast('Bạn đã thêm sản phẩm vào giỏ hàng!');
+                    changeQuantityGioHang();
                     return;
                     
                 }
@@ -943,81 +945,14 @@ function addProductToCart(button) {
         }
 
 
-
-
-        
-        // var img =obj.img;
-        // var name =obj.name;
-        // var quantity = parseInt(obj.quantity);
-        // var price = parseFloat(obj.price);
-        // var thanhTien;
-        // Kiểm tra sản phẩm đã có trong giỏ hàng chưa 
-        // var check = false;
-
-        
-        // var allTen = document.getElementById("showShopTable").querySelectorAll(".cotTen");
-        // for (var ten of allTen) {
-        //     if (ten.innerText === name) { // nếu đã có ==> tăng số lượng, tăng thành tiền 
-        //         check = true;
-        //         var a = parseInt(ten.parentElement.querySelector(".soLuong").innerText);
-        //         // Kiểm tra số lượng của 1 sản phẩm trong giỏ hàng không được đặt quá số lượng của shop
-        //         if (a >= quantity) {
-        //             console.log("quá ");
-        //             return;
-        //         } else {
-        //             console.log("chưa quá");
-        //             ten.parentElement.querySelector(".soLuong").innerText = a + 1;
-        //             thanhTien = (a + 1) * price;
-        //             console.log("Thành Tiền", thanhTien);
-        //             ten.parentElement.querySelector(".thanhTien").innerText = thanhTien + "đ";
-        //         }
-        //         // -------------------------------------------------------------------------------------
-        //     }
-        // }
-
-
-        // nếu chưa ==> thêm vào giỏ hàng
-        // if (!check) {
-        //     // document.getElementById("quantity").innerText = stt + 1;
-        //     document.getElementById("showShopTable").innerHTML += `
-        //     <tr class="sanPham">
-        //         <td class="stt">${stt+1}</td>
-        //         <td><img class="hinh" src=${img}></td>
-        //         <td class="cotTen">${name}</td>
-        //         <td class="donGia">${price}đ</td>
-        //         <td class="soLuong">1</td>
-        //         <td class="thanhTien">${price}đ</td>
-        //         <td>
-        //             <button onclick="deleteProduct(this);">Delete</button>
-        //         </td>
-        //     </tr>`;
-        // }
-
-
-        // cập nhật lại tổng tiền các sản phẩm trong giỏ hàng
-        // var arr = document.getElementById("showShopTable").querySelectorAll(".thanhTien");
-        // var tongTien = 0;
-        // for (var tien of arr) {
-        //     tongTien += parseInt(tien.innerText);
-        // }
-        // document.getElementById("tongTien").innerText = `${tongTien}đ`;
-
-
-        // cập nhật lại giỏ hàng của khách trong localStorage
-        // var gioHang = {
-        //     img: img,
-        //     nameProduct: name,
-        //     price: price,
-        //     quantity: 1,
-        //     money: price,
-        // }
-        // ThemGioHang(gioHang, check);
     }
     // chưa đăng nhập ==> bắt đăng nhập
     else {
         showWarningToast('Vui lòng đăng nhập trước khi thêm giỏ hàng!')
         // showDangNhap();
     }
+
+  
 }
 
 
@@ -1500,3 +1435,10 @@ hienThi({id:'FirstLoad'})
 localStorage.setItem('page','FirstLoad')
 
 
+
+function changeQuantityGioHang()
+{
+    var arr = renderCartFromAcc();
+    document.querySelector('#shop #quantity').innerHTML =arr.length+'';
+
+}
