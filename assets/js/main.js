@@ -14,16 +14,19 @@ function giay(productId,brand,img,name,price,quantity ,size=39) {
 }
 
 
-function PhieuXuat(stt_rec,user_id,productId,size,name,price,quantity,total,status) {
+function PhieuXuat(stt_rec,userId,productId,size,name,price,quantity,total,status,img,date0 = new Date(),date2= new Date()) {
     this.stt_rec = stt_rec;
     this.productId = productId;
-    this.user_id = user_id;
+    this.userId = userId;
     this.size = size
     this.name = name;
     this.price = price;
     this.quantity = quantity;
     this.total = total;
-    this.status = status
+    this.status = status;
+    this.img = img;
+    this.date0 = date0;
+    this.date2 = date2;
 }
 
 
@@ -40,7 +43,7 @@ function taikhoan(hoten,sdt,taikhoan,matkhau,diachi="Q10 TPHCM",gioHang=[],daMua
 }
 
 
-function gioHang(productId,brand,img,name,price,size,so_luong,date0,date2) {
+function gioHang(productId,brand,img,name,price,size,so_luong,date0 = new Date(),date2= new Date()) {
     this.productId = productId;
     this.brand = brand;
     this.img = img;
@@ -147,6 +150,7 @@ var bitis = [
 
 var sanPham = [...nike,...adidas,...jordan,...men,...bitis]
 
+
 // var sanPham = [
 //     new giay("N01","Nike","/assets/img/nike/1.webp","Court Vision Low Next Nature",1380000,10),
 //     new giay("N02","Nike","/assets/img/nike/2.webp","Downshifter 12 - Đen/Trắng",1380000,10),
@@ -219,6 +223,12 @@ var sanPham = [...nike,...adidas,...jordan,...men,...bitis]
 //     new giay("B13","Bitis","/assets/img/bitis/13.webp","Giày Thể Thao Nam DSM075033XAM Xám",750000,10),
 //     new giay("B14","Bitis","/assets/img/bitis/14.webp","Giày Thể Thao Nam DSM075033TRG Trắng",750000,10),
 // ];
+var status1 = 
+    {"1":"Chờ xác nhận",
+    "2":"Đang lấy hàng",
+    "3": "Đang vận chuyển",
+    "4": "Hoàn thành",
+    "5":"Đã Hủy"}
 
 var listTaiKhoan  = [new taikhoan('Đức','123456575','duc','1')]
 //  tránh tạo đè ==> tạo 1 lần rồi thôi
@@ -231,5 +241,12 @@ localStorage.getItem("sanPham") ? 1 : localStorage.setItem("sanPham", JSON.strin
 localStorage.getItem("listTaiKhoan") ? 1 : localStorage.setItem("listTaiKhoan", JSON.stringify(listTaiKhoan));
 localStorage.getItem("stt_rec_px") ? 1 : localStorage.setItem("stt_rec_px", 10000000);
 localStorage.getItem("DonHang") ? 1 : localStorage.setItem("DonHang", '[]');
+localStorage.getItem("status") ? 1 : localStorage.setItem("status", JSON.stringify(status1));
 
 
+
+function xoaCache()
+{
+    localStorage.removeItem("sanPham")
+    localStorage.removeItem("DonHang")
+}

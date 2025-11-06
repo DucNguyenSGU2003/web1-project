@@ -186,7 +186,7 @@ var taiKhoan;
         console.log(stt);
         document.getElementById("quantity").innerText = stt;
         document.getElementById("tongTien").innerText = `${tongtien}đ`;
-           changeQuantityGioHang();
+        changeQuantityGioHang();
     }
     // tài khoản chưa tồn tại
     else {
@@ -1453,11 +1453,10 @@ function ThanhToan(id,size)
      sttPx +=1;
      localStorage.setItem('stt_rec_px',sttPx);
     var stt_rec = 'PX'+sttPx;
-    var total = parseFloat(cart.price) *parseFloat(cart.quantity);
-    var PXA = new PhieuXuat(stt_rec,localStorage.getItem('userId'),id,size,cart.name,cart.price,cart.so_luong,total,1);
+    var total = parseFloat(cart.price) *parseFloat(cart.so_luong);
+    var PXA = new PhieuXuat(stt_rec,localStorage.getItem('userId'),id,size,cart.name,cart.price,cart.so_luong,total,1,product.img);
     
     addOrder(PXA);
-    showSuccessToast('Bạn đã thanh toán thành công sản phẩm');
 }
 
 
@@ -1497,14 +1496,11 @@ listTaiKhoan.forEach((item)=>{
 })
 
 localStorage.setItem('listTaiKhoan',JSON.stringify(listTaiKhoan));
-    
 
-
+    showSuccessToast('Bạn đã thanh toán thành công sản phẩm');
+changeQuantityGioHang();
+showDonHang('*')
 }
-
-hienThi({id:'FirstLoad'})
-localStorage.setItem('page','FirstLoad')
-
 
 
 function changeQuantityGioHang()
@@ -1513,3 +1509,90 @@ function changeQuantityGioHang()
     document.querySelector('#shop #quantity').innerHTML =arr.length+'';
 
 }
+
+
+function getDonHangOfAcc()
+{
+    var list = JSON.parse(localStorage.getItem('DonHang'));
+    list  = list.filter(item=> item.userId == localStorage.userId)
+    return list;
+}
+
+function showDonHang(status)
+{
+var arr = getDonHangOfAcc();
+if( status != '*')
+    arr = arr.filter(item => item.status == status);
+var listDonHoang = ``
+var listStatus = JSON.parse(localStorage.status);
+
+arr.forEach(item=>{
+listDonHoang +=`
+ <div class="order-card">
+      <div class="order-header">
+        <div class="shop-info">
+        </div>
+        <div class="shop-actions">
+          <span class="shop-status">${item.status == '4'  ?"🚚 Giao hàng thành công · ":""}<span style="color:#ff5722;">${listStatus[item.status+'']}</span></span>
+        </div>
+      </div>
+      <div class="product-list">
+        <div class="product-item">
+          <div class="product-img">
+            <img src="${item.img}" alt="${item.name}">
+          </div>
+          <div class="product-info">
+            <div class="product-title">${item.name}</div>
+            <div class="product-meta">Size: ${item.size} <span class="product-qty">x${item.quantity}</span></div>
+          </div>
+          <div class="product-price">
+            <span class="price-now">${item.price} VNĐ</span>
+          </div>
+        </div>
+      </div>
+      <div class="order-footer">
+        <div class="order-total">Thành tiền: <strong>${item.total} VNĐ</strong></div>
+        <div class="footer-actions">
+        ${item.status != '5'  ?`<button class="btn-back" onclick="HuyDonHang('${item.userId}','${item.productId}','${item.size}','${status}')">Hủy đơn hàng</button>`:""}
+          
+        </div>
+      </div>
+    </div>
+
+`;
+
+
+})
+var r = `
+  <div class="orders-container">
+    <div class="tabs">
+      <div class="tab ${status == "*" ? "active" :"" }" onclick="showDonHang('*')">Tất cả</div>
+      <div class="tab ${status == "1" ? "active" :"" }" onclick="showDonHang('1')">Chờ xác nhận</div>
+      <div class="tab ${status == "2" ? "active" :"" }" onclick="showDonHang('2')">Đang lấy hàng</div>
+      <div class="tab ${status == "3" ? "active" :"" }" onclick="showDonHang('3')">Đang vận chuyển</div>
+      <div class="tab ${status == "4" ? "active" :"" }" onclick="showDonHang('4')">Hoàn thành</div>
+      <div class="tab ${status == "5" ? "active" :"" }" onclick="showDonHang('5')" >Đã hủy</div>
+    </div>
+
+    ${listDonHoang != '' ? listDonHoang :'<h3 style="text-align:center;">Chưa có Đơn hàng</h3>' }
+  </div>
+`;
+document.getElementById("container").innerHTML = r ;
+
+}
+
+function HuyDonHang(user,id,size,status)
+{
+    var arr = getDonHangOfAcc();
+    var index = arr.findIndex(item => item.userId == user && item.productId == id && item.size == size)
+    if(index >=0 )
+        arr[index].status = '5';
+    localStorage.setItem('DonHang',JSON.stringify(arr));
+    showDonHang(status);
+
+}
+
+hienThi({id:'FirstLoad'})
+localStorage.setItem('page','FirstLoad')
+
+

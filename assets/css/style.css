@@ -1337,7 +1337,6 @@ tbody #themSp {
 
 
    .product-page {
-  font-family: Arial, sans-serif;
   background-color: #fff;
   color: #111;
   padding: 40px 80px;
@@ -1891,3 +1890,187 @@ tbody #themSp {
 .order-button-online:hover {
   background-color: #2179b5; 
 }
+
+
+/* css của đơn hanngf */
+ .orders-container {
+      max-width: 1024px;
+      margin: 24px auto;
+      padding: 12px;
+      font-family: "Segoe UI", Arial, sans-serif;
+      box-sizing: border-box;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 16px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 10px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .tab {
+      padding: 8px 12px;
+      color: #888;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 6px 6px 0 0;
+    }
+    .tab.active {
+      color: #ff5722;
+      border-bottom: 2px solid #ff5722;
+      font-weight: 600;
+    }
+
+    .order-card {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      background: #fff;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
+    .order-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      flex-wrap: wrap;
+    }
+    .shop-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .badge {
+      background: #e7f8f0;
+      color: #1aa37a;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .shop-name {
+      font-weight: 600;
+      font-size: 15px;
+    }
+    .shop-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .shop-actions button {
+      padding: 6px 8px;
+      font-size: 13px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .shop-status {
+      color: #1aa37a;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .product-list {
+      padding: 10px 16px;
+      border-bottom: 1px solid #f2f2f2;
+    }
+    .product-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid #fafafa;
+      
+    }
+    .product-item:last-child {
+      border-bottom: none;
+    }
+    .product-img {
+      width: 70px;
+      height: 70px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #fafafa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .product-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .product-info {
+      flex: 1;
+    }
+    .product-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #222;
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+    .product-meta {
+      font-size: 13px;
+      color: #777;
+    }
+    .product-qty {
+      margin-left: 6px;
+    }
+    .product-price {
+      text-align: right;
+      width: 140px;
+      flex-shrink: 0;
+    margin-left: auto;
+    }
+    .price-old {
+      text-decoration: line-through;
+      color: #999;
+      font-size: 13px;
+      display: block;
+    }
+    .price-now {
+      color: #ff5722;
+      font-weight: 600;
+      font-size: 15px;
+      margin-right: 10px;
+    }
+
+    .order-footer {
+      padding: 12px 16px;
+      background: #fbfbfb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      border-top: 1px solid #eee;
+    }
+    .order-total {
+      font-size: 15px;
+    }
+    .order-total strong {
+      color: #ff5722;
+    }
+    .footer-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      border: none;
+      font-weight: 600;
+    }
+    .btn-primary {
+      background: #ff5722;
+      color: #fff;
+    }
+    .btn-ghost {
+      background: #fff;
+      border: 1px solid #ccc;
+    }
