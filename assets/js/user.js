@@ -1367,7 +1367,11 @@ function showOrder(id,size) {
     var infoAcc = renderInfoAcc();
     var obj = renderCartById(id,size);
     var total=obj.so_luong*obj.price;
-    var r =`<div class="order-container">
+    var r =`
+                <button class="btn-back" onclick="showCart()">← Quay lại</button>
+
+    <div class="order-container">
+
     <div class="order-left">
       <h3>Đặt hàng</h3>
       <div class="order-input-row">
@@ -1420,6 +1424,14 @@ function showOrder(id,size) {
    
 }
 
+
+function getProductFromList(id,size)
+{
+    var arr = JSON.parse(localStorage.sanPham)
+    var obj = arr.filter(item => item.productId== id && item.size == size)
+    return obj[0];
+
+}
 function ThanhToan(id,size)
 {
     var dia_chi =  document.getElementById('dia_chi').value;
@@ -1428,7 +1440,66 @@ function ThanhToan(id,size)
         showWarningToast('Vui lòng nhập địa chỉ giao hàng!');
         return;
     }
-    var obj = renderCartById(id,size);
+    
+    var cart = renderCartById(id,size);
+    var  product  = getProductFromList(id,size);
+    if(product.quantity < cart.so_luong)
+    {
+        showErrorToast(`Vượt quá số lượng tồn của sản phẩm [ tồn: ${product.quantity} sản phẩm. ] `)
+        return;
+
+    }
+    var sttPx = parseInt(localStorage.stt_rec_px);
+     sttPx +=1;
+     localStorage.setItem('stt_rec_px',sttPx);
+    var stt_rec = 'PX'+sttPx;
+    var total = parseFloat(cart.price) *parseFloat(cart.quantity);
+    var PXA = new PhieuXuat(stt_rec,localStorage.getItem('userId'),id,size,cart.name,cart.price,cart.so_luong,total,1);
+    
+    addOrder(PXA);
+    showSuccessToast('Bạn đã thanh toán thành công sản phẩm');
+}
+
+
+function addOrder(obj)
+{
+    var list = JSON.parse(localStorage.DonHang)
+    list.push(obj);
+    localStorage.setItem('DonHang',JSON.stringify(list));
+    
+    // trừ tồn
+    var listSP = JSON.parse(localStorage.sanPham);
+    listSP.forEach((item)=>{
+
+        if(item.productId == obj.productId && item.size == obj.size )
+        {
+            item.quantity = parseFloat(item.quantity ) - (obj.quantity); 
+        }
+    })
+    localStorage.setItem('sanPham',JSON.stringify(listSP));
+
+    // xóa giỏ hàng
+
+    var arrCart = renderCartFromAcc();
+
+    index  = arrCart.findIndex((item)=> {
+        return item.productId == obj.productId && item.size == obj.size; 
+    })
+
+    arrCart.splice(index,1);
+
+    var listTaiKhoan = JSON.parse(localStorage.listTaiKhoan)
+listTaiKhoan.forEach((item)=>{
+    if(item.taikhoan == localStorage.userId)
+    {
+        item.gioHang = arrCart;
+    }
+})
+
+localStorage.setItem('listTaiKhoan',JSON.stringify(listTaiKhoan));
+    
+
+
 }
 
 hienThi({id:'FirstLoad'})

@@ -14,6 +14,20 @@ function giay(productId,brand,img,name,price,quantity ,size=39) {
 }
 
 
+function PhieuXuat(stt_rec,user_id,productId,size,name,price,quantity,total,status) {
+    this.stt_rec = stt_rec;
+    this.productId = productId;
+    this.user_id = user_id;
+    this.size = size
+    this.name = name;
+    this.price = price;
+    this.quantity = quantity;
+    this.total = total;
+    this.status = status
+}
+
+
+
 
 function taikhoan(hoten,sdt,taikhoan,matkhau,diachi="Q10 TPHCM",gioHang=[],daMua=[]) {
     this.hoten = hoten;
@@ -215,4 +229,7 @@ var listTaiKhoan  = [new taikhoan('Đức','123456575','duc','1')]
 // localStorage.getItem("bitis") ? 1 : localStorage.setItem("bitis", JSON.stringify(bitis));
 localStorage.getItem("sanPham") ? 1 : localStorage.setItem("sanPham", JSON.stringify(sanPham));
 localStorage.getItem("listTaiKhoan") ? 1 : localStorage.setItem("listTaiKhoan", JSON.stringify(listTaiKhoan));
+localStorage.getItem("stt_rec_px") ? 1 : localStorage.setItem("stt_rec_px", 10000000);
+localStorage.getItem("DonHang") ? 1 : localStorage.setItem("DonHang", '[]');
+
 
