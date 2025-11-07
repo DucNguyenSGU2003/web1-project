@@ -352,3 +352,54 @@ font-size: 17px;
   transition: all 0.3s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
+
+.sanpham-title {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+  background: #f8f9fa;
+  padding: 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sanpham-title h2 {
+  margin: 0;
+  color: #333;
+}
+
+.sanpham-title div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sanpham-title label {
+  font-weight: 600;
+  color: #555;
+  margin-right: 4px;
+}
+
+.sanpham-title input[type="text"] {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  outline: none;
+}
+
+.sanpham-title input[type="number"] {
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 14px;
+  outline: none;
+}
+
+
+.sanpham-title input[type="number"]:focus {
+  border-color: #ffd54f;
+  box-shadow: 0 0 4px rgba(255, 213, 79, 0.6);
+}
