@@ -11,7 +11,7 @@ function hienThiTrangAdmin(obj) {
             break;
         }
         case "quanlysanpham": {
-            quanlysanpam();
+            quanlysanpham();
             break;
         }
         case "quanlydonhang": {
@@ -1052,3 +1052,115 @@ function duyetHetDonHang() {
 
 
  showSuccessToast('Đăng nhập thành công!') 
+
+function quanlysanpham() {
+  var s = `
+  <div class="sanpham-container">
+    <div class="sanpham-title">
+    <h2>Quản Lý Sản Phẩm</h2>
+    <button class="btn-reset">Thêm mới </button>
+    </div>
+    
+    <table class="sanpham-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Sản phẩm</th>
+          <th>Size</th>
+          <th>Giá nhập</th>
+          <th>Giá bán</th>
+          <th>Trạng thái</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="sanpham-table-body"></tbody>
+    </table>
+  </div>`;
+
+  document.getElementById("container").innerHTML = s;
+
+  var listSanPham = renderArrSP();
+
+  var rows = "";
+  for (var i = 0; i < listSanPham.length; i++) {
+    var d = listSanPham[i];
+
+
+
+    var statusText = d.status == "1" ? "checked" : "" ;
+
+    var size = ``;
+var arrSize = getSizeBySP(d.productId);
+  for (var s = 0; s < arrSize.length; s++) {
+     var c='';
+    if(arrSize[s].status == '1')
+         c = '#51a105' 
+    else  c= 'red'
+    size += `<input type="button" class="btn-size" style="background:${c}; color:white" value="${arrSize[s].size}"/>
+       `
+}
+
+    rows += `
+      <tr>
+       <td class="sanpham-name">${d.productId}</td>
+        <td class="user-cell">
+          <img src="${d.img}" class="user-avatar" alt="${d.name}">
+          <div class="user-info">
+            <div class="user-name">${d.name}</div>
+          </div>
+        </td>
+        <td class="sanpham-size">${size}</td>
+        <td class="team-cell">
+          <div class="team-avatars">
+            ${d.price_nhap}
+          </div>
+        </td>
+        <td class="status-cell">
+          ${d.price}
+        </td>
+        <td class="budget-cell"> <span class="status-badge"><input type="checkbox" ${statusText} onchange=""></span></td>
+        <td class="budget-cell">
+        <input type="button" class="btn-add" value="Thêm biến thể" />
+        <input type="button" class="btn-edit" value="Sửa"/>
+        </td>
+      </tr>`;
+  }
+
+
+  function getSizeBySP(id)
+  {
+        var sanPham = JSON.parse(localStorage.sanPham);
+
+    var size = ``;
+    
+    var arrSize = sanPham.filter(item => item.productId == id && item.productId == id);
+   var size = arrSize.map(item => ({
+    size: item.size,
+    status: item.status
+}));
+    return size;
+  }
+  
+function renderArrSP()
+{
+  var arr1  = JSON.parse(localStorage.getItem('sanPham'));
+    var list_sp  = []
+    var l = arr1.length;
+    for(var  i = 0 ; i< l ; i++)
+    {
+        var index =  list_sp.findIndex((item)=>{
+                return item.productId == arr1[i].productId
+        })
+        if(index >= 0 )
+        {
+            list_sp[index].quantity += parseFloat(arr1[i].quantity);
+        }else
+        {
+            list_sp.push(arr1[i]);
+        }
+            
+    }
+    return list_sp;
+}
+  document.getElementById("sanpham-table-body").innerHTML = rows;
+}

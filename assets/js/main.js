@@ -2,7 +2,7 @@
 localStorage.removeItem("userId")
 
 
-function giay(productId,brand,img,name,price,quantity ,size=39) {
+function giay(productId,brand,img,name,price,quantity ,size=39,price_nhap=0,status = 1 )  {
     this.productId = productId;
     this.brand = brand;
     this.img = img;
@@ -10,6 +10,8 @@ function giay(productId,brand,img,name,price,quantity ,size=39) {
     this.price = price;
     this.quantity = quantity;
     this.size = size
+    this.price_nhap=price_nhap;
+    this.status=status;
     
 }
 
