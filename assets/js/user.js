@@ -87,7 +87,7 @@ function dangNhap() {
     var listTaiKhoan = localStorage.getItem("listTaiKhoan") ? JSON.parse(localStorage.getItem("listTaiKhoan")) : [];
     var check = false;
     for (let index = 0; index < listTaiKhoan.length; index++) {
-        if (listTaiKhoan[index].taikhoan === taikhoan && listTaiKhoan[index].matkhau === matkhau) {
+        if (listTaiKhoan[index].taikhoan === taikhoan && listTaiKhoan[index].matkhau === matkhau && listTaiKhoan[index].status=='1' && listTaiKhoan[index].role == '1') {
             check = true;
             name = listTaiKhoan[index].hoten;
             break;
@@ -176,9 +176,9 @@ var taiKhoan;
     }
 
     // tài khoản đặc biệt (admin) ==> dẫn tới trang admin
-    if (taikhoan === adminTk && matkhau === adminMk) {
-        window.location.href = "http://127.0.0.1:5500/admin.html";
-    }
+    // if (taikhoan === adminTk && matkhau === adminMk) {
+    //     window.location.href = "http://127.0.0.1:5500/admin.html";
+    // }
 }
 
 
@@ -680,7 +680,7 @@ function renderProduct(mang) {
 
 
 function search() {
-    var url = window.location.href;
+    // var url = window.location.href;
     var id = localStorage.getItem('page');
     
     arr = renderArrSP();

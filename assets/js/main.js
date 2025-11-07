@@ -32,7 +32,7 @@ function PhieuXuat(stt_rec,userId,productId,size,name,price,quantity,total,statu
 
 
 
-function taiKhoan(hoten,sdt,taikhoan,matkhau,diachi="Q10 TPHCM",gioHang=[],daMua=[]) {
+function taiKhoan(hoten,sdt,taikhoan,matkhau,diachi="Q10 TPHCM",gioHang=[],daMua=[],status='1',role='1') {
     this.hoten = hoten;
     this.sdt = sdt;
     this.taikhoan = taikhoan;
@@ -40,6 +40,9 @@ function taiKhoan(hoten,sdt,taikhoan,matkhau,diachi="Q10 TPHCM",gioHang=[],daMua
     this.diachi = diachi;
     this.gioHang=gioHang;
     this.daMua = daMua;
+    this.status = status;
+    this.role = role;
+
 }
 
 
@@ -230,7 +233,9 @@ var status1 =
     "4": "Hoàn thành",
     "5":"Đã Hủy"}
 
-var listTaiKhoan  = [new taiKhoan('Đức','123456575','duc','1')]
+var listTaiKhoan  = [new taiKhoan('Đức','123456575','duc','1'),
+    new taiKhoan('Admin','#','admin','1','#',[],[],'1','2')
+]
 //  tránh tạo đè ==> tạo 1 lần rồi thôi
 // localStorage.getItem("nike") ? 1 : localStorage.setItem("nike", JSON.stringify(nike));
 // localStorage.getItem("adidas") ? 1 : localStorage.setItem("adidas", JSON.stringify(adidas));
@@ -240,6 +245,8 @@ var listTaiKhoan  = [new taiKhoan('Đức','123456575','duc','1')]
 localStorage.getItem("sanPham") ? 1 : localStorage.setItem("sanPham", JSON.stringify(sanPham));
 localStorage.getItem("listTaiKhoan") ? 1 : localStorage.setItem("listTaiKhoan", JSON.stringify(listTaiKhoan));
 localStorage.getItem("stt_rec_px") ? 1 : localStorage.setItem("stt_rec_px", 10000000);
+localStorage.getItem("resetmk") ? 1 : localStorage.setItem("resetmk", 10000000);
+
 localStorage.getItem("DonHang") ? 1 : localStorage.setItem("DonHang", '[]');
 localStorage.getItem("status") ? 1 : localStorage.setItem("status", JSON.stringify(status1));
 
@@ -250,3 +257,75 @@ function xoaCache()
     localStorage.removeItem("sanPham")
     localStorage.removeItem("DonHang")
 }
+
+
+
+// const headers = [
+//   "Blog Title",
+//   "Post Views",
+//   "Subscriber",
+//   "Likes",
+//   "Comments",
+//   "Status",
+//   "Action"
+// ];
+
+// const data = [
+//   {
+//     title: "Monetization Tips for Blogs",
+//     date: "Feb 2, 2025",
+//     author: "John Doe",
+//     views: "1,345",
+//     subs: 21,
+//     likes: 32,
+//     comments: 120,
+//     status: "Published"
+//   },
+//   {
+//     title: "Email Marketing for Bloggers",
+//     date: "Feb 2, 2025",
+//     author: "John Doe",
+//     views: "2,345",
+//     subs: 21,
+//     likes: 42,
+//     comments: 314,
+//     status: "Published"
+//   }
+// ];
+
+// // Hàm render bảng
+// function renderTable(headers, data) {
+//   const container = document.getElementById("container");
+
+//   let html = `<table class="blog-table"><thead><tr>`;
+//   headers.forEach(h => html += `<th>${h}</th>`);
+//   html += `</tr></thead><tbody>`;
+
+//   data.forEach(item => {
+//     html += `
+//       <tr>
+//         <td>
+//           <div class="blog-info">
+//             <img src="https://picsum.photos/60" alt="img" />
+//             <div class="blog-text">
+//               <div class="blog-title">${item.title}</div>
+//               <div class="blog-meta">${item.date} • ${item.author}</div>
+//             </div>
+//           </div>
+//         </td>
+//         <td>${item.views}</td>
+//         <td>${item.subs}</td>
+//         <td>${item.likes}</td>
+//         <td>${item.comments}</td>
+//         <td><span class="status published">${item.status}</span></td>
+//         <td><span class="dot-menu">⋮</span></td>
+//       </tr>
+//     `;
+//   });
+
+//   html += `</tbody></table>`;
+//   container.innerHTML = html;
+// }
+
+// renderTable(headers, data);
+

@@ -1,5 +1,6 @@
 
 function hienThiTrangAdmin(obj) {
+    localStorage.setItem('page',obj.id);
     switch (obj.id) {
         case "trangchu": {
             trangChuUser();
@@ -25,55 +26,102 @@ function hienThiTrangAdmin(obj) {
     }
 }
 
-
-
-
-function trangChuUser() {
-window.location.href = "http://127.0.0.1:5500/user.html";
-document.getElementById("sign-in").outerHTML = `
-<div id="sign-in" onclick="dangXuat();">
-<i class="fas fa-sign-in-alt"></i>
-<a href="#">Đăng Xuất</a>
-</div>`
-document.getElementById("user").innerHTML = `<i class="fas fa-cog"></i><a href="#">Admin</a>`
+function getAccUser()
+{
+ var listTaiKhoan = JSON.parse(localStorage.getItem("listTaiKhoan")) || [];
+  listTaiKhoan = listTaiKhoan.filter(item => item.role == '1')
+  return listTaiKhoan;
 }
-
 function quanlyuser() {
-var s = `            
-<table id="quanlyuser">
-    <thead>
-        <th>STT</th>
-        <th>Họ Tên</th>
-        <th>Số điện thoại</th>
-        <th>Tài Khoản</th>
-        <th>Mật Khẩu</th>
-    </thead>
-    <tbody id="table-body">
-        
-    </tbody>
-    <tfoot>
-        <tr id="tongTaiKhoan">
-            
+  var s = `
+  <div class="user-container">
+    <h2 class="user-title">Quản Lý Người Dùng</h2>
+
+  
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Họ Tên</th>
+          <th>Số Điện Thoại</th>
+          <th>Tài Khoản</th>
+          <th>Mật Khẩu</th>
+          <th>Sử dụng</th>
+              <th></th>
         </tr>
-    </tfoot>
-</table>`;
-document.getElementById("container").innerHTML = s;
-var listTaiKhoan = JSON.parse(localStorage.getItem("listTaiKhoan"));
-var s = "";
-for (var i = 0; i < listTaiKhoan.length; i++) {
-    s += `
-    <tr>
-        <td>${i+1}</td>
+      </thead>
+      <tbody id="table-body"></tbody>
+     
+    </table>
+  </div>`;
+  
+  document.getElementById("container").innerHTML = s;
+
+  var listTaiKhoan = getAccUser();
+  var rows = "";
+  for (var i = 0; i < listTaiKhoan.length; i++) {
+    rows += `
+      <tr id="user-row-${i}">
+        <td>${i + 1}</td>
         <td>${listTaiKhoan[i].hoten}</td>
         <td>${listTaiKhoan[i].sdt}</td>
         <td>${listTaiKhoan[i].taikhoan}</td>
         <td>${listTaiKhoan[i].matkhau}</td>
-    </tr>`
-}
-document.getElementById("table-body").innerHTML = s;
-document.getElementById("tongTaiKhoan").innerHTML = `<th colspan="5"><spanp>Tổng Tài Khoản: </spanp>${listTaiKhoan.length}</th>`
+        <td><input type="checkbox" onchange="anUser('${listTaiKhoan[i].taikhoan}',this)"></td>
+        <td><button class="btn-reset" onclick="resetMatKhauTK('${listTaiKhoan[i].taikhoan}')">Reset mật khẩu</button></td>
+        </tr>`;
+  }
+
+  document.getElementById("table-body").innerHTML = rows;
+
+  document.getElementById("tongTaiKhoan").innerHTML = `
+    <th colspan="6" class="user-total">
+    </th>`;
 }
 
+function anUser(tk,checkbox)
+{ 
+    var list = getAccUser();
+    var index  = list.findIndex(item => item.taikhoan == tk)
+    if(index >= 0)
+    {
+        if(checkbox.checked)
+        list[index].status = '1';
+            else
+        list[index].status = '0';
+
+            localStorage.setItem('listTaiKhoan',JSON.stringify(list))
+        showSuccessToast('Thay đổi trạng thái tài khoản thành công!')
+    }
+}
+
+function resetMatKhauTK(us)
+{
+    var list = getAccUser();
+    var index  = list.findIndex(item => item.taikhoan == us)
+     if(index >= 0)
+    {
+        var resetmk = parseInt(localStorage.getItem('resetmk')) + 1;
+        
+        list[index].matkhau = 'thankyou'+resetmk;
+        localStorage.setItem('resetmk',resetmk)
+        localStorage.setItem('listTaiKhoan',JSON.stringify(list))
+        var r =  `
+        <div style="text-align:center">
+        <h3>Mật khẩu của tài khoản ${list[index].taikhoan} là: ${resetmk} </h3>
+                    <button class="btn-reset"onclick="goBack('quanlyuser')">OK</button> 
+            </div>       
+            `;
+           document.getElementsByClassName("user-container")[0].innerHTML = r
+        showSuccessToast('Thay đổi trạng thái tài khoản thành công!')
+    }
+
+
+}
+function goBack(id)
+{
+    hienThiTrangAdmin({id: id})
+}
 
 function quanlysanpam() {
 var s = `
@@ -1000,3 +1048,7 @@ function duyetHetDonHang() {
     }
     localStorage.setItem("listDonHang",JSON.stringify(listDonHang));
 }
+
+
+
+ showSuccessToast('Đăng nhập thành công!') 
