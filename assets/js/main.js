@@ -32,7 +32,7 @@ function PhieuXuat(stt_rec,userId,productId,size,name,price,quantity,total,statu
 
 
 
-function taikhoan(hoten,sdt,taikhoan,matkhau,diachi="Q10 TPHCM",gioHang=[],daMua=[]) {
+function taiKhoan(hoten,sdt,taikhoan,matkhau,diachi="Q10 TPHCM",gioHang=[],daMua=[]) {
     this.hoten = hoten;
     this.sdt = sdt;
     this.taikhoan = taikhoan;
@@ -230,7 +230,7 @@ var status1 =
     "4": "Hoàn thành",
     "5":"Đã Hủy"}
 
-var listTaiKhoan  = [new taikhoan('Đức','123456575','duc','1')]
+var listTaiKhoan  = [new taiKhoan('Đức','123456575','duc','1')]
 //  tránh tạo đè ==> tạo 1 lần rồi thôi
 // localStorage.getItem("nike") ? 1 : localStorage.setItem("nike", JSON.stringify(nike));
 // localStorage.getItem("adidas") ? 1 : localStorage.setItem("adidas", JSON.stringify(adidas));

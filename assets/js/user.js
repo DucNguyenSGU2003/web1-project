@@ -25,16 +25,14 @@ function dangKy() {
     var sdt = document.getElementById("sdt");
     var taikhoan = document.getElementById("taikhoan");
     var matkhau = document.getElementById("matkhau");
+     var diachi = document.getElementById("diachi");
 
     var listTaiKhoan = localStorage.getItem("listTaiKhoan") ? JSON.parse(localStorage.getItem("listTaiKhoan")) : [];
-    var listGioHang = localStorage.getItem("listGioHang") ? JSON.parse(localStorage.getItem("listGioHang")) : [];
-    var listDonHang = localStorage.getItem("listDonHang") ? JSON.parse(localStorage.getItem("listDonHang")) : [];
 
     // kiểm tra trùng thông tin đăng ký
     var tonTai = false;
     if (listTaiKhoan != []) {
         for (var i = 0; i < listTaiKhoan.length; i++) {
-            console.log(listTaiKhoan[i]);
             if (listTaiKhoan[i].hoten === hoten.value) {
                 tonTai = true;
                 hoten.parentElement.querySelector(".error-message").innerText = "Họ tên này đã tồn tại";
@@ -64,35 +62,18 @@ function dangKy() {
     }
     // nếu không bị trùng thông tin đăng ký
     if (tonTai == false) {
-        listTaiKhoan.push({
-            hoten: hoten.value,
-            sdt: sdt.value,
-            taikhoan: taikhoan.value,
-            matkhau: matkhau.value,
-        })
+        var  a = new taikhoan(
+             hoten.value,
+             sdt.value,
+            taikhoan.value,
+             matkhau.value,
+             diachi.value
+        )
+        listTaiKhoan.push(a)
         localStorage.setItem("listTaiKhoan", JSON.stringify(listTaiKhoan));
         showSuccessToast("Đăng Ký thành công!");
 
-        // khi tạo tài khoản ==> tạo luôn kho lưu trữ giỏ hàng cho khách
-        listGioHang.push({
-            name: hoten.value,
-            sdt: sdt.value,
-            taikhoan: taikhoan.value,
-            matkhau: matkhau.value,
-            giohang: [],
-        })
-        localStorage.setItem("listGioHang", JSON.stringify(listGioHang));
-
-
-        listDonHang.push({
-            name: hoten.value,
-            sdt: sdt.value,
-            taikhoan: taikhoan.value,
-            matkhau: matkhau.value,
-            donhang: [],
-        })
-        localStorage.setItem("listDonHang", JSON.stringify(listDonHang));
-
+        
 
 
     }
@@ -203,15 +184,6 @@ var taiKhoan;
 
 var click = false;
 
-function showInfo() {
-    if (!click) {
-        document.getElementById("infomation").style.display = "block";
-        click = true;
-    } else {
-        document.getElementById("infomation").style.display = "none";
-        click = false;
-    }
-}
 
 
 function dangXuat() {
@@ -232,7 +204,7 @@ function dangXuat() {
     document.getElementById("order").style.display = "none";
      document.getElementById("register").style.display = "block";
      localStorage.removeItem('userId')
-
+     showSuccessToast('Bạn đã đăng xuất thành công!');
 
 }
 
@@ -248,6 +220,12 @@ function showDangKy() {
 
 function hideDangKy() {
     registerModal.classList.remove("open");
+
+        document.getElementById("hoten").value = '';
+    document.getElementById("sdt").value = '';
+    document.getElementById("taikhoan").value = '';
+    document.getElementById("matkhau").value = '';
+     document.getElementById("diachi").value = '';
 }
 
 registermModalContainer.addEventListener('click', function(event) {
@@ -264,6 +242,8 @@ function showDangNhap() {
 
 function hideDangNhap() {
     modal.classList.remove("open");
+     document.getElementById("tk").value = '';
+   document.getElementById("mk").value= '';
 }
 
 modalContainer.addEventListener('click', function(event) {
@@ -938,6 +918,7 @@ function addProductToCart(button) {
                     localStorage.setItem('listTaiKhoan',JSON.stringify(listTaiKhoan));
                     showSuccessToast('Bạn đã thêm sản phẩm vào giỏ hàng!');
                     changeQuantityGioHang();
+                    showCart()
                     return;
                     
                 }
@@ -1192,7 +1173,7 @@ function renderCartFromAcc()
     {
         return item.taikhoan == localStorage.getItem('userId');
     })[0];
-    return taikhoan.gioHang;
+    return taikhoan.gioHang || [];
 }
 
 
@@ -1346,6 +1327,7 @@ Accs.forEach(item=>{
 })
 localStorage.setItem('listTaiKhoan',JSON.stringify(Accs))
 showCart();
+changeQuantityGioHang();
  }
 
 
@@ -1389,7 +1371,7 @@ function showOrder(id,size) {
      
       <div class="order-payment-buttons">
       <button class="order-button order-button-cod" onclick="ThanhToan('${obj.productId}','${obj.size}')">Thanh toán khi nhận hàng</button>
-      <button class="order-button order-button-online">Thanh toán qua tài khoản</button>
+      <button class="order-button order-button-online" onclick="hienQR()">Thanh toán qua tài khoản</button>
     </div>
     </div>
 
@@ -1416,6 +1398,26 @@ function showOrder(id,size) {
         </div>
 
       </div>
+        
+
+      <div style="display:none" class="QRpanel" >
+    <div  class="QR">
+         <img src="/assets/img/QR.jpg" alt="">
+
+    </div>
+    <div  class="QRbutton">
+        <button class="order-button order-button-cod" onclick="ThanhToan('${obj.productId}','${obj.size}')">Thanh toán</button>
+
+    </div>
+
+      </div>
+
+
+
+
+
+
+      
     </div>
   </div>`;
 
@@ -1531,6 +1533,7 @@ listDonHoang +=`
  <div class="order-card">
       <div class="order-header">
         <div class="shop-info">
+        Mã đơn hàng: ${item.stt_rec}
         </div>
         <div class="shop-actions">
           <span class="shop-status">${item.status == '4'  ?"🚚 Giao hàng thành công · ":""}<span style="color:#ff5722;">${listStatus[item.status+'']}</span></span>
@@ -1553,7 +1556,7 @@ listDonHoang +=`
       <div class="order-footer">
         <div class="order-total">Thành tiền: <strong>${item.total} VNĐ</strong></div>
         <div class="footer-actions">
-        ${item.status != '5'  ?`<button class="btn-back" onclick="HuyDonHang('${item.userId}','${item.productId}','${item.size}','${status}')">Hủy đơn hàng</button>`:""}
+        ${item.status != '5'  ?`<button class="btn-back" onclick="HuyDonHang('${item.stt_rec}','${item.userId}','${item.productId}','${item.size}','${status}')">Hủy đơn hàng</button>`:""}
           
         </div>
       </div>
@@ -1581,18 +1584,130 @@ document.getElementById("container").innerHTML = r ;
 
 }
 
-function HuyDonHang(user,id,size,status)
+function HuyDonHang(stt_rec,user,id,size,status)
 {
     var arr = getDonHangOfAcc();
-    var index = arr.findIndex(item => item.userId == user && item.productId == id && item.size == size)
+    var index = arr.findIndex(item => item.stt_rec  == stt_rec)
     if(index >=0 )
+    {
         arr[index].status = '5';
+        backTonKho(id,size, arr[index].quantity)
+
+    }
+    
     localStorage.setItem('DonHang',JSON.stringify(arr));
     showDonHang(status);
 
 }
 
+function backTonKho(id,size,quantity)
+{
+    var arr = JSON.parse(localStorage.sanPham);
+    var index  =  arr.findIndex(item =>{
+        return item.productId == id && item.size == size
+    })
+    if(index >= 0 )
+    {
+        arr[index].quantity = parseFloat(arr[index].quantity)+ parseFloat(quantity);
+    }
+    localStorage.setItem('sanPham',JSON.stringify(arr));
+}
+
+
+function hienQR(){
+document.getElementsByClassName('QRpanel')[0].style.display = 'block';
+document.getElementsByClassName('order-button-cod')[0].style.display = 'none';
+document.getElementsByClassName('order-button-online')[0].style.display = 'none';
+
+} 
+
+
+
+
+function showInfo() {
+   var acc = renderInfoAcc(); 
+
+var r = `
+
+
+
+
+
+<div class="info-form">
+  <label for="taikhoan">Tên đăng nhập </label>
+  <input disabled type="text" id="taikhoan" name="taikhoan" value="${acc.taikhoan}" />
+
+  
+  <label for="hoten">Họ tên</label>
+  <input type="text" id="hoten" name="hoten" value="${acc.hoten}"/>
+
+
+  <label for="sdt">Số điện thoại </label>
+  <input type="text" id="sdt" name="sdt" value="${acc.sdt}"/>
+
+  <label for="matkhau">Mật khẩu </label>
+  <input type="text" id="matkhau" name="matkhau" value="${acc.matkhau}" />
+
+  <label for="diachi">Địa chỉ </label>
+  <textarea id="diachi" name="diachi" >${acc.diachi}</textarea>
+
+  <div class="info-buttons">
+    <button type="button" class="btn-back" onclick="hienThi({id:'FirstLoad'})">Quay lại</button>
+    <button type="submit" class="btn-save" onclick="changeTaiKhoan()">Lưu</button>
+  </div>
+</div>
+`
+
+  document.getElementById("container").innerHTML = r;
+
+   
+}
+
+function changeTaiKhoan ()
+{
+    var acc = renderInfoAcc();
+
+
+    var hoten = document.querySelector(".info-form #hoten").value;
+    var sdt = document.querySelector(".info-form #sdt").value;
+    var matkhau = document.querySelector(".info-form #matkhau").value;
+    var diachi = document.querySelector(".info-form #diachi").value;
+
+    if(hoten == '' || sdt == ''|| matkhau == ''|| diachi == '')
+    {
+        showErrorToast('Vui lòng nhập đủ thông tin!')
+        return;
+    }
+
+    acc.hoten =  hoten
+    acc.sdt = sdt
+    acc.matkhau = matkhau
+    acc.diachi = diachi
+
+    var list = JSON.parse(localStorage.listTaiKhoan);
+    var index  = list.findIndex(item=> item.taikhoan == localStorage.userId);
+    if(index>=0)
+    {
+        list[index] = acc;
+        localStorage.setItem('listTaiKhoan',JSON.stringify(list))
+        hienThi({id:'FirstLoad'})
+        showSuccessToast('Bạn đã thay đổi thông tin thành công')
+        document.querySelector('#user>a').innerHTML =hoten;
+    }
+    else
+    {
+        showErrorToast('Đã có lỗi phát sinh!')
+        return;
+    }
+
+
+
+    }
+
+
+
+
+
 hienThi({id:'FirstLoad'})
 localStorage.setItem('page','FirstLoad')
-
 
