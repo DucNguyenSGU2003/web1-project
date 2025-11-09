@@ -56,6 +56,8 @@ function quanlyuser() {
   var listTaiKhoan = getAccUser();
   var rows = "";
   for (var i = 0; i < listTaiKhoan.length; i++) {
+
+
     rows += `
       <tr id="user-row-${i}">
         <td>${i + 1}</td>
@@ -63,7 +65,7 @@ function quanlyuser() {
         <td>${listTaiKhoan[i].sdt}</td>
         <td>${listTaiKhoan[i].taikhoan}</td>
         <td>${listTaiKhoan[i].matkhau}</td>
-        <td><input type="checkbox" onchange="anUser('${
+        <td><input type="checkbox" ${listTaiKhoan[i].status == "1" ? "checked" :''} onchange="anUser('${
           listTaiKhoan[i].taikhoan
         }',this)"></td>
         <td><button class="btn-reset" onclick="resetMatKhauTK('${
@@ -1094,14 +1096,14 @@ function quanlysanpham() {
   var s = `
   <div class="sanpham-container">
     <div class="sanpham-title">
-    <h2>Quản Lý Sản Phẩm</h2>
     <div>
-    <label>ID</label>
+    <h2>Quản Lý Sản Phẩm</h2>
+ <!--   <label>ID</label>
     <input id="id-varriant" disabled type='text'/>
       <label>Size:</label>
     <input type='number'/>
-     <input type="button" class="btn-add" onclick="addVarriant()"value="Thêm biến thể" />
-       <button class="btn-reset">Thêm mới </button></div>
+     <input type="button" class="btn-add" onclick="addVarriant()"value="Thêm biến thể" /> -->
+       <button class="btn-reset" onclick="showAddProduct();">Thêm mới </button></div>
   
     </div>
     
@@ -1208,6 +1210,98 @@ function selectID(id)
 {
     document.getElementById('id-varriant').value = id;
 }
-function addVarriant(){
-    
+
+  function previewImage(event) {
+      document.getElementById("previewImg").src = URL.createObjectURL(event.target.files[0]);
 }
+
+  function showAddProduct(action)
+  {
+
+  var r = `` ;
+
+  var renderCombo = ``;
+  var combo = JSON.parse(localStorage.type);
+  for(var i =0 ; i < combo.length ; i++)
+  {
+    renderCombo+=`  <option value="${combo[i].id}">${combo[i].name}</option>`;
+  }
+
+  var stt_rec = combo[0].id+localStorage.stt_rec_product;
+  localStorage.setItem('stt_rec_product',parseFloat(localStorage.stt_rec_product)+1);
+
+  r = `
+    <div class="add-sanpham-container">
+
+        <h1 class="add-sanpham-title">${action == 'A' ? "Thêm sản phẩm": "Sửa sản phẩm"}</h1>
+
+        <div class="add-sanpham-grid">
+            <!-- LEFT: IMAGE + FILE -->
+            <div class="add-sanpham-left">
+                <div class="add-sanpham-image-preview">
+                    <img id="previewImg" src="" alt="">
+                </div>
+
+                <input class="add-sanpham-file" type="file" onchange="previewImage(event)">
+            </div>
+
+            <!-- RIGHT -->
+            <div class="add-sanpham-right">
+               <label class="add-sanpham-label">Thể loại <span style="color:red">*</span></label>
+               <select id="product-type" style="width:200px" onchange="changeType(this)">
+                    ${renderCombo}
+              </select>
+               
+                <label class="add-sanpham-label">Mã sản phẩm <span style="color:red">*</span></label>
+                <input id="productId" class="add-sanpham-input" value="${stt_rec}"disabled type="text">
+
+                <label class="add-sanpham-label">Tên sản phẩm <span style="color:red">*</span></label>
+                <input id="productName" class="add-sanpham-input" type="text">
+
+                <label class="add-sanpham-label">Giá nhập <span style="color:red">*</span></label>
+                <input id="price-import" class="add-sanpham-input" type="number">
+
+                <label class="add-sanpham-label">Giá bán <span style="color:red">*</span></label>
+                <input id="price" class="add-sanpham-input" type="number">
+
+                <label id="mota" class="add-sanpham-label">Mô tả</label>
+                <textarea class="add-sanpham-textarea"></textarea>
+            </div>
+        </div>
+
+        <button class="add-sanpham-btn-submit">Thêm sản phẩm</button>
+
+
+        <div class="variant-container">
+        <div class="variant-title">Quản lý biến thể</div>
+        <label><b>Size: </b></label>
+        <input type='number'/>
+     <input type="button" class="btn-add" onclick="addVarriant()"value="Thêm biến thể" /> 
+            <table class="variant-table">
+                <thead>
+                    <tr>
+                        <th>Kích thước</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>41</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>`;
+
+    
+  document.getElementById("container").innerHTML = r;
+
+
+  } 
+  function changeType(type)
+  {
+  document.querySelector('.add-sanpham-input#productId').value = type.value + localStorage.stt_rec_product+'';
+  localStorage.setItem('stt_rec_product',parseFloat(localStorage.stt_rec_product)+1);
+  }

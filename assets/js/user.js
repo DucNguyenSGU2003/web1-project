@@ -907,7 +907,7 @@ function addProductToCart(button) {
                        })
                        if(index >= 0 )
                        {
-                        listTaiKhoan[i].gioHang[index].so_luong = tmp.so_luong
+                        listTaiKhoan[i].gioHang[index].so_luong += tmp.so_luong
                        }
                        else
                        {
