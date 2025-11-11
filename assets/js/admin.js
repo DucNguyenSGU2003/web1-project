@@ -56,8 +56,6 @@ function quanlyuser() {
   var listTaiKhoan = getAccUser();
   var rows = "";
   for (var i = 0; i < listTaiKhoan.length; i++) {
-
-
     rows += `
       <tr id="user-row-${i}">
         <td>${i + 1}</td>
@@ -65,9 +63,9 @@ function quanlyuser() {
         <td>${listTaiKhoan[i].sdt}</td>
         <td>${listTaiKhoan[i].taikhoan}</td>
         <td>${listTaiKhoan[i].matkhau}</td>
-        <td><input type="checkbox" ${listTaiKhoan[i].status == "1" ? "checked" :''} onchange="anUser('${
-          listTaiKhoan[i].taikhoan
-        }',this)"></td>
+        <td><input type="checkbox" ${
+          listTaiKhoan[i].status == "1" ? "checked" : ""
+        } onchange="anUser('${listTaiKhoan[i].taikhoan}',this)"></td>
         <td><button class="btn-reset" onclick="resetMatKhauTK('${
           listTaiKhoan[i].taikhoan
         }')">Reset mật khẩu</button></td>
@@ -75,8 +73,6 @@ function quanlyuser() {
   }
 
   document.getElementById("table-body").innerHTML = rows;
-
- 
 }
 
 function anUser(tk, checkbox) {
@@ -1103,7 +1099,7 @@ function quanlysanpham() {
       <label>Size:</label>
     <input type='number'/>
      <input type="button" class="btn-add" onclick="addVarriant()"value="Thêm biến thể" /> -->
-       <button class="btn-reset" onclick="showAddProduct();">Thêm mới </button></div>
+       <button class="btn-reset" onclick="showAddProduct('A');">Thêm mới </button></div>
   
     </div>
     
@@ -1206,37 +1202,42 @@ function renderArrSP() {
   return list_sp;
 }
 
-function selectID(id)
-{
-    document.getElementById('id-varriant').value = id;
+function selectID(id) {
+  document.getElementById("id-varriant").value = id;
 }
 
-  function previewImage(event) {
-      document.getElementById("previewImg").src = URL.createObjectURL(event.target.files[0]);
+function previewImage(event) {
+  document.getElementById("previewImg").src = URL.createObjectURL(
+    event.target.files[0]
+  );
+  localStorage.setItem("file", event.target.files[0].name);
 }
 
-  function showAddProduct(action)
-  {
-
-  var r = `` ;
+function showAddProduct(action = "A") {
+  if (action == "A") localStorage.setItem("list_size", JSON.stringify([]));
+  localStorage.removeItem("file");
+  var r = ``;
 
   var renderCombo = ``;
   var combo = JSON.parse(localStorage.type);
-  for(var i =0 ; i < combo.length ; i++)
-  {
-    renderCombo+=`  <option value="${combo[i].id}">${combo[i].name}</option>`;
+  for (var i = 0; i < combo.length; i++) {
+    renderCombo += `  <option value="${combo[i].id}">${combo[i].name}</option>`;
   }
 
-  var stt_rec = combo[0].id+localStorage.stt_rec_product;
-  localStorage.setItem('stt_rec_product',parseFloat(localStorage.stt_rec_product)+1);
+  var stt_rec = combo[0].id + localStorage.stt_rec_product;
+  localStorage.setItem(
+    "stt_rec_product",
+    parseFloat(localStorage.stt_rec_product) + 1
+  );
 
   r = `
     <div class="add-sanpham-container">
 
-        <h1 class="add-sanpham-title">${action == 'A' ? "Thêm sản phẩm": "Sửa sản phẩm"}</h1>
+        <h1 class="add-sanpham-title">${
+          action == "A" ? "Thêm sản phẩm" : "Sửa sản phẩm"
+        }</h1>
 
         <div class="add-sanpham-grid">
-            <!-- LEFT: IMAGE + FILE -->
             <div class="add-sanpham-left">
                 <div class="add-sanpham-image-preview">
                     <img id="previewImg" src="" alt="">
@@ -1264,12 +1265,12 @@ function selectID(id)
                 <label class="add-sanpham-label">Giá bán <span style="color:red">*</span></label>
                 <input id="price" class="add-sanpham-input" type="number">
 
-                <label id="mota" class="add-sanpham-label">Mô tả</label>
-                <textarea class="add-sanpham-textarea"></textarea>
+                <label class="add-sanpham-label">Mô tả</label>
+                <textarea id="mota"  class="add-sanpham-textarea"></textarea>
             </div>
         </div>
 
-        <button class="add-sanpham-btn-submit">Thêm sản phẩm</button>
+        <button class="add-sanpham-btn-submit" onclick="checkBeforProduct('${action}')">Thêm sản phẩm</button>
 
 
         <div class="variant-container">
@@ -1295,13 +1296,78 @@ function selectID(id)
 
     </div>`;
 
-    
   document.getElementById("container").innerHTML = r;
+}
+function changeType(type) {
+  document.querySelector(".add-sanpham-input#productId").value =
+    type.value + localStorage.stt_rec_product + "";
+  localStorage.setItem(
+    "stt_rec_product",
+    parseFloat(localStorage.stt_rec_product) + 1
+  );
+}
 
+function checkBeforProduct(action) {
+  var type = document.getElementById("product-type").value;
+  var productId = document.getElementById("productId").value;
+  var productName = document.getElementById("productName").value;
+  var price_import = parseFloat(document.getElementById("price-import").value);
+  var price = parseFloat(document.getElementById("price").value);
+  var mota = document.getElementById("mota").value;
 
-  } 
-  function changeType(type)
-  {
-  document.querySelector('.add-sanpham-input#productId').value = type.value + localStorage.stt_rec_product+'';
-  localStorage.setItem('stt_rec_product',parseFloat(localStorage.stt_rec_product)+1);
+  if (
+    productId == "" ||
+    productName == "" ||
+    price_import == "" ||
+    price == "" ||
+    mota == ""
+  ) {
+    showErrorToast("Bắt buộc nhập các trường dữ liệu!");
+    return;
   }
+  if (!localStorage.file || localStorage.file == "") {
+    showErrorToast("Bắt buộc chọn hình ảnh của sản phẩm!");
+    return;
+  }
+  if (price <= price_import) {
+    showWarningToast("Giá bán phải lớn hơn giá nhập!");
+    return;
+  }
+
+var list_size = JSON.parse(localStorage.list_size)
+
+if(list_size.length <= 0 ) 
+{
+  showErrorToast('Bạn chưa nhập danh sách biến thể!')
+  return;
+}
+
+  var tmp = {
+    productId:productId,
+    type:type||'',
+    productName: productName,
+    price_import:price_import,
+    price:price,
+    mota:mota
+  }
+
+
+  if (action == "A") {
+    showSuccessToast("tHÊM");
+    AddProductToList(tmp);
+  }
+
+  if (action == "E") {
+    showSuccessToast("sửa");
+  }
+}
+
+function addVarriant()
+{
+
+} 
+
+function AddProductToList(data)
+{
+
+}
