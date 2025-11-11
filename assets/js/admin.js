@@ -1215,6 +1215,7 @@ function previewImage(event) {
 
 function showAddProduct(action = "A") {
   if (action == "A") localStorage.setItem("list_size", JSON.stringify([]));
+  
   localStorage.removeItem("file");
   var r = ``;
 
@@ -1276,7 +1277,7 @@ function showAddProduct(action = "A") {
         <div class="variant-container">
         <div class="variant-title">Quản lý biến thể</div>
         <label><b>Size: </b></label>
-        <input type='number'/>
+        <input id="input-variant" type='number'    oninput="this.value = this.value < 0 ? 0 : this.value"/>
      <input type="button" class="btn-add" onclick="addVarriant()"value="Thêm biến thể" /> 
             <table class="variant-table">
                 <thead>
@@ -1339,6 +1340,7 @@ var list_size = JSON.parse(localStorage.list_size)
 if(list_size.length <= 0 ) 
 {
   showErrorToast('Bạn chưa nhập danh sách biến thể!')
+  document.getElementById('input-variant').focus();
   return;
 }
 
@@ -1364,6 +1366,33 @@ if(list_size.length <= 0 )
 
 function addVarriant()
 {
+var list_size = JSON.parse(localStorage.list_size);
+var value_variant  = parseFloat(document.getElementById('input-variant').value);
+var checkExists = list_size.findIndex(item=>{
+  return item == value_variant
+})
+
+if(checkExists >= 0 )
+{
+  showErrorToast('Biến thể đã tồn tại!')
+  return;
+}
+
+list_size.push(value_variant+'');
+localStorage.setItem('list_size',JSON.stringify(list_size));
+
+var r  = ``;
+list_size.forEach(item =>
+{
+  r+= `<tr>
+                        <td>${item}</td>
+                        <td></td>
+          </tr>`
+}
+)
+document.querySelector('.variant-table>tbody').innerHTML= r;
+
+
 
 } 
 
