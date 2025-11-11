@@ -12,7 +12,6 @@ function giay(productId,brand,img,name,price,quantity ,size=39,price_nhap=0,stat
     this.size = size
     this.price_nhap=price_nhap;
     this.status=status;
-    
 }
 
 

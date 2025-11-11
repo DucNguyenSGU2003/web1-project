@@ -1366,9 +1366,12 @@ if(list_size.length <= 0 )
 function addVarriant()
 {
 var list_size = JSON.parse(localStorage.list_size);
-var value_variant  = parseFloat(document.getElementById('input-variant').value);
+var value_variant  = {
+ size: parseFloat(document.getElementById('input-variant').value),
+  status:'1'
+};
 var checkExists = list_size.findIndex(item=>{
-  return item == value_variant
+  return item.size == value_variant.size
 })
 
 if(checkExists >= 0 )
@@ -1377,17 +1380,17 @@ if(checkExists >= 0 )
   return;
 }
 
-list_size.push(value_variant+'');
+list_size.push(value_variant);
 localStorage.setItem('list_size',JSON.stringify(list_size));
 
 var r  = ``;
 list_size.forEach(item =>
 {
   r+= `<tr>
-                        <td>${item}</td>
-                        <td><input type="checkbox" /></td>
+                        <td>${item.size}</td>
+                        <td><input type="checkbox"  ${item.status == 1 ? 'checked' : ''}/></td>
                          
-                        <td><button>Xóa biến thể</button></td>
+                        <td ><button  class="btn-delete">Xóa biến thể</button></td>
           </tr>`
 }
 )
@@ -1399,5 +1402,21 @@ document.querySelector('.variant-table>tbody').innerHTML= r;
 
 function AddProductToList(data)
 {
-
+  var list_size = JSON.parse(localStorage.list_size);
+console.log(1);
+var list_type =JSON.parse(localStorage.type);
+  var new_products  =[];
+  var file = localStorage.file.toLowerCase();
+  list_size.forEach(item=>{
+    var brand = list_type.filter(i =>i.id == data.type)[0].name;
+    var img = `/assets/img/${brand.toLowerCase()}/${file}`;
+    var product = new giay(data.productId,brand,img,data.productName,data.price,0,item,data.price_import,'1');
+    new_products.push(product)
+  })
+  console.log(new_products);
+  var sanPham = JSON.parse(localStorage.sanPham)
+  var newSanPham = [...sanPham,...new_products];
+  localStorage.setItem('sanPham',JSON.stringify(newSanPham))
+  showSuccessToast('Thêm sản phẩm thành công');
+  quanlysanpham();
 }
