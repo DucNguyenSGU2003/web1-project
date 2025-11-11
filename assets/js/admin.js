@@ -1284,13 +1284,12 @@ function showAddProduct(action = "A") {
                     <tr>
                         <th>Kích thước</th>
                         <th>Trạng thái</th>
+                        <th>Hành động</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>41</td>
-                        <td></td>
-                    </tr>
+                  
                 </tbody>
             </table>
         </div>
@@ -1386,7 +1385,9 @@ list_size.forEach(item =>
 {
   r+= `<tr>
                         <td>${item}</td>
-                        <td></td>
+                        <td><input type="checkbox" /></td>
+                         
+                        <td><button>Xóa biến thể</button></td>
           </tr>`
 }
 )
