@@ -1162,7 +1162,7 @@ function quanlysanpham() {
         <td class="budget-cell"> <span class="status-badge"><input type="checkbox" ${statusText} onchange=""></span></td>
         <td class="budget-cell">
        
-        <input type="button" class="btn-edit" value="Sửa"/>
+        <input type="button" class="btn-edit" onclick="showAddProduct('E','${d.productId}')" value="Sửa"/>
         </td>
       </tr>`;
   }
@@ -1213,9 +1213,10 @@ function previewImage(event) {
   localStorage.setItem("file", event.target.files[0].name);
 }
 
-function showAddProduct(action = "A") {
+function showAddProduct(action = "A", productId = "") {
+  localStorage.setItem("action", action);
   if (action == "A") localStorage.setItem("list_size", JSON.stringify([]));
-  
+
   localStorage.removeItem("file");
   var r = ``;
 
@@ -1249,11 +1250,12 @@ function showAddProduct(action = "A") {
 
             <!-- RIGHT -->
             <div class="add-sanpham-right">
-               <label class="add-sanpham-label">Thể loại <span style="color:red">*</span></label>
+            <div id="combobox-panel">
+            <label class="add-sanpham-label">Thể loại <span style="color:red">*</span></label>
                <select id="product-type" style="width:200px" onchange="changeType(this)">
                     ${renderCombo}
               </select>
-               
+            </div>  
                 <label class="add-sanpham-label">Mã sản phẩm <span style="color:red">*</span></label>
                 <input id="productId" class="add-sanpham-input" value="${stt_rec}"disabled type="text">
 
@@ -1297,6 +1299,46 @@ function showAddProduct(action = "A") {
     </div>`;
 
   document.getElementById("container").innerHTML = r;
+
+  if (action == "E") {
+    var product = getDetailProduct(productId);
+    var list_size = product.map((item) => {
+      return {
+        size: item.size,
+        status: item.status,
+      };
+    });
+    localStorage.setItem('list_size',JSON.stringify(list_size))
+    r = ``;
+    list_size.forEach((item) => {
+      r += `<tr>
+                        <td>${item.size}</td>
+                        <td><input type="checkbox"  ${
+                          item.status == 1 ? "checked" : ""
+                        }/></td>
+                         
+                        <td ><button  class="btn-delete" onclick="deleteVariant(${
+                          item.size
+                        })">Xóa biến thể</button></td>
+          </tr>`;
+    });
+
+    document.querySelector(".variant-table>tbody").innerHTML = r;
+    document.getElementById("product-type").disabled = true;
+    document.getElementById("price-import").disabled = true;
+    document.getElementById("price").disabled = true;
+    document.getElementById("combobox-panel").style.display = "none";
+    document.getElementsByClassName("add-sanpham-btn-submit")[0].innerHTML = "Cập nhật thông tin sản phẩm";
+    var type = document.getElementById("product-type").value;
+    document.getElementById("productName").value = product[0].name;
+    document.getElementById("productId").value = product[0].productId;
+    document.getElementById("price-import").value = product[0].price_nhap;
+    document.getElementById("price").value = product[0].price;
+    document.getElementById("previewImg").src = product[0].img;
+    const arr = product[0].img.split('/').map(item => item.trim());
+    localStorage.setItem('file',arr[arr.length-1].trim())
+
+  }
 }
 function changeType(type) {
   document.querySelector(".add-sanpham-input#productId").value =
@@ -1334,24 +1376,22 @@ function checkBeforProduct(action) {
     return;
   }
 
-var list_size = JSON.parse(localStorage.list_size)
+  var list_size = JSON.parse(localStorage.list_size);
 
-if(list_size.length <= 0 ) 
-{
-  showErrorToast('Bạn chưa nhập danh sách biến thể!')
-  document.getElementById('input-variant').focus();
-  return;
-}
-
-  var tmp = {
-    productId:productId,
-    type:type||'',
-    productName: productName,
-    price_import:price_import,
-    price:price,
-    mota:mota
+  if (list_size.length <= 0) {
+    showErrorToast("Bạn chưa nhập danh sách biến thể!");
+    document.getElementById("input-variant").focus();
+    return;
   }
 
+  var tmp = {
+    productId: productId,
+    type: type || "",
+    productName: productName,
+    price_import: price_import,
+    price: price,
+    mota: mota,
+  };
 
   if (action == "A") {
     showSuccessToast("tHÊM");
@@ -1363,60 +1403,94 @@ if(list_size.length <= 0 )
   }
 }
 
-function addVarriant()
-{
-var list_size = JSON.parse(localStorage.list_size);
-var value_variant  = {
- size: parseFloat(document.getElementById('input-variant').value),
-  status:'1'
-};
-var checkExists = list_size.findIndex(item=>{
-  return item.size == value_variant.size
-})
-
-if(checkExists >= 0 )
-{
-  showErrorToast('Biến thể đã tồn tại!')
-  return;
-}
-
-list_size.push(value_variant);
-localStorage.setItem('list_size',JSON.stringify(list_size));
-
-var r  = ``;
-list_size.forEach(item =>
-{
-  r+= `<tr>
-                        <td>${item.size}</td>
-                        <td><input type="checkbox"  ${item.status == 1 ? 'checked' : ''}/></td>
-                         
-                        <td ><button  class="btn-delete">Xóa biến thể</button></td>
-          </tr>`
-}
-)
-document.querySelector('.variant-table>tbody').innerHTML= r;
-
-
-
-} 
-
-function AddProductToList(data)
-{
+function addVarriant() {
   var list_size = JSON.parse(localStorage.list_size);
-console.log(1);
-var list_type =JSON.parse(localStorage.type);
-  var new_products  =[];
+  var value_variant = {
+    size: parseFloat(document.getElementById("input-variant").value),
+    status: "1",
+  };
+  var checkExists = list_size.findIndex((item) => {
+    return item.size == value_variant.size;
+  });
+
+  if (checkExists >= 0) {
+    showErrorToast("Biến thể đã tồn tại!");
+    return;
+  }
+
+  list_size.push(value_variant);
+  localStorage.setItem("list_size", JSON.stringify(list_size));
+
+  var r = ``;
+  list_size.forEach((item) => {
+    r += `<tr>
+                        <td>${item.size}</td>
+                        <td><input type="checkbox"  ${
+                          item.status == 1 ? "checked" : ""
+                        }/></td>
+                         
+                        <td ><button  class="btn-delete" onclick="deleteVariant(${
+                          item.size
+                        })">Xóa biến thể</button></td>
+          </tr>`;
+  });
+  document.querySelector(".variant-table>tbody").innerHTML = r;
+}
+
+function AddProductToList(data) {
+  var list_size = JSON.parse(localStorage.list_size);
+  console.log(1);
+  var list_type = JSON.parse(localStorage.type);
+  var new_products = [];
   var file = localStorage.file.toLowerCase();
-  list_size.forEach(item=>{
-    var brand = list_type.filter(i =>i.id == data.type)[0].name;
+  list_size.forEach((item) => {
+    var brand = list_type.filter((i) => i.id == data.type)[0].name;
     var img = `/assets/img/${brand.toLowerCase()}/${file}`;
-    var product = new giay(data.productId,brand,img,data.productName,data.price,0,item,data.price_import,'1');
-    new_products.push(product)
-  })
-  console.log(new_products);
-  var sanPham = JSON.parse(localStorage.sanPham)
-  var newSanPham = [...sanPham,...new_products];
-  localStorage.setItem('sanPham',JSON.stringify(newSanPham))
-  showSuccessToast('Thêm sản phẩm thành công');
+    var product = new giay(
+      data.productId,
+      brand,
+      img,
+      data.productName,
+      data.price,
+      0,
+      item.size,
+      data.price_import,
+      data.mota,
+      "1"
+    );
+    new_products.push(product);
+  });
+  var sanPham = JSON.parse(localStorage.sanPham);
+  var newSanPham = [...sanPham, ...new_products];
+  localStorage.setItem("sanPham", JSON.stringify(newSanPham));
+  showSuccessToast("Thêm sản phẩm thành công");
   quanlysanpham();
+}
+
+function deleteVariant(size) {
+  var list_size = JSON.parse(localStorage.getItem("list_size"));
+  var action = localStorage.action;
+  if (action == "A") {
+    list_size = list_size.filter((item) => item.size != size);
+    localStorage.setItem("list_size", JSON.stringify(list_size));
+    var r = ``;
+    list_size.forEach((item) => {
+      r += `<tr>
+              <td>${item.size}</td>
+              <td><input type="checkbox"  ${
+                item.status == 1 ? "checked" : ""
+              }/></td>
+              <td ><button  class="btn-delete" onclick="deleteVariant(${
+                item.size
+              })">Xóa biến thể</button></td>
+          </tr>`;
+    });
+    document.querySelector(".variant-table>tbody").innerHTML = r;
+  }
+}
+
+function getDetailProduct(id) {
+  var arr = JSON.parse(localStorage.getItem("sanPham"));
+  var obj = arr.filter((item) => item.productId == id);
+  return obj;
 }
