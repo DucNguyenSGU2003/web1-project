@@ -1309,21 +1309,8 @@ function showAddProduct(action = "A", productId = "") {
       };
     });
     localStorage.setItem('list_size',JSON.stringify(list_size))
-    r = ``;
-    list_size.forEach((item) => {
-      r += `<tr>
-                        <td>${item.size}</td>
-                        <td><input type="checkbox"  ${
-                          item.status == 1 ? "checked" : ""
-                        }/></td>
-                         
-                        <td ><button  class="btn-delete" onclick="deleteVariant(${
-                          item.size
-                        })">Xóa biến thể</button></td>
-          </tr>`;
-    });
+     renderCheckBoxVariant(list_size)
 
-    document.querySelector(".variant-table>tbody").innerHTML = r;
     document.getElementById("product-type").disabled = true;
     document.getElementById("price-import").disabled = true;
     document.getElementById("price").disabled = true;
@@ -1394,7 +1381,6 @@ function checkBeforProduct(action) {
   };
 
   if (action == "A") {
-    showSuccessToast("tHÊM");
     AddProductToList(tmp);
   }
 
@@ -1422,19 +1408,8 @@ function addVarriant() {
   localStorage.setItem("list_size", JSON.stringify(list_size));
 
   var r = ``;
-  list_size.forEach((item) => {
-    r += `<tr>
-                        <td>${item.size}</td>
-                        <td><input type="checkbox"  ${
-                          item.status == 1 ? "checked" : ""
-                        }/></td>
-                         
-                        <td ><button  class="btn-delete" onclick="deleteVariant(${
-                          item.size
-                        })">Xóa biến thể</button></td>
-          </tr>`;
-  });
-  document.querySelector(".variant-table>tbody").innerHTML = r;
+     renderCheckBoxVariant(list_size)
+
 }
 
 function AddProductToList(data) {
@@ -1456,7 +1431,7 @@ function AddProductToList(data) {
       item.size,
       data.price_import,
       data.mota,
-      "1"
+      item.status
     );
     new_products.push(product);
   });
@@ -1474,19 +1449,41 @@ function deleteVariant(size) {
     list_size = list_size.filter((item) => item.size != size);
     localStorage.setItem("list_size", JSON.stringify(list_size));
     var r = ``;
-    list_size.forEach((item) => {
+   renderCheckBoxVariant(list_size)
+  }
+}
+
+
+function renderCheckBoxVariant(list_size)
+{
+  var r = ``;
+  list_size.forEach((item) => {
       r += `<tr>
               <td>${item.size}</td>
               <td><input type="checkbox"  ${
                 item.status == 1 ? "checked" : ""
-              }/></td>
+              }  onchange="changeStatusVariant(this,'${item.size}')" /></td>
               <td ><button  class="btn-delete" onclick="deleteVariant(${
                 item.size
               })">Xóa biến thể</button></td>
           </tr>`;
     });
     document.querySelector(".variant-table>tbody").innerHTML = r;
-  }
+}
+
+
+function changeStatusVariant(button,size) {
+  
+  var list_size = JSON.parse(localStorage.list_size);
+  list_size.forEach(item=>{
+    if(item.size == size)
+    {
+      button.value == true ? item.status = 1 : item.status = 0; 
+    }
+  }) 
+  localStorage.setItem('list_size',JSON.stringify(list_size));
+  renderCheckBoxVariant(list_size)
+
 }
 
 function getDetailProduct(id) {
@@ -1494,3 +1491,6 @@ function getDetailProduct(id) {
   var obj = arr.filter((item) => item.productId == id);
   return obj;
 }
+
+
+
