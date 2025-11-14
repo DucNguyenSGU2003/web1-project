@@ -13,6 +13,11 @@ function hienThiTrangAdmin(obj) {
       quanlysanpham();
       break;
     }
+     case "quanlyphieunhap": {
+      quanlyphieunhap();
+      break;
+    }
+
     case "quanlydonhang": {
       quanlydonhang();
       break;
@@ -1092,6 +1097,7 @@ function quanlysanpham() {
   var s = `
   <div class="sanpham-container">
     <div class="sanpham-title">
+   
     <div>
     <h2>Quản Lý Sản Phẩm</h2>
  <!--   <label>ID</label>
@@ -1113,7 +1119,7 @@ function quanlysanpham() {
           <th>Size</th>
           <th>Giá nhập</th>
           <th>Giá bán</th>
-          <th>Trạng thái</th>
+          <!-- <th>Trạng thái</th> -->
           <th></th>
         </tr>
       </thead>
@@ -1159,7 +1165,7 @@ function quanlysanpham() {
         <td class="status-cell">
           ${d.price}
         </td>
-        <td class="budget-cell"> <span class="status-badge"><input type="checkbox" ${statusText} onchange=""></span></td>
+    <!--    <td class="budget-cell"> <span class="status-badge"><input type="checkbox" ${statusText} onchange=""></span></td> -->
         <td class="budget-cell">
        
         <input type="button" class="btn-edit" onclick="showAddProduct('E','${d.productId}')" value="Sửa"/>
@@ -1169,6 +1175,86 @@ function quanlysanpham() {
 
   document.getElementById("sanpham-table-body").innerHTML = rows;
 }
+
+
+
+
+function quanlyphieunhap() {
+  var s = `
+  <div class="sanpham-container">
+    <div class="sanpham-title">
+   
+    <div>
+    <h2>Quản lý phiếu nhập</h2>
+       <button class="btn-reset" onclick="showAddProduct('A');">Thêm mới </button></div>
+    </div>
+    
+    
+    
+    <table class="sanpham-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Ngày nhập hàng</th>
+          <th>Diễn giải</th>
+           <th>Ngày nhập</th>
+           <th>Trạng thái</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="sanpham-table-body"></tbody>
+    </table>
+  </div>`;
+
+  document.getElementById("container").innerHTML = s;
+
+  var listSanPham = renderArrSP();
+
+  var rows = "";
+  for (var i = 0; i < listSanPham.length; i++) {
+    var d = listSanPham[i];
+
+    var statusText = d.status == "1" ? "checked" : "";
+
+    var size = ``;
+    var arrSize = getSizeBySP(d.productId);
+    for (var s = 0; s < arrSize.length; s++) {
+      var c = "";
+      if (arrSize[s].status == "1") c = "#51a105";
+      else c = "red";
+      size += `<input type="button" class="btn-size" style="background:${c}; color:white" value="${arrSize[s].size}"/>
+       `;
+    }
+
+    rows += `
+      <tr onclick="selectID('${d.productId}')">
+       <td class="sanpham-name">${d.productId}</td>
+        <td class="user-cell">
+          <img src="${d.img}" class="user-avatar" alt="${d.name}">
+          <div class="user-info">
+            <div class="user-name">${d.name}</div>
+          </div>
+        </td>
+        <td class="sanpham-size">${size}</td>
+        <td class="team-cell">
+          <div class="team-avatars">
+            ${d.price_nhap}
+          </div>
+        </td>
+        <td class="status-cell">
+          ${d.price}
+        </td>
+    <!--    <td class="budget-cell"> <span class="status-badge"><input type="checkbox" ${statusText} onchange=""></span></td> -->
+        <td class="budget-cell">
+       
+        <input type="button" class="btn-edit" onclick="showAddProduct('E','${d.productId}')" value="Sửa"/>
+        </td>
+      </tr>`;
+  }
+
+  document.getElementById("sanpham-table-body").innerHTML = rows;
+}
+
 
 function getSizeBySP(id) {
   var sanPham = JSON.parse(localStorage.sanPham);
@@ -1234,8 +1320,10 @@ function showAddProduct(action = "A", productId = "") {
 
   r = `
     <div class="add-sanpham-container">
-
-        <h1 class="add-sanpham-title">${
+  <button class="btn-reset"onclick="goBack('quanlysanpham')"> < Quay lại</button> 
+        <h1 class="add-sanpham-title">
+        
+        ${
           action == "A" ? "Thêm sản phẩm" : "Sửa sản phẩm"
         }</h1>
 
@@ -1409,6 +1497,8 @@ function addVarriant() {
 
   var r = ``;
      renderCheckBoxVariant(list_size)
+
+     document.getElementById("input-variant").value = ''
 
 }
 
