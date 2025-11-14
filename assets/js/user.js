@@ -1,9 +1,4 @@
 
-//Tài Khoản Admin---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-var adminTk = "admin";
-var adminMk = "1111";
-
-// -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 function dangKy() {
@@ -544,12 +539,13 @@ var arr = [];
 function renderArrSP()
 {
   var arr1  = JSON.parse(localStorage.getItem('sanPham'));
+  arr1 = arr1.filter(item=>item.status == 1);
     var list_sp  = []
     var l = arr1.length;
     for(var  i = 0 ; i< l ; i++)
     {
         var index =  list_sp.findIndex((item)=>{
-                return item.productId == arr1[i].productId  && arr1[i].status == '1'
+                return item.productId == arr1[i].productId  
         })
         if(index >= 0 )
         {

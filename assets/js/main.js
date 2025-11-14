@@ -2,7 +2,7 @@
 localStorage.removeItem("userId")
 
 
-function giay(productId,brand,img,name,price,quantity ,size=39,price_nhap=1,mo_ta = '',status = 1 )  {
+function giay(productId,brand,img,name,price,quantity ,size=39,price_nhap=1,mo_ta = 'Fullbox O.l.d Skool Black / Đen. Phù hợp: nam nữ, đi học, đi làm, hoạt động thể thao. Size: 36-44. Chất liệu: Canvas. Giao hàng toàn quốc. Bảo hành 3 tháng. Đổi trả dễ dàng. Streetwear, trẻ trung năng động.',status = 1 )  {
     this.productId = productId;
     this.brand = brand;
     this.img = img;
@@ -242,4 +242,18 @@ function xoaCache()
     localStorage.removeItem("DonHang")
 }
 
+function xoaCacheAll()
+{
+localStorage.removeItem('sanPham')
+localStorage.removeItem('listTaiKhoan')
+localStorage.removeItem('stt_rec_px')
+localStorage.removeItem('resetmk')
+localStorage.removeItem('stt_rec_product')
+localStorage.removeItem('DonHang')
+localStorage.removeItem('status')
+localStorage.removeItem('statusPND')
+localStorage.removeItem('type')
+localStorage.removeItem('PhieuNhap')
+
+}
 

@@ -1,3 +1,12 @@
+function DangXuatAdmin()
+{
+window.location.href = 'http://127.0.0.1:8080/loginAdmin.html'
+localStorage.removeItem('userId')
+}
+
+
+
+
 function hienThiTrangAdmin(obj) {
   localStorage.setItem("page", obj.id);
   switch (obj.id) {
@@ -19,7 +28,7 @@ function hienThiTrangAdmin(obj) {
     }
 
     case "quanlydonhang": {
-      quanlydonhang();
+      quanlydonhang('*');
       break;
     }
     case "thongkekinhdoanh": {
@@ -882,213 +891,109 @@ function thietlapAdd() {
   }
 }
 
-function quanlydonhang() {
-  var s = `
-    <div class = "content">
-        <h1 id="title-chuaXuLy">Các Đơn Hàng Chưa Xử Lý</h1>
-        <table id="quanlydonhang-chuaXuLy">
-            <thead>
-                <th>STT</th>
-                <th>Mã Đơn Hàng</th>
-                <th>Tên Khách Hàng</th>
-                <th>Số Điện Thoại</th>
-                <th>Sản Phẩm</th>
-                <th>Thành Tiền</th>
-                <th>Action</th>
-            </thead>
-            <tbody id="table-chuaXuLy">
 
-            </tbody>
-        
-            <tfoot>
-                <tr>
-                    <td colspan="7">
-                        <button onclick="duyetHetDonHang();">Duyệt Hết</button>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+function getDonHangOfAcc()
+{
+    var list = JSON.parse(localStorage.getItem('DonHang'));
+    return list;
+}
+function quanlydonhang(status) {
+  localStorage.setItem('statusOrder',status)
+var arr = getDonHangOfAcc();
+var dfrom  = document.getElementById('dfrom') != null ? document.getElementById('dfrom').value: '';
+if(dfrom != '')
+{
+  var df = new Date(dfrom);
+  arr = arr.filter(item=>(new Date(item.date0) >= df));
+}
+
+
+var dto  = document.getElementById('dto') != null ? document.getElementById('dto').value: '';
+if(dto != '')
+{
+  var dt = new Date(dto);
+  arr = arr.filter(item=>(new Date(item.date0) <= dt));
+}
+
+if( status != '*')
+    arr = arr.filter(item => item.status == status);
+var listDonHoang = ``
+var listStatus = JSON.parse(localStorage.status);
+
+arr.forEach(item=>{
+listDonHoang +=`
+ <div id="user-container">
+ <div class="order-card">
+      <div class="order-header">
+        <div class="shop-info">
+        Mã đơn hàng: ${item.stt_rec}
+        </div>
+        <div class="shop-actions">
+          <span class="shop-status">${item.status == '4'  ?"🚚 Giao hàng thành công · ":""}<span style="color:#ff5722;">${listStatus[item.status+'']}</span></span>
+        </div>
+      </div>
+      <div class="product-list">
+        <div class="product-item">
+          <div class="product-img">
+            <img src="${item.img}" alt="${item.name}">
+          </div>
+          <div class="product-info">
+            <div class="product-title">${item.name}</div>
+            <div class="product-meta">Size: ${item.size} <span class="product-qty">x${item.quantity}</span></div>
+          </div>
+          <div class="product-price">
+            <span class="price-now">${item.price} VNĐ</span>
+          </div>
+        </div>
+      </div>
+      <div class="order-footer">
+        <div class="order-total">Thành tiền: <strong>${item.total} VNĐ</strong></div>
+        <div class="footer-actions">
+       <button class="btn-back" onclick="showOrder('${item.stt_rec}')">Chi tiết</button>
+        ${(item.status != '4' && item.status != '5')   ?`<button class="btn-back" onclick="ChuyenTrangThaiDonHang('${item.stt_rec}')">Chuyển Trạng Thái</button>`:""}
+          
+        </div>
+      </div>
     </div>
-
-
-    <div class = "content">
-        <h1 id="title-daXuLy">Các Đơn Hàng Đã Xử Lý</h1>
-        <table id="quanlydonhang-daXuLy">
-            <thead>
-                <th>STT</th>
-                <th>Mã Đơn Hàng</th>
-                <th>Tên Khách Hàng</th>
-                <th>Số Điện Thoại</th>
-                <th>Sản Phẩm</th>
-                <th>Thành Tiền</th>
-            </thead>
-
-            <tbody id="table-daXuLy">
-
-            </tbody>
-        </table>
-    </div>
-
-
+</div>
 `;
-  document.getElementById("container").innerHTML = s;
 
-  var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
-  var string = "";
-  var s = "";
-  var sttchuaXuLy = 0;
-  var sttdaXuLy = 0;
-  var tong = 0;
-  for (var a of listDonHang) {
-    if (a.donhang.length !== 0) {
-      for (var i = 0; i < a.donhang.length; i++) {
-        if (a.donhang[i].duocDuyet === false) {
-          // Chưa được duyệt ==> In trong table-chuaXuLy
-          for (var j = 0; j < a.donhang[i].giohang.length; j++) {
-            s += `<span class="Ten">${a.donhang[i].giohang[j].nameProduct}</span> <span class="SoLuong">(${a.donhang[i].giohang[j].quantity})</span><br>`;
-            tong += parseInt(a.donhang[i].giohang[j].money);
-          }
-          string = `
-                    <tr>
-                        <td>${++sttchuaXuLy}</td>
-                        <td class="maDonHang">${a.donhang[i].madh}</td>
-                        <td class="tenKhachHang">${a.name}</td>
-                        <td class="sdtKhachHang">${a.sdt}</td>
-                        <td class="SanPham">
-                            ${s}
-                        </td>
-                        <td class="ThanhTien">${tong}đ</td>
-                        <td>
-                            <button onclick="duyetDonHang(this);">Duyệt</button>
-                        </td>
-                    </tr>`;
-          document.getElementById("table-chuaXuLy").innerHTML += string;
-          s = "";
-          tong = 0;
-        } else {
-          // Được duyệt rồi ==> In trong table-daXuLy
-          for (var j = 0; j < a.donhang[i].giohang.length; j++) {
-            s += `<span class="Ten">${a.donhang[i].giohang[j].nameProduct}</span> <span class="SoLuong">(${a.donhang[i].giohang[j].quantity})</span><br>`;
-            tong += parseInt(a.donhang[i].giohang[j].money);
-          }
-          string = `
-                    <tr>
-                        <td>${++sttdaXuLy}</td>
-                        <td class="maDonHang">${a.donhang[i].madh}</td>
-                        <td class="tenKhachHang">${a.name}</td>
-                        <td class="sdtKhachHang">${a.sdt}</td>
-                        <td class="SanPham">
-                            ${s}
-                        </td>
-                        <td class="ThanhTien">${tong}đ</td>
-                    </tr>`;
-          document.getElementById("table-daXuLy").innerHTML += string;
-          s = "";
-          tong = 0;
-        }
-      }
-    }
-  }
+
+})
+var r = `
+  <div class="orders-container">
+        <label>Từ ngày</label>
+   <input id='dfrom' class="add-sanpham-input" id='ngay-nhap' type="date"/>
+      <label>Đến ngày</label>
+    <input  id='dto' class="add-sanpham-input" id='ngay-nhap' type="date"/>
+     
+    <div class="tabs">
+      <div class="tab ${status == "*" ? "active" :"" }" onclick="quanlydonhang('*')">Tất cả</div>
+      <div class="tab ${status == "1" ? "active" :"" }" onclick="quanlydonhang('1')">Chờ xác nhận</div>
+      <div class="tab ${status == "2" ? "active" :"" }" onclick="quanlydonhang('2')">Đang lấy hàng</div>
+      <div class="tab ${status == "3" ? "active" :"" }" onclick="quanlydonhang('3')">Đang vận chuyển</div>
+      <div class="tab ${status == "4" ? "active" :"" }" onclick="quanlydonhang('4')">Hoàn thành</div>
+      <div class="tab ${status == "5" ? "active" :"" }" onclick="quanlydonhang('5')" >Đã hủy</div>
+    </div>
+
+    ${listDonHoang != '' ? listDonHoang :'<h3 style="text-align:center;">Chưa có Đơn hàng</h3>' }
+  </div>
+`;
+document.getElementById("container").innerHTML = r ;
+
+
+if(dfrom != '')
+{
+  document.getElementById('dfrom').value = dfrom
 }
 
-/** Khi bấm duyệt
- * đưa vào localStorage listDonHang-daXuLy, in ra trong table listDonHang daXuLy
- * xóa số đi số lượng sản phẩm trên localStorage: nike/adidas/jordan/men/bitis , sanPham
- * inner vào Đơn hàng của trang người dùng đó thành đã xử lý
- */
-function duyetDonHang(button) {
-  alert("Duyệt Thành Công!");
 
-  // Chuyển đơn hàng từ chưa xử lý sang xử lý
-  var tenKhachHang =
-    button.parentElement.parentElement.querySelector(".tenKhachHang").innerText;
-  var maDonHang =
-    button.parentElement.parentElement.querySelector(".maDonHang").innerText;
-  var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
-  var listSanPham = [];
-  for (var a of listDonHang) {
-    if (a.name === tenKhachHang) {
-      for (var i = 0; i < a.donhang.length; i++) {
-        if (a.donhang[i].madh === maDonHang) {
-          a.donhang[i].duocDuyet = true;
-          listSanPham = a.donhang[i].giohang;
-        }
-      }
-    }
-  }
-  localStorage.setItem("listDonHang", JSON.stringify(listDonHang));
+if(dto != '')
+{
+  document.getElementById('dto').value = dto
 
-  // Xóa đi số lượng sản phẩm hiện có
-  var nike = JSON.parse(localStorage.getItem("nike"));
-  var adidas = JSON.parse(localStorage.getItem("adidas"));
-  var jordan = JSON.parse(localStorage.getItem("jordan"));
-  var men = JSON.parse(localStorage.getItem("men"));
-  var bitis = JSON.parse(localStorage.getItem("bitis"));
-  var sanPham = JSON.parse(localStorage.getItem("sanPham"));
-
-  for (var a of listSanPham) {
-    for (var i = 0; i < sanPham.length; i++) {
-      for (var j = 0; j < sanPham[i].length; j++) {
-        if (a.nameProduct === sanPham[i][j].name) {
-          if (a.quantity === sanPham[i][j].quantity) {
-            // Xóa ở các mảng sản phẩm
-            if (sanPham[i][j].brand === "Nike") {
-              nike.splice(j, 1);
-            } else if (sanPham[i][j].brand === "Adidas") {
-              adidas.splice(j, 1);
-            } else if (sanPham[i][j].brand === "Jordan") {
-              jordan.splice(j, 1);
-            } else if (sanPham[i][j].brand === "Men") {
-              men.splice(j, 1);
-            } else {
-              bitis.splice(j, 1);
-            }
-          } else {
-            console.log("Số lượng", a.quantity);
-            if (sanPham[i][j].brand === "Nike") {
-              nike[j].quantity -= a.quantity;
-              console.log(nike[j].quantity);
-            } else if (sanPham[i][j].brand === "Adidas") {
-              adidas[j].quantity -= a.quantity;
-              console.log(adidas[j].quantity);
-            } else if (sanPham[i][j].brand === "Jordan") {
-              jordan[j].quantity -= a.quantity;
-              console.log(jordan[j].quantity);
-            } else if (sanPham[i][j].brand === "Men") {
-              men[j].quantity -= a.quantity;
-              console.log(men[j].quantity);
-            } else {
-              bitis[j].quantity -= a.quantity;
-              console.log(bitis[j].quantity);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  sanPham = [nike, adidas, jordan, men, bitis];
-  localStorage.setItem("nike", JSON.stringify(nike));
-  localStorage.setItem("adidas", JSON.stringify(adidas));
-  localStorage.setItem("jordan", JSON.stringify(jordan));
-  localStorage.setItem("men", JSON.stringify(men));
-  localStorage.setItem("bitis", JSON.stringify(bitis));
-  localStorage.setItem("sanPham", JSON.stringify(sanPham));
 }
 
-function duyetHetDonHang() {
-  alert("Đã Duyệt Hết!");
-  var listDonHang = JSON.parse(localStorage.getItem("listDonHang"));
-  for (var a of listDonHang) {
-    if (a.donhang.length !== 0) {
-      for (var i = 0; i < a.donhang.length; i++) {
-        if (a.donhang[i].duocDuyet === false) {
-          a.donhang[i].duocDuyet = true;
-        }
-      }
-    }
-  }
-  localStorage.setItem("listDonHang", JSON.stringify(listDonHang));
 }
 
 showSuccessToast("Đăng nhập thành công!");
@@ -1355,7 +1260,7 @@ function showAddProduct(action = "A", productId = "") {
                     <tr>
                         <th>Kích thước</th>
                         <th>Trạng thái</th>
-                        <th>Hành động</th>
+                      ${localStorage.action == 'E'?"":' <th>Hành động</th>'} 
 
                     </tr>
                 </thead>
@@ -1392,8 +1297,13 @@ function showAddProduct(action = "A", productId = "") {
     document.getElementById("price-import").value = product[0].price_nhap;
     document.getElementById("price").value = product[0].price;
     document.getElementById("previewImg").src = product[0].img;
+    document.getElementById("mota").value = product[0].mo_ta;
+
     const arr = product[0].img.split("/").map((item) => item.trim());
     localStorage.setItem("file", arr[arr.length - 1].trim());
+     document.querySelectorAll(".btn-delete").forEach((item) => {
+        item.parentElement.style.display ='none';
+      });
   }
 }
 function changeType(type) {
@@ -1460,6 +1370,12 @@ function checkBeforProduct(action) {
 
 function addVarriant() {
   var list_size = JSON.parse(localStorage.list_size);
+  
+ if(document.getElementById("input-variant").value == '')
+  {
+    showErrorToast('Vui lòng nhập size!')
+    return;
+  }
   var value_variant = {
     size: parseFloat(document.getElementById("input-variant").value),
     status: "1",
@@ -1512,6 +1428,37 @@ function AddProductToList(data) {
   quanlysanpham();
 }
 
+
+
+function EditProductToList(data) {
+  var list_size = JSON.parse(localStorage.list_size);
+  var list_type = JSON.parse(localStorage.type);
+  var new_products = [];
+  var file = localStorage.file.toLowerCase();
+  var sanPham = JSON.parse(localStorage.sanPham);
+  
+  for(var i = 0 ; i < list_size.length ; i++  )
+  {
+
+       var brand = list_type.filter((i) => i.id == data.type)[0].name;
+    var img = `/assets/img/${brand.toLowerCase()}/${file}`;
+    var index  = sanPham.findIndex(item => item.productId == data.productId && item.size == list_size[i].size);
+    if(index >= 0 )
+    {
+      sanPham[index].img = img;
+      sanPham[index].mo_ta = data.mota;
+      sanPham[index].name =data.productName;
+      sanPham[index].status =list_size[i].status;
+    }
+  }
+
+
+localStorage.setItem('sanPham',JSON.stringify(sanPham))
+
+  showSuccessToast("Cập nhật sản phẩm thành công");
+  quanlysanpham();
+}
+
 function deleteVariant(size) {
   var list_size = JSON.parse(localStorage.getItem("list_size"));
   var action = localStorage.action;
@@ -1523,34 +1470,6 @@ function deleteVariant(size) {
   }
 }
 
-function EditProductToList(data) {
-  var list_size = JSON.parse(localStorage.list_size);
-  var list_type = JSON.parse(localStorage.type);
-  var new_products = [];
-  var file = localStorage.file.toLowerCase();
-  // list_size.forEach((item) => {
-  //   var brand = list_type.filter((i) => i.id == data.type)[0].name;
-  //   var img = `/assets/img/${brand.toLowerCase()}/${file}`;
-  //   var product = new giay(
-  //     data.productId,
-  //     brand,
-  //     img,
-  //     data.productName,
-  //     data.price,
-  //     0,
-  //     item.size,
-  //     data.price_import,
-  //     data.mota,
-  //     item.status
-  //   );
-  //   new_products.push(product);
-  // });
-  // var sanPham = JSON.parse(localStorage.sanPham);
-  // var newSanPham = [...sanPham, ...new_products];
-  // localStorage.setItem("sanPham", JSON.stringify(newSanPham));
-  // showSuccessToast("Thêm sản phẩm thành công");
-  // quanlysanpham();
-}
 
 function deleteVariant(size) {
   var list_size = JSON.parse(localStorage.getItem("list_size"));
@@ -1566,14 +1485,16 @@ function deleteVariant(size) {
 function renderCheckBoxVariant(list_size) {
   var r = ``;
   list_size.forEach((item) => {
+    var x =` <td ><button  class="btn-delete" onclick="deleteVariant(${
+                item.size
+              })">Xóa biến thể</button>`
     r += `<tr>
               <td>${item.size}</td>
               <td><input type="checkbox"  ${
                 item.status == 1 ? "checked" : ""
               }  onchange="changeStatusVariant(this,'${item.size}')" /></td>
-              <td ><button  class="btn-delete" onclick="deleteVariant(${
-                item.size
-              })">Xóa biến thể</button></td>
+              ${localStorage.action == 'E'?'':x}
+             </td>
           </tr>`;
   });
   document.querySelector(".variant-table>tbody").innerHTML = r;
@@ -1981,4 +1902,126 @@ function getPhieuNhapByKey(stt_rec) {
   var arr1 = JSON.parse(localStorage.getItem("PhieuNhap"));
   arr1 = arr1.filter((item) => item.stt_rec == stt_rec);
   return arr1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function renderInfoAcc(id)
+{
+    var accs = JSON.parse(localStorage.getItem('listTaiKhoan'))
+    var index = accs.findIndex(item=> item.taikhoan == id);
+    return accs[index];
+}
+
+
+function showOrder(id) {
+    // kiểm tra đã đăng nhập chưa (muốn xem/thểm giỏ hàng thì cần phải đăng nhập)
+    // Nếu đã đăng nhập
+      
+    var obj = getDonHangOfAccBykey(id);
+    var infoAcc = renderInfoAcc(obj.userId);
+    var total=obj.quantity*obj.price;
+    var r =`
+                <button class="btn-back" onclick="goBack('quanlydonhang')">← Quay lại</button>
+
+    <div class="order-container">
+
+    <div class="order-left">
+      <h3>Đặt hàng</h3>
+      <div class="order-input-row">
+        <input type="text" disabled placeholder="Tên" value='${infoAcc.hoten}'>
+      </div>
+
+    <div class="order-input-row">
+        <input type="text"  disabled placeholder="Điện thoại" value='${infoAcc.sdt}'>
+      </div>
+
+      <div class="order-input-row">
+        <input type="text" id="dia_chi" placeholder="Địa chỉ" value='${infoAcc.diachi}'>
+      </div>
+      
+     
+      <div class="order-payment-buttons">
+    </div>
+    </div>
+
+    <div class="order-right">
+      <div class="order-product">
+        <img src="${obj.img}" alt="">
+        <div class="order-product-info">
+          <p class="order-product-name">${obj.name}</p>
+          <p class="order-product-size">Size: ${obj.size}</p>
+        </div>
+        <span class="order-product-price">Giá: ${obj.price} VNĐ</span>
+      </div>
+     
+
+      <div class="order-summary">
+        <div class="order-summary-item">
+          <span>Tổng số lượng · ${obj.quantity} mặt hàng</span>
+        </div>
+       
+
+        <div class="order-total">
+          <span>Tổng thanh toán</span>
+          <span>${total} VNĐ</span>
+        </div>
+
+      </div>
+        
+
+      <div style="display:none" class="QRpanel" >
+    <div  class="QR">
+         <img src="/assets/img/QR.jpg" alt="">
+
+    </div>
+    <div  class="QRbutton">
+        <button class="order-button order-button-cod" onclick="ThanhToan('${obj.productId}','${obj.size}')">Thanh toán</button>
+
+    </div>
+
+      </div>
+
+
+
+
+
+
+      
+    </div>
+  </div>`;
+
+  document.getElementsByClassName('orders-container')[0].innerHTML = r;
+   
+   
+}
+
+
+function getDonHangOfAccBykey(id)
+{
+    var list = JSON.parse(localStorage.getItem('DonHang'));
+    list = list.filter(item=> item.stt_rec == id)
+    return list[0];
+}
+
+
+function ChuyenTrangThaiDonHang(stt_rec)
+{
+  var list_don_hang = JSON.parse(localStorage.getItem('DonHang'));
+  var index = list_don_hang.findIndex(item=>(item.stt_rec == stt_rec))
+  if(index >= 0)
+  {
+    list_don_hang[index].status = parseFloat(list_don_hang[index].status)+1;
+    localStorage.setItem('DonHang',JSON.stringify(list_don_hang))
+  }
+  quanlydonhang(localStorage.statusOrder);
 }
