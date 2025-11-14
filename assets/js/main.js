@@ -32,6 +32,16 @@ function PhieuXuat(stt_rec,userId,productId,size,name,price,quantity,total,statu
 }
 
 
+function PhieuNhap(stt_rec,ngay_nhap) {
+    this.stt_rec = stt_rec;
+   
+    this.date0 = date0;
+    this.date2 = date2;
+}
+
+
+
+
 
 
 function taiKhoan(hoten,sdt,taikhoan,matkhau,diachi="Q10 TPHCM",gioHang=[],daMua=[],status='1',role='1') {

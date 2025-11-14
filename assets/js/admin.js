@@ -1186,7 +1186,7 @@ function quanlyphieunhap() {
    
     <div>
     <h2>Quản lý phiếu nhập</h2>
-       <button class="btn-reset" onclick="showAddProduct('A');">Thêm mới </button></div>
+       <button class="btn-reset" onclick="showAddPhieuNhap('A');">Thêm mới </button></div>
     </div>
     
     
@@ -1247,7 +1247,7 @@ function quanlyphieunhap() {
     <!--    <td class="budget-cell"> <span class="status-badge"><input type="checkbox" ${statusText} onchange=""></span></td> -->
         <td class="budget-cell">
        
-        <input type="button" class="btn-edit" onclick="showAddProduct('E','${d.productId}')" value="Sửa"/>
+        <input type="button" class="btn-edit" onclick="showAddPhieuNhap('E','${d.productId}')" value="Sửa"/>
         </td>
       </tr>`;
   }
@@ -1473,7 +1473,7 @@ function checkBeforProduct(action) {
   }
 
   if (action == "E") {
-    showSuccessToast("sửa");
+    EditProductToList(tmp);
   }
 }
 
@@ -1544,6 +1544,50 @@ function deleteVariant(size) {
 }
 
 
+
+
+
+function EditProductToList(data) {
+  var list_size = JSON.parse(localStorage.list_size);
+  var list_type = JSON.parse(localStorage.type);
+  var new_products = [];
+  var file = localStorage.file.toLowerCase();
+  // list_size.forEach((item) => {
+  //   var brand = list_type.filter((i) => i.id == data.type)[0].name;
+  //   var img = `/assets/img/${brand.toLowerCase()}/${file}`;
+  //   var product = new giay(
+  //     data.productId,
+  //     brand, 
+  //     img,
+  //     data.productName,
+  //     data.price,
+  //     0,
+  //     item.size,
+  //     data.price_import,
+  //     data.mota,
+  //     item.status
+  //   );
+  //   new_products.push(product);
+  // });
+  // var sanPham = JSON.parse(localStorage.sanPham);
+  // var newSanPham = [...sanPham, ...new_products];
+  // localStorage.setItem("sanPham", JSON.stringify(newSanPham));
+  // showSuccessToast("Thêm sản phẩm thành công");
+  // quanlysanpham();
+}
+
+function deleteVariant(size) {
+  var list_size = JSON.parse(localStorage.getItem("list_size"));
+  var action = localStorage.action;
+  if (action == "A") {
+    list_size = list_size.filter((item) => item.size != size);
+    localStorage.setItem("list_size", JSON.stringify(list_size));
+    var r = ``;
+   renderCheckBoxVariant(list_size)
+  }
+}
+
+
 function renderCheckBoxVariant(list_size)
 {
   var r = ``;
@@ -1568,7 +1612,7 @@ function changeStatusVariant(button,size) {
   list_size.forEach(item=>{
     if(item.size == size)
     {
-      button.value == true ? item.status = 1 : item.status = 0; 
+      button.checked == true ? item.status = 1 : item.status = 0; 
     }
   }) 
   localStorage.setItem('list_size',JSON.stringify(list_size));
@@ -1584,3 +1628,124 @@ function getDetailProduct(id) {
 
 
 
+
+
+
+
+
+function showAddPhieuNhap(action = "A", id = "") {
+  localStorage.setItem("action", action);
+  if (action == "A") localStorage.setItem("list_size", JSON.stringify([]));
+
+  localStorage.removeItem("file");
+  var r = ``;
+
+  var renderCombo = ``;
+  var combo = JSON.parse(localStorage.type);
+  for (var i = 0; i < combo.length; i++) {
+    renderCombo += `  <option value="${combo[i].id}">${combo[i].name}</option>`;
+  }
+
+  var stt_rec = combo[0].id + localStorage.stt_rec_product;
+  localStorage.setItem(
+    "stt_rec_product",
+    parseFloat(localStorage.stt_rec_product) + 1
+  );
+
+  r = `
+    <div class="add-sanpham-container">
+  <button class="btn-reset"onclick="goBack('quanlysanpham')"> < Quay lại</button> 
+      
+  
+  <h1 class="add-sanpham-title">
+        
+        ${
+          action == "A" ? "Thêm Phiếu Nhập" : "Sửa Phiếu nhập"
+        }</h1>
+
+        <div class="add-sanpham-grid">
+        
+            <!-- RIGHT -->
+            <div class="add-sanpham-right">
+              
+
+                <label class="add-sanpham-label">Số chứng từ <span style="color:red">*</span></label>
+                <input id="productId" class="add-sanpham-input" value="${stt_rec}"disabled type="text">
+               
+                    
+               
+ <label class="add-phieunhap-input">Mã sản phẩm <span style="color:red">*</span></label>
+                  <div class="add-phieunhap-title">
+                            <input id="productName" class="add-phieunhap-input" type="text">
+              <div id="combobox-panel">
+                <label class="add-sanpham-label">Size: <span style="color:red">*</span></label>
+               <select id="product-type" style="width:200px" onchange="changeType(this)">
+              </select>
+             </div>  
+                      </div>
+                      
+            
+          <input type="button" class="btn-add" onclick="addVarriant()"value="Thêm chi tiết" /> 
+            </div>
+
+            <div class="add-sanpham-left">
+               <button class="add-sanpham-btn-submit" onclick="checkBeforProduct('${action}')">Thêm phiếu nhập </button>
+           
+              <div id="combobox-panel">
+               <select id="list_size" style="width:200px" onchange="changeType(this)">
+              </select>
+             </div>  
+              </div>
+      
+        </div>
+
+     
+
+        <div class="variant-container">
+        <div class="variant-title">Danh sách chi tiết:</div>
+            <table class="variant-table">
+                <thead>
+                    <tr>
+                        <th>Kích thước</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+            </table>
+        </div>
+
+    </div>`;
+
+  document.getElementById("container").innerHTML = r;
+
+  if (action == "E") {
+    var product = getDetailProduct(productId);
+    var list_size = product.map((item) => {
+      return {
+        size: item.size,
+        status: item.status,
+      };
+    });
+    localStorage.setItem('list_size',JSON.stringify(list_size))
+     renderCheckBoxVariant(list_size)
+
+    document.getElementById("product-type").disabled = true;
+    document.getElementById("price-import").disabled = true;
+    document.getElementById("price").disabled = true;
+    document.getElementById("combobox-panel").style.display = "none";
+    document.getElementsByClassName("add-sanpham-btn-submit")[0].innerHTML = "Cập nhật thông tin sản phẩm";
+    var type = document.getElementById("product-type").value;
+    document.getElementById("productName").value = product[0].name;
+    document.getElementById("productId").value = product[0].productId;
+    document.getElementById("price-import").value = product[0].price_nhap;
+    document.getElementById("price").value = product[0].price;
+    document.getElementById("previewImg").src = product[0].img;
+    const arr = product[0].img.split('/').map(item => item.trim());
+    localStorage.setItem('file',arr[arr.length-1].trim())
+
+  }
+}
