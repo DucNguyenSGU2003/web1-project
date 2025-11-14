@@ -32,9 +32,9 @@ function PhieuXuat(stt_rec,userId,productId,size,name,price,quantity,total,statu
 }
 
 
-function PhieuNhap(stt_rec,ngay_nhap) {
+function PhieuNhap(stt_rec,ngay_nhap,date0= new Date(),date2= new Date()) {
     this.stt_rec = stt_rec;
-   
+   status
     this.date0 = date0;
     this.date2 = date2;
 }

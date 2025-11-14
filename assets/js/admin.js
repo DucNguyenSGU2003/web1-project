@@ -1673,19 +1673,25 @@ function showAddPhieuNhap(action = "A", id = "") {
                 <input id="productId" class="add-sanpham-input" value="${stt_rec}"disabled type="text">
                
                     
-               
+              
+                
+                <div class="form-chi-tiet">
  <label class="add-phieunhap-input">Mã sản phẩm <span style="color:red">*</span></label>
                   <div class="add-phieunhap-title">
-                            <input id="productName" class="add-phieunhap-input" type="text">
+                  <input id="productId" class="add-phieunhap-input" type="text">
               <div id="combobox-panel">
                 <label class="add-sanpham-label">Size: <span style="color:red">*</span></label>
-               <select id="product-type" style="width:200px" onchange="changeType(this)">
+               <select id="product-size" style="width:200px" onchange="changeType(this)">
               </select>
-             </div>  
+             </div>  <div>
+             
+             <input type="button" class="btn-add" onclick="addVarriant()"value="Thêm chi tiết" /> 
+             </div>
                       </div>
+
+            </div>
                       
             
-          <input type="button" class="btn-add" onclick="addVarriant()"value="Thêm chi tiết" /> 
             </div>
 
             <div class="add-sanpham-left">
