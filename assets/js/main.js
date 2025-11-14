@@ -217,10 +217,9 @@ var status1 =
 
 
     var statusPND = 
-    ["Chờ duyệt",
-    "Duyệt",
-     "Hoàn thành",
-    "Hủy phiếu"]
+    ["Đang găm hàng",
+     "Hoàn thành"
+    ]
 
 var listTaiKhoan  = [new taiKhoan('Đức','123456575','duc','1'),
     new taiKhoan('Admin','#','admin','1','#',[],[],'1','2')

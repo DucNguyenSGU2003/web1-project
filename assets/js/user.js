@@ -254,7 +254,7 @@ modalContainer.addEventListener('click', function(event) {
 var mang = [1];
 function showDetailProduct(id) {
   var arr = JSON.parse(localStorage.getItem('sanPham'));
-  var obj = arr.filter((item) => item.productId == id);
+  var obj = arr.filter((item) => item.productId == id && item.status =='1');
   let totalQty = obj.reduce((sum, item) => sum + item.quantity, 0);
 var s='';
 obj.forEach(element => {
@@ -315,7 +315,10 @@ obj.forEach(element => {
         </div>
 
         <button class="add-to-cart" onclick="addProductToCart('${id}')">Thêm vào giỏ hàng</button>
-      </div>
+        <h1>Mô tả</h1>
+        <p>${obj[0].mo_ta}</p>
+        </div>
+
     </div>
   </div>`;
 
@@ -546,7 +549,7 @@ function renderArrSP()
     for(var  i = 0 ; i< l ; i++)
     {
         var index =  list_sp.findIndex((item)=>{
-                return item.productId == arr1[i].productId
+                return item.productId == arr1[i].productId  && arr1[i].status == '1'
         })
         if(index >= 0 )
         {

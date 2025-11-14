@@ -13,7 +13,7 @@ function hienThiTrangAdmin(obj) {
       quanlysanpham();
       break;
     }
-     case "quanlyphieunhap": {
+    case "quanlyphieunhap": {
       quanlyphieunhap();
       break;
     }
@@ -1176,9 +1176,6 @@ function quanlysanpham() {
   document.getElementById("sanpham-table-body").innerHTML = rows;
 }
 
-
-
-
 function quanlyphieunhap() {
   var s = `
   <div class="sanpham-container">
@@ -1213,8 +1210,7 @@ function quanlyphieunhap() {
   for (var i = 0; i < listSanPham.length; i++) {
     var d = listSanPham[i];
 
- 
-var statusStr = JSON.parse(localStorage.statusPND)[d.status]
+    var statusStr = JSON.parse(localStorage.statusPND)[d.status];
     rows += `
       <tr >
      
@@ -1224,21 +1220,24 @@ var statusStr = JSON.parse(localStorage.statusPND)[d.status]
             <div class="user-name">${d.stt_rec}</div>
           </div>
         </td>
-        <td class="sanpham-size"> ${new Date(d.ngay_nhap).toISOString().split('T')[0]}</td>
+        <td class="sanpham-size"> ${
+          new Date(d.ngay_nhap).toISOString().split("T")[0]
+        }</td>
         <td class="team-cell">
-          ${d.tong_tien_sp}
+          ${d.tong_tien_phieu}
         </td>
           <td class="sanpham-name">${statusStr}</td>
         <td class="budget-cell">
        
-        <input type="button" class="btn-edit" onclick="showAddPhieuNhap('E','${d.productId}')" value="Sửa"/>
+        <input type="button" class="btn-edit" onclick="showAddPhieuNhap('E','${
+          d.stt_rec
+        }')" value="Sửa"/>
         </td>
       </tr>`;
   }
 
   document.getElementById("sanpham-table-body").innerHTML = rows;
 }
-
 
 function getSizeBySP(id) {
   var sanPham = JSON.parse(localStorage.sanPham);
@@ -1307,9 +1306,7 @@ function showAddProduct(action = "A", productId = "") {
   <button class="btn-reset"onclick="goBack('quanlysanpham')"> < Quay lại</button> 
         <h1 class="add-sanpham-title">
         
-        ${
-          action == "A" ? "Thêm sản phẩm" : "Sửa sản phẩm"
-        }</h1>
+        ${action == "A" ? "Thêm sản phẩm" : "Sửa sản phẩm"}</h1>
 
         <div class="add-sanpham-grid">
             <div class="add-sanpham-left">
@@ -1380,23 +1377,23 @@ function showAddProduct(action = "A", productId = "") {
         status: item.status,
       };
     });
-    localStorage.setItem('list_size',JSON.stringify(list_size))
-     renderCheckBoxVariant(list_size)
+    localStorage.setItem("list_size", JSON.stringify(list_size));
+    renderCheckBoxVariant(list_size);
 
     document.getElementById("product-type").disabled = true;
     document.getElementById("price-import").disabled = true;
     document.getElementById("price").disabled = true;
     document.getElementById("combobox-panel").style.display = "none";
-    document.getElementsByClassName("add-sanpham-btn-submit")[0].innerHTML = "Cập nhật thông tin sản phẩm";
+    document.getElementsByClassName("add-sanpham-btn-submit")[0].innerHTML =
+      "Cập nhật thông tin sản phẩm";
     var type = document.getElementById("product-type").value;
     document.getElementById("productName").value = product[0].name;
     document.getElementById("productId").value = product[0].productId;
     document.getElementById("price-import").value = product[0].price_nhap;
     document.getElementById("price").value = product[0].price;
     document.getElementById("previewImg").src = product[0].img;
-    const arr = product[0].img.split('/').map(item => item.trim());
-    localStorage.setItem('file',arr[arr.length-1].trim())
-
+    const arr = product[0].img.split("/").map((item) => item.trim());
+    localStorage.setItem("file", arr[arr.length - 1].trim());
   }
 }
 function changeType(type) {
@@ -1480,10 +1477,9 @@ function addVarriant() {
   localStorage.setItem("list_size", JSON.stringify(list_size));
 
   var r = ``;
-     renderCheckBoxVariant(list_size)
+  renderCheckBoxVariant(list_size);
 
-     document.getElementById("input-variant").value = ''
-
+  document.getElementById("input-variant").value = "";
 }
 
 function AddProductToList(data) {
@@ -1523,13 +1519,9 @@ function deleteVariant(size) {
     list_size = list_size.filter((item) => item.size != size);
     localStorage.setItem("list_size", JSON.stringify(list_size));
     var r = ``;
-   renderCheckBoxVariant(list_size)
+    renderCheckBoxVariant(list_size);
   }
 }
-
-
-
-
 
 function EditProductToList(data) {
   var list_size = JSON.parse(localStorage.list_size);
@@ -1541,7 +1533,7 @@ function EditProductToList(data) {
   //   var img = `/assets/img/${brand.toLowerCase()}/${file}`;
   //   var product = new giay(
   //     data.productId,
-  //     brand, 
+  //     brand,
   //     img,
   //     data.productName,
   //     data.price,
@@ -1567,16 +1559,14 @@ function deleteVariant(size) {
     list_size = list_size.filter((item) => item.size != size);
     localStorage.setItem("list_size", JSON.stringify(list_size));
     var r = ``;
-   renderCheckBoxVariant(list_size)
+    renderCheckBoxVariant(list_size);
   }
 }
 
-
-function renderCheckBoxVariant(list_size)
-{
+function renderCheckBoxVariant(list_size) {
   var r = ``;
   list_size.forEach((item) => {
-      r += `<tr>
+    r += `<tr>
               <td>${item.size}</td>
               <td><input type="checkbox"  ${
                 item.status == 1 ? "checked" : ""
@@ -1585,23 +1575,19 @@ function renderCheckBoxVariant(list_size)
                 item.size
               })">Xóa biến thể</button></td>
           </tr>`;
-    });
-    document.querySelector(".variant-table>tbody").innerHTML = r;
+  });
+  document.querySelector(".variant-table>tbody").innerHTML = r;
 }
 
-
-function changeStatusVariant(button,size) {
-  
+function changeStatusVariant(button, size) {
   var list_size = JSON.parse(localStorage.list_size);
-  list_size.forEach(item=>{
-    if(item.size == size)
-    {
-      button.checked == true ? item.status = 1 : item.status = 0; 
+  list_size.forEach((item) => {
+    if (item.size == size) {
+      button.checked == true ? (item.status = 1) : (item.status = 0);
     }
-  }) 
-  localStorage.setItem('list_size',JSON.stringify(list_size));
-  renderCheckBoxVariant(list_size)
-
+  });
+  localStorage.setItem("list_size", JSON.stringify(list_size));
+  renderCheckBoxVariant(list_size);
 }
 
 function getDetailProduct(id) {
@@ -1609,13 +1595,6 @@ function getDetailProduct(id) {
   var obj = arr.filter((item) => item.productId == id);
   return obj;
 }
-
-
-
-
-
-
-
 
 function showAddPhieuNhap(action = "A", id = "") {
   localStorage.setItem("action", action);
@@ -1626,14 +1605,11 @@ function showAddPhieuNhap(action = "A", id = "") {
 
   var statusPND = JSON.parse(localStorage.statusPND);
 
-var statusPNDStr = ``;
-statusPND.forEach((item,index) =>
-  {
-      statusPNDStr +=    `  <option value="${index}">${item}</option>`;
-
-  }
-)
-  var stt_rec = 'PND' + localStorage.stt_rec_product;
+  var statusPNDStr = ``;
+  statusPND.forEach((item, index) => {
+    statusPNDStr += `  <option value="${index}">${item}</option>`;
+  });
+  var stt_rec = "PND" + localStorage.stt_rec_product;
   localStorage.setItem(
     "stt_rec_product",
     parseFloat(localStorage.stt_rec_product) + 1
@@ -1646,9 +1622,7 @@ statusPND.forEach((item,index) =>
   
   <h1 class="add-sanpham-title">
         
-        ${
-          action == "A" ? "Thêm Phiếu Nhập" : "Sửa Phiếu nhập"
-        }</h1>
+        ${action == "A" ? "Thêm Phiếu Nhập" : "Sửa Phiếu nhập"}</h1>
 
         <div class="add-sanpham-grid">
         
@@ -1668,7 +1642,7 @@ statusPND.forEach((item,index) =>
                 </div>
               <div id="combobox-panel1">
                 <label class="add-sanpham-label">Size: <span style="color:red">*</span></label>
-               <select id="product-size" style="width:200px" onchange="changeType(this)">
+               <select id="product-size" style="width:200px">
               </select>
              </div> 
                    <div class="form-chi-tiet-current">
@@ -1693,7 +1667,9 @@ statusPND.forEach((item,index) =>
                   
 
               <div id="combobox-panel">
+              <label class="add-sanpham-label">Ngày nhập <span style="color:red">*</span></label>
              <input class="add-sanpham-input" id='ngay-nhap' type="date"/>
+             <label class="add-sanpham-label">Trạng thái <span style="color:red">*</span></label>
                <select id="statusPND" style="width:100%">
               ${statusPNDStr}
                </select>
@@ -1727,161 +1703,156 @@ statusPND.forEach((item,index) =>
 
   document.getElementById("container").innerHTML = r;
 
-  if(action == 'A') 
-  {
-       const today = new Date().toLocaleDateString('en-CA'); 
-      document.getElementById('ngay-nhap').value = today;
-
-
+  if (action == "A") {
+    const today = new Date().toLocaleDateString("en-CA");
+    document.getElementById("ngay-nhap").value = today;
   }
   if (action == "E") {
-    var product = getDetailProduct(productId);
-    var list_size = product.map((item) => {
-      return {
-        size: item.size,
-        status: item.status,
-      };
-    });
-    localStorage.setItem('list_size',JSON.stringify(list_size))
-     renderCheckBoxVariant(list_size)
+    var list_detail = getPhieuNhapByKey(id);
+    localStorage.setItem("list_detail", JSON.stringify(list_detail));
+    renderDetailPhieuNhap();
+    var statusPNDValue = list_detail[0].status;
+    document.getElementById("statusPND").value = statusPNDValue;
+    var ngay_nhap = new Date(list_detail[0].ngay_nhap)
+      .toISOString()
+      .split("T")[0];
+    document.getElementById("ngay-nhap").value = ngay_nhap;
+    document.getElementById("PhieuNhapId").value = list_detail[0].stt_rec;
+    document.getElementsByClassName("add-sanpham-btn-submit")[0].innerHTML =
+      "Cập nhật phiếu nhập";
+    if (statusPNDValue == 1) {
+      document.getElementById("statusPND").disabled = true;
+      document.getElementById("ngay-nhap").disabled = true;
+      document.getElementById("statusPND").disabled = true;
+      document.getElementsByClassName("form-chi-tiet")[0].style.display =
+        "none";
+      document.getElementsByClassName("form-chi-tiet")[0].style.display =
+        "none";
+      document.getElementsByClassName(
+        "add-sanpham-btn-submit"
+      )[0].style.display = "none";
+      document.querySelectorAll(".qty-btn").forEach((item) => {
+        item.style.display = "none";
+      });
 
-    document.getElementById("product-type").disabled = true;
-    document.getElementById("price-import").disabled = true;
-    document.getElementById("price").disabled = true;
-    document.getElementById("combobox-panel").style.display = "none";
-    document.getElementsByClassName("add-sanpham-btn-submit")[0].innerHTML = "Cập nhật thông tin sản phẩm";
-    var type = document.getElementById("product-type").value;
-    document.getElementById("productName").value = product[0].name;
-    document.getElementById("productId").value = product[0].productId;
-    document.getElementById("price-import").value = product[0].price_nhap;
-    document.getElementById("price").value = product[0].price;
-    document.getElementById("previewImg").src = product[0].img;
-    const arr = product[0].img.split('/').map(item => item.trim());
-    localStorage.setItem('file',arr[arr.length-1].trim())
-
+      document.querySelectorAll(".btn-delete").forEach((item) => {
+        item.disabled = true;
+      });
+      showWarningToast("Phiếu ở trạng thái Hoàn Thành không được thao Tác");
+    }
   }
 }
 
+function changeVarriantId(e, button) {
+  if (e.key != "Enter") return;
 
-function changeVarriantId(e,button)
-{
-  if(e.key != 'Enter') return;
+  var gia_nhap = getGiaNhapOfSPByStatus(button.value, "1");
+  if (gia_nhap == -1) {
+    showWarningToast("Không có mã sản phẩm: " + button.value);
+    return;
+  }
 
-var gia_nhap = getGiaNhapOfSPByStatus(button.value,'1');
-if(gia_nhap == -1)
-{
-showWarningToast('Không có mã sản phẩm: '+ button.value)
-  return;
-}
+  document.getElementById("gia-nhap").value = gia_nhap;
+  var list_size = getListSizeOfSPByStatus(button.value, "1");
 
-document.getElementById('gia-nhap').value = gia_nhap;
-var list_size  = getListSizeOfSPByStatus(button.value,'1')
-  
-var renderComboboxSize = ``;
+  var renderComboboxSize = ``;
   for (var i = 0; i < list_size.length; i++) {
     renderComboboxSize += `  <option value="${list_size[i].size}">${list_size[i].size}</option>`;
   }
-  document.getElementById('product-size').innerHTML = renderComboboxSize;
-  if(list_size.length > 0 ) document.getElementById('variantId').disabled =true;
+  document.getElementById("product-size").innerHTML = renderComboboxSize;
+  if (list_size.length > 0)
+    document.getElementById("variantId").disabled = true;
 }
 
-function getListSizeOfSPByStatus(id,status)
-{
+function getListSizeOfSPByStatus(id, status) {
   var list_sp = JSON.parse(localStorage.sanPham);
-  list_sp = list_sp.filter(item => item.productId == id && item.status == status)
+  list_sp = list_sp.filter(
+    (item) => item.productId == id && item.status == status
+  );
 
-  
-  var list_size = list_sp.map(item=>{
-
+  var list_size = list_sp.map((item) => {
     return {
-      size:item.size,
-      status: item.status
-    }
-  })
+      size: item.size,
+      status: item.status,
+    };
+  });
 
   return list_size;
 }
 
-
-
-function getGiaNhapOfSPByStatus(id,status)
-{
+function getGiaNhapOfSPByStatus(id, status) {
   var list_sp = JSON.parse(localStorage.sanPham);
-  list_sp = list_sp.filter(item => item.productId == id && item.status == status)
+  list_sp = list_sp.filter(
+    (item) => item.productId == id && item.status == status
+  );
 
-  if(list_sp.length>0)
-    return list_sp[0].price_nhap;
+  if (list_sp.length > 0) return list_sp[0].price_nhap;
 
-  return -1 ;
+  return -1;
 }
 
-
-
-
-
-function resetAddVarriant()
-{
-    document.getElementById('product-size').innerHTML = '';
-    document.getElementById('variantId').value = '';
-    document.getElementById('variantId').disabled =false;
-    document.getElementById('gia-nhap').value = ''
-    document.getElementById('so-luong').value = ''
+function resetAddVarriant() {
+  document.getElementById("product-size").innerHTML = "";
+  document.getElementById("variantId").value = "";
+  document.getElementById("variantId").disabled = false;
+  document.getElementById("gia-nhap").value = "";
+  document.getElementById("so-luong").value = "";
 }
 
+function AddDetailPhieuNhap() {
+  var stt_rec = document.getElementById("PhieuNhapId").value;
+  var productId = document.getElementById("variantId").value;
+  var gia_nhap = document.getElementById("gia-nhap").value;
+  var size = document.getElementById("product-size").value;
+  var so_luong = document.getElementById("so-luong").value;
+  if (productId == "" || gia_nhap == "" || size == "" || so_luong == "") {
+    showErrorToast("Vui lòng nhập đủ các trường!");
+    return;
+  }
+  if (so_luong <= 0) {
+    showErrorToast("Số lượng nhập phải lớn hơn 0!");
+    return;
+  }
 
+  var list_detail = JSON.parse(localStorage.list_detail);
 
-function AddDetailPhieuNhap()
-{
-  var stt_rec = document.getElementById('PhieuNhapId').value;
-var productId = document.getElementById('variantId').value;
-var gia_nhap = document.getElementById('gia-nhap').value;
-var size = document.getElementById('product-size').value;
-var so_luong = document.getElementById('so-luong').value;
-if(productId == '' || gia_nhap == ''   || size == ''   || so_luong == ''  ) 
-{
-  showErrorToast('Vui lòng nhập đủ các trường!');
-  return;
+  var index = list_detail.findIndex((item) => {
+    return item.productId == productId && item.size == size;
+  });
+  if (index >= 0) {
+    list_detail[index].so_luong =
+      parseFloat(list_detail[index].so_luong) + parseFloat(so_luong);
+    list_detail[index].tong_tien_sp =
+      parseFloat(list_detail[index].so_luong) * parseFloat(gia_nhap);
+  } else {
+    var total = parseFloat(so_luong) * parseFloat(gia_nhap);
+    var PND = new PhieuNhap(
+      stt_rec,
+      productId,
+      size,
+      gia_nhap,
+      so_luong,
+      total,
+      0,
+      -1,
+      new Date()
+    );
+    list_detail.push(PND);
+  }
+
+  localStorage.setItem("list_detail", JSON.stringify(list_detail));
+  renderDetailPhieuNhap();
+
+  resetAddVarriant();
+
+  showSuccessToast("Thêm chi tiết thành công!");
 }
-if(so_luong <= 0 )
-{
-    showErrorToast('Số lượng nhập phải lớn hơn 0!');
-  return;
-}
 
-var list_detail = JSON.parse(localStorage.list_detail);
+function renderDetailPhieuNhap() {
+  var list_detail = JSON.parse(localStorage.list_detail);
 
-var index =  list_detail.findIndex(item=>{
-  return item.productId == productId && item.size == size 
-})
-if(index >=0)
-{
-  list_detail[index].so_luong  = parseFloat(list_detail[index].so_luong) + parseFloat(so_luong);
-    list_detail[index].tong_tien_sp  = parseFloat(list_detail[index].so_luong) * parseFloat(gia_nhap);
-
-}else
-{
-  var total = parseFloat(so_luong) * parseFloat(gia_nhap);
-  var PND = new PhieuNhap(stt_rec,productId,size,gia_nhap,so_luong,total,0,-1,new Date());
-  list_detail.push(PND);
-}
-
-localStorage.setItem('list_detail',JSON.stringify(list_detail));
-renderDetailPhieuNhap();
-
-
-resetAddVarriant();
-
-showSuccessToast('Thêm chi tiết thành công!')
-}
-
-
-function renderDetailPhieuNhap()
-{
-  var list_detail = JSON.parse(localStorage.list_detail)
-
-
-var rows=``;
-    for (var i = 0; i < list_detail.length; i++) {
+  var rows = ``;
+  for (var i = 0; i < list_detail.length; i++) {
     rows += `
       <tr >
         <td>${list_detail[i].productId}</td>
@@ -1890,7 +1861,7 @@ var rows=``;
         <td>
         <button class="qty-btn" onclick="changeQtyPhieuNhap('${list_detail[i].productId}','${list_detail[i].size}',-1)">-</button>
                 <input class="qty-input" disabled type="text" value="${list_detail[i].so_luong}" min="1" />
-                <button class="qty-btn" onclick="changeQtyPhieuNhap('${list_detail[i].productId}','${list_detail[i].size}',1)">+</button>
+  <button class="qty-btn" onclick="changeQtyPhieuNhap('${list_detail[i].productId}','${list_detail[i].size}',1)">+</button>
         
         
         
@@ -1901,96 +1872,113 @@ var rows=``;
        `;
   }
 
-  document.querySelector('.variant-table tbody').innerHTML  = rows;
+  document.querySelector(".variant-table tbody").innerHTML = rows;
 }
 
+function changeQtyPhieuNhap(id, size, x) {
+  var list_detail = JSON.parse(localStorage.list_detail);
 
+  list_detail.forEach((item) => {
+    if (item.productId == id && item.size == size) {
+      item.so_luong = parseFloat(item.so_luong) + parseFloat(x);
+      item.tong_tien_sp = parseFloat(item.so_luong) * parseFloat(item.gia_nhap);
 
-function changeQtyPhieuNhap(id,size,x)
-{
-var list_detail = JSON.parse(localStorage.list_detail)
-
-list_detail.forEach((item)=>{
-
-    if(item.productId ==id && item.size == size)
-    {
-         item.so_luong= parseFloat(item.so_luong)+parseFloat(x);
-        if(item.so_luong > 0)
-        {
-        localStorage.setItem('list_detail',JSON.stringify(list_detail))
-
-        }
-
+      if (item.so_luong > 0) {
+        localStorage.setItem("list_detail", JSON.stringify(list_detail));
+      }
     }
-    
-    
-  })
+  });
   renderDetailPhieuNhap();
 }
-function deleteDetail(id,size)
-{
-var list_detail = JSON.parse(localStorage.list_detail)
-list_detail= list_detail.filter(item=>item.productId != id && item.size != size);
-localStorage.setItem('list_detail',JSON.stringify(list_detail))
-renderDetailPhieuNhap();
-showErrorToast('Xóa thành công bản ghi!');
-
+function deleteDetail(id, size) {
+  var list_detail = JSON.parse(localStorage.list_detail);
+  var index = list_detail.findIndex(
+    (item) => item.productId == id && item.size == size
+  );
+  if (index >= 0) list_detail.splice(index, 1);
+  localStorage.setItem("list_detail", JSON.stringify(list_detail));
+  renderDetailPhieuNhap();
+  showSuccessToast("Xóa thành công bản ghi!");
 }
-
-
-
 
 function checkBeforPhieuNhap(action) {
- var list_detail =JSON.parse( localStorage.list_detail);
+  var list_detail = JSON.parse(localStorage.list_detail);
 
- if(list_detail.length == 0 )
- {
-  showErrorToast('Bạn chưa nhập danh sách chi tiết!')
-  return;
- }
- var ngay_nhap =document.getElementById('ngay-nhap').value;
-  var statusPND =document.getElementById('statusPND').value;
-  var stt_rec = document.getElementById('PhieuNhapId').value;
-  var sum =0;
-  
-list_detail.forEach(item=>{
-sum += parseFloat(item.tong_tien_sp);
-})
+  if (list_detail.length == 0) {
+    showErrorToast("Bạn chưa nhập danh sách chi tiết!");
+    return;
+  }
+  var ngay_nhap = document.getElementById("ngay-nhap").value;
+  var statusPND = document.getElementById("statusPND").value;
+  var stt_rec = document.getElementById("PhieuNhapId").value;
+  var sum = 0;
 
-var arr = [];
-list_detail.forEach(item=>{
-  var tmp = new PhieuNhap(stt_rec,item.productId,item.size,item.gia_nhap,item.so_luong,item.tong_tien_sp,sum,statusPND,new Date(ngay_nhap));
-  arr.push(tmp);
+  list_detail.forEach((item) => {
+    sum += parseFloat(item.tong_tien_sp);
+  });
 
-})
+  var arr = [];
+  list_detail.forEach((item) => {
+    var tmp = new PhieuNhap(
+      stt_rec,
+      item.productId,
+      item.size,
+      item.gia_nhap,
+      item.so_luong,
+      item.tong_tien_sp,
+      sum,
+      statusPND,
+      new Date(ngay_nhap)
+    );
+    arr.push(tmp);
+  });
 
-var phieunhap = JSON.parse(localStorage.PhieuNhap)
-phieunhap = [...phieunhap,...arr];
-localStorage.setItem('PhieuNhap',JSON.stringify(phieunhap))
-goBack('quanlyphieunhap')
-showSuccessToast('Bạn đã thêm phiếu nhập thành công');
+  var phieunhap = JSON.parse(localStorage.PhieuNhap);
+
+  phieunhap = phieunhap.filter((item) => item.stt_rec != stt_rec);
+  phieunhap = [...phieunhap, ...arr];
+  localStorage.setItem("PhieuNhap", JSON.stringify(phieunhap));
+  goBack("quanlyphieunhap");
+  showSuccessToast("Bạn đã thêm phiếu nhập thành công");
+
+  if (statusPND == "1") {
+    var sanPham = JSON.parse(localStorage.sanPham);
+
+    for (var i = 0; i < list_detail.length; i++) {
+      var index = sanPham.findIndex((item2) => {
+        return (
+          item2.productId == list_detail[i].productId &&
+          list_detail[i].size == item2.size
+        );
+      });
+      if (index >= 0)
+        sanPham[index].quantity =
+          parseFloat(sanPham[index].quantity) + parseFloat(list_detail[i].so_luong);
+    }
+
+    localStorage.setItem("sanPham", JSON.stringify(sanPham));
+  }
 }
 
-
-
-function getPhieuNhapGroup()
-{
-  var arr1  = JSON.parse(localStorage.getItem('PhieuNhap'));
-    var list_sp  = []
-    var l = arr1.length;
-    for(var  i = 0 ; i< l ; i++)
-    {
-        var index =  list_sp.findIndex((item)=>{
-                return item.stt_rec == arr1[i].stt_rec
-        })
-        if(index >= 0 )
-        {
-            continue;
-        }else
-        {
-            list_sp.push(arr1[i]);
-        }
-            
+function getPhieuNhapGroup() {
+  var arr1 = JSON.parse(localStorage.getItem("PhieuNhap"));
+  var list_sp = [];
+  var l = arr1.length;
+  for (var i = 0; i < l; i++) {
+    var index = list_sp.findIndex((item) => {
+      return item.stt_rec == arr1[i].stt_rec;
+    });
+    if (index >= 0) {
+      continue;
+    } else {
+      list_sp.push(arr1[i]);
     }
-    return list_sp;
+  }
+  return list_sp;
+}
+
+function getPhieuNhapByKey(stt_rec) {
+  var arr1 = JSON.parse(localStorage.getItem("PhieuNhap"));
+  arr1 = arr1.filter((item) => item.stt_rec == stt_rec);
+  return arr1;
 }
