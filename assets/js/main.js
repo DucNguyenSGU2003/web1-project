@@ -32,9 +32,16 @@ function PhieuXuat(stt_rec,userId,productId,size,name,price,quantity,total,statu
 }
 
 
-function PhieuNhap(stt_rec,ngay_nhap,date0= new Date(),date2= new Date()) {
+function PhieuNhap(stt_rec,productId,size,gia_nhap,so_luong,tong_tien_sp,tong_tien_phieu,status=1,ngay_nhap= new Date(),date0= new Date(),date2= new Date()) {
     this.stt_rec = stt_rec;
-   status
+    this.productId = productId;
+    this.size = size,
+    this.gia_nhap = gia_nhap;
+    this.so_luong = so_luong,
+    this.tong_tien_sp = tong_tien_sp;
+    this.tong_tien_phieu = tong_tien_phieu;;
+    this.status =status;
+    this.ngay_nhap=ngay_nhap;
     this.date0 = date0;
     this.date2 = date2;
 }
@@ -208,6 +215,13 @@ var status1 =
     "4": "Hoàn thành",
     "5":"Đã Hủy"}
 
+
+    var statusPND = 
+    ["Chờ duyệt",
+    "Duyệt",
+     "Hoàn thành",
+    "Hủy phiếu"]
+
 var listTaiKhoan  = [new taiKhoan('Đức','123456575','duc','1'),
     new taiKhoan('Admin','#','admin','1','#',[],[],'1','2')
 ]
@@ -219,7 +233,9 @@ localStorage.getItem("resetmk") ? 1 : localStorage.setItem("resetmk", 10000000);
 localStorage.getItem("stt_rec_product") ? 1 : localStorage.setItem("stt_rec_product", 10000000);
 localStorage.getItem("DonHang") ? 1 : localStorage.setItem("DonHang", '[]');
 localStorage.getItem("status") ? 1 : localStorage.setItem("status", JSON.stringify(status1));
+localStorage.getItem("statusPND") ? 1 : localStorage.setItem("statusPND", JSON.stringify(statusPND));
 localStorage.getItem("type") ? 1 : localStorage.setItem("type", JSON.stringify(type));
+localStorage.getItem("PhieuNhap") ? 1 : localStorage.setItem("PhieuNhap", JSON.stringify([]));
 
 function xoaCache()
 {

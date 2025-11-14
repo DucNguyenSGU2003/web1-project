@@ -1711,3 +1711,5 @@ function changeTaiKhoan ()
 hienThi({id:'FirstLoad'})
 localStorage.setItem('page','FirstLoad')
 
+
+

@@ -535,13 +535,14 @@ justify-content: space-between;
 .add-sanpham-btn-submit {
     margin-top: 20px;
     width: 100%;
-    padding: 12px;
+    padding: 12px 0px ;
     border: none;
     background: #2563eb;
     color: white;
     border-radius: 6px;
     font-size: 16px;
     cursor: pointer;
+    margin-bottom: 12px;
 }
 
 
@@ -621,5 +622,41 @@ justify-content: space-between;
 
   margin :10px;
   background-color: #e4e7e9;
+  width: 1400px;
   padding: 10px;
+  border-radius: 10px;
+}
+
+#combobox-panel1{
+margin-left: 20px;  
+}
+
+#variantId{
+
+  width: 450px;
+}
+
+
+
+
+.btn-reset1 {
+  background-color: #f0a606; 
+  color: #fff; 
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.form-chi-tiet-current {
+  margin-left: 10px ;
+}
+
+.form-chi-tiet input[type="number"]{
+  background: white;
 }
