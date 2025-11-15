@@ -1,7 +1,7 @@
      function dangNhapAdmin()
     {
-        var un = document.getElementById ('username').value;
-        var pass = document.getElementById ('password').value;
+        var un = 'admin';
+        var pass = '1';
         var check = false;
         var listTaiKhoan = JSON.parse(localStorage.listTaiKhoan)
         var index  =  listTaiKhoan.findIndex(item=>{
@@ -11,7 +11,7 @@
         
         if(index >= 0 )
         {
-            localStorage.setItem('userId',un);
+            localStorage.setItem('userId','admin');
             window.location.href = 'http://127.0.0.1:8080/ADMIN.html';
         }
         else

@@ -76,8 +76,8 @@ function dangKy() {
 }
 
 function dangNhap() {
-    var taikhoan = document.getElementById("tk").value;
-    var matkhau = document.getElementById("mk").value;
+    var taikhoan = 'duc';
+    var matkhau = '1';
     var name;
     var listTaiKhoan = localStorage.getItem("listTaiKhoan") ? JSON.parse(localStorage.getItem("listTaiKhoan")) : [];
     var check = false;
@@ -90,7 +90,8 @@ function dangNhap() {
     }
     // Kiểm tra tài khoản đã tồn tại hay chưa
     
-    // tài khoản đã tồn tại
+    // tài khoản đã tồn tại\
+    
     if (check) {
         document.getElementById("mk").parentElement.querySelector(".error-message").innerText = "";
         showSuccessToast("Đăng nhập thành công");

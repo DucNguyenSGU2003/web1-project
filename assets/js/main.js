@@ -224,6 +224,7 @@ var status1 =
 var listTaiKhoan  = [new taiKhoan('Đức','123456575','duc','1'),
     new taiKhoan('Admin','#','admin','1','#',[],[],'1','2')
 ]
+xoaCacheAll()
 
 localStorage.getItem("sanPham") ? 1 : localStorage.setItem("sanPham", JSON.stringify(sanPham));
 localStorage.getItem("listTaiKhoan") ? 1 : localStorage.setItem("listTaiKhoan", JSON.stringify(listTaiKhoan));
@@ -254,6 +255,5 @@ localStorage.removeItem('status')
 localStorage.removeItem('statusPND')
 localStorage.removeItem('type')
 localStorage.removeItem('PhieuNhap')
-
 }
 
