@@ -253,12 +253,28 @@ var listTaiKhoan  = [new taiKhoan('Đức','123456575','duc','1'),
 ]
 xoaCacheAll()
 
+var dh = [
+    {
+        "stt_rec": "PX10000001",
+        "productId": "N03",
+        "userId": "duc",
+        "size": "39",
+        "name": "Downshifter 12 Nam - Đen",
+        "price": 1380000,
+        "quantity": 2,
+        "total": 2760000,
+        "status": 1,
+        "img": "./assets/img/nike/3.webp",
+        "date0": "2025-11-15T01:25:51.322Z",
+        "date2": "2025-11-15T01:25:51.322Z"
+    }
+]
 localStorage.getItem("sanPham") ? 1 : localStorage.setItem("sanPham", JSON.stringify(sanPham));
 localStorage.getItem("listTaiKhoan") ? 1 : localStorage.setItem("listTaiKhoan", JSON.stringify(listTaiKhoan));
 localStorage.getItem("stt_rec_px") ? 1 : localStorage.setItem("stt_rec_px", 10000000);
 localStorage.getItem("resetmk") ? 1 : localStorage.setItem("resetmk", 10000000);
 localStorage.getItem("stt_rec_product") ? 1 : localStorage.setItem("stt_rec_product", 10000000);
-localStorage.getItem("DonHang") ? 1 : localStorage.setItem("DonHang", '[]');
+localStorage.getItem("DonHang") ? 1 : localStorage.setItem("DonHang", JSON.stringify(dh));
 localStorage.getItem("status") ? 1 : localStorage.setItem("status", JSON.stringify(status1));
 localStorage.getItem("statusPND") ? 1 : localStorage.setItem("statusPND", JSON.stringify(statusPND));
 localStorage.getItem("type") ? 1 : localStorage.setItem("type", JSON.stringify(type));
