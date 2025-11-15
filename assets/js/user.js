@@ -367,24 +367,24 @@ function hienThi(obJ) {
                 // '<div id="container" style=" margin-top: 50px;margin-left: 30px;margin-bottom: 50px;">' +
                 // '<h2 class = "gioiThieu">BÁN GIÀY THỂ THAO SNEAKER CHÍNH HÃNG TẠI TPHCM - SneakerShop GIỚI THIỆU</h2>' +
                 // '<p class = "gioiThieu">Nỗi sợ vì mua phải giày kém chất lượng, giày fake, từ nay không còn lo lắng nữa vì đã có #SneakerShop.VN: hàng chính hãng nhập trực tiếp từ US, fullbox, nguyên tem.</p>' +
-                // '<p class = "gioiThieu"><img class = "gioiThieu" src="/assets/img/logo.png" alt=""><h4 class = "gioiThieu">SneakerShop</h4>✓15 Ngày Đổi Hàng ✓Giao Hàng Miễn Phí ✓Thanh Toán Khi Nhận Hàng ✓Bảo Hành Hàng Chính Hãng.!!!</p>' +
+                // '<p class = "gioiThieu"><img class = "gioiThieu" src="./assets/img/logo.png" alt=""><h4 class = "gioiThieu">SneakerShop</h4>✓15 Ngày Đổi Hàng ✓Giao Hàng Miễn Phí ✓Thanh Toán Khi Nhận Hàng ✓Bảo Hành Hàng Chính Hãng.!!!</p>' +
                 // '<p class = "gioiThieu">Đến với "SneakerShop.VN” quý khách hàng sẽ có những sản phẩm ưng ý nhất, chất lượng phục vụ tốt và giá thành tốt nhất, cùng những “ Chương Trình Khuyến Mãi Đặc Biệt”.</p>' +
                 // '<p class = "gioiThieu">Tìm được cửa hàng giày khiến mình an tâm rất khó luôn đó mọi người ơi. Hổng nói nổi vui như nào khi gặp được SneakerShop luôn á, ' +
                 // 'Sản phẩm chất lượng mà các dịch vụ đi kèm hấp dẫn nữa. Dân mê giày làm sao cưỡng lại KINGSHOES đây!</p>' +
-                // '<img class = "gioiThieu" src="/assets/img/gioithieu1.Jpg" alt="">' +
+                // '<img class = "gioiThieu" src="./assets/img/gioithieu1.Jpg" alt="">' +
                 // '<p class = "gioiThieu">Cửa Hàng Bán Giày Sneaker Chính Hãng Tại HCM - SneakerShop Giới thiệu</p>' +
-                // '<img class = "gioiThieu" src="/assets/img/gioithieu2.Jpg" alt="">' +
+                // '<img class = "gioiThieu" src="./assets/img/gioithieu2.Jpg" alt="">' +
                 // '<h3 class = "gioiThieu">SneakerShop CHUẨN GIÀY REAL - DEAL SIÊU KHỦNG</h3>' +
                 // '<p class = "gioiThieu">Cửa Hàng KING SHOES là một trong những nơi sưu tầm có khối lượng giày hiếm siêu khủng. Có những mẫu giày cực kì hype được giới sưu tầm săn lùng' +
                 // ', thậm chí bạn sẽ bắt gặp nhiều mẫu lạ mới mà hiếm shop nào có. Có những mẫu chỉ có độc nhất 1 đôi. ' +
                 // 'Ngoài ra những mẫu đang rất HOT trên thị trường sneaker về liên tục nên các bạn cứ yên tâm không sợ hết hàng.</p>' +
-                // '<img class = "gioiThieu" src="/assets/img/gioithieu3.Jpg" alt="">' +
+                // '<img class = "gioiThieu" src="./assets/img/gioithieu3.Jpg" alt="">' +
                 // '<p class = "gioiThieu">Cửa Hàng Bán Giày Sneaker Chính Hãng Tại HCM - SneakerShop Giới thiệu</p>' +
-                // '<img class = "gioiThieu" src="/assets/img/gioithieu4.Jpg" alt="">' +
+                // '<img class = "gioiThieu" src="./assets/img/gioithieu4.Jpg" alt="">' +
                 // '<p class = "gioiThieu">Cửa Hàng Bán Giày Sneaker Adidas, Jordan Chính Hãng tại tpHCM 100% Authentic nhập trực tiếp từ US, UK,' +
                 // 'JAPAN @ SneakerShop.VN nhiệm vụ mang hàng chính hãng đến tay người tiêu dùng Việt Nam !!! 192/2 Nguyễn Thái Bình,' +
                 // 'Phường 12, Quận Tân Bình, Thành phố Hồ Chí Minh. </p>' +
-                // '<img class = "gioiThieu" src="/assets/img/gioithieu5.Jpg" alt="">;'
+                // '<img class = "gioiThieu" src="./assets/img/gioithieu5.Jpg" alt="">;'
                 // '</div>'
                 // document.getElementById("search-main").innerHTML = "";
                 // document.getElementById("container").outerHTML = s;
@@ -481,7 +481,7 @@ function hienThi(obJ) {
             {
                 s =
                 '<div id="container" style="margin-bottom: 50px;">' +
-                '<img src="/assets/img/bando.png" alt="">' +
+                '<img src="./assets/img/bando.png" alt="">' +
                 '<div id="main">' +
                 '<div id="leftmain">' +
                 '<h2>SNEAKERSHOP TRANG THÔNG TIN CHÍNH THỨC</h2>' +
@@ -1427,7 +1427,7 @@ function showOrder(id,size) {
 
       <div style="display:none" class="QRpanel" >
     <div  class="QR">
-         <img src="/assets/img/QR.jpg" alt="">
+         <img src="./assets/img/QR.jpg" alt="">
 
     </div>
     <div  class="QRbutton">

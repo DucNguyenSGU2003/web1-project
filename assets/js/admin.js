@@ -1610,7 +1610,7 @@ function AddProductToList(data) {
   var file = localStorage.file.toLowerCase();
   list_size.forEach((item) => {
     var brand = list_type.filter((i) => i.id == data.type)[0].name;
-    var img = `/assets/img/${brand.toLowerCase()}/${file}`;
+    var img = `./assets/img/${brand.toLowerCase()}/${file}`;
     var product = new giay(
       data.productId,
       brand,
@@ -1645,7 +1645,7 @@ function EditProductToList(data) {
   {
 
        var brand = list_type.filter((i) => i.id == data.type)[0].name;
-    var img = `/assets/img/${brand.toLowerCase()}/${file}`;
+    var img = `./assets/img/${brand.toLowerCase()}/${file}`;
     var index  = sanPham.findIndex(item => item.productId == data.productId && item.size == list_size[i].size);
     if(index >= 0 )
     {
@@ -2185,7 +2185,7 @@ function showOrder(id) {
 
       <div style="display:none" class="QRpanel" >
     <div  class="QR">
-         <img src="/assets/img/QR.jpg" alt="">
+         <img src="./assets/img/QR.jpg" alt="">
 
     </div>
     <div  class="QRbutton">
