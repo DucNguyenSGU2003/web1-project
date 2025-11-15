@@ -559,6 +559,32 @@ function renderArrSP()
     return list_sp;
 }
 
+
+
+
+function renderArrSPXuat()
+{
+  var arr1  = JSON.parse(localStorage.getItem('PhieuXuat'));
+  arr1 = arr1.filter(item=>item.status == 1);
+    var list_sp  = []
+    var l = arr1.length;
+    for(var  i = 0 ; i< l ; i++)
+    {
+        var index =  list_sp.findIndex((item)=>{
+                return item.productId == arr1[i].productId  
+        })
+        if(index >= 0 )
+        {
+            list_sp[index].quantity += parseFloat(arr1[i].quantity);
+        }else
+        {
+            list_sp.push(arr1[i]);
+        }
+            
+    }
+    return list_sp;
+}
+
 function hienThiSanPhamPhanTrang(brand, mang) {
   
     var mang = renderArrSP()

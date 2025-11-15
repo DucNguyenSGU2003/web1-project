@@ -31,7 +31,8 @@ function hienThiTrangAdmin(obj) {
       quanlydonhang('*');
       break;
     }
-    case "thongkekinhdoanh": {
+    case "baocaoton": {
+        baocaoton();
       break;
     }
   }
@@ -897,6 +898,208 @@ function getDonHangOfAcc()
     var list = JSON.parse(localStorage.getItem('DonHang'));
     return list;
 }
+
+
+
+
+
+
+
+function renderArrSPXuat()
+{
+  var arr1  = JSON.parse(localStorage.getItem('DonHang')) || [];
+  arr1 = arr1.filter(item=>item.status != 5);
+    var list_sp  = []
+    var l = arr1.length;
+    for(var  i = 0 ; i< l ; i++)
+    {
+        var index =  list_sp.findIndex((item)=>{
+                return item.productId == arr1[i].productId  
+        })
+        if(index >= 0 )
+        {
+            list_sp[index].so_luong += parseFloat(arr1[i].so_luong);
+        }else
+        {
+            list_sp.push(arr1[i]);
+        }
+            
+    }
+    return list_sp;
+}
+
+
+
+
+function renderArrSPNhap()
+{
+  var arr1  = JSON.parse(localStorage.getItem('PhieuNhap')) || [];
+  arr1 = arr1.filter(item=>item.status == 1);
+    var list_sp  = []
+    var l = arr1.length;
+    for(var  i = 0 ; i< l ; i++)
+    {
+        var index =  list_sp.findIndex((item)=>{
+                return item.productId == arr1[i].productId  
+        })
+        if(index >= 0 )
+        {
+            list_sp[index].so_luong += parseFloat(arr1[i].so_luong);
+        }else
+        {
+            list_sp.push(arr1[i]);
+        }
+            
+    }
+    return list_sp;
+}
+
+
+function baocaoton() {
+
+
+  var dfrom  = document.getElementById('dfrom') != null ? document.getElementById('dfrom').value: '';
+if(dfrom != '')
+{
+  var df = new Date(dfrom);
+  arr = arr.filter(item=>(new Date(item.date0) >= df));
+}
+
+
+
+var dto  = document.getElementById('dto') != null ? document.getElementById('dto').value: '';
+if(dto != '')
+{
+  var dt = new Date(dto);
+  arr = arr.filter(item=>(new Date(item.date0) <= dt));
+}
+
+
+
+
+  var s = `
+  <div class="sanpham-container">
+    <div class="sanpham-title">
+      <h2>Báo cáo tồn</h2>
+
+       <label>Từ ngày</label>
+   <input id='dfrom' class="add-sanpham-input" id='ngay-nhap' type="date"/>
+      <label>Đến ngày</label>
+    <input  id='dto' class="add-sanpham-input" id='ngay-nhap' type="date"/>
+    
+    <div>
+ 
+       <button class="btn-reset" onclick="baocaoton()">Lọc </button></div>
+  
+    </div>
+    
+    
+    
+    <table class="sanpham-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Sản phẩm</th>
+          <th>Size</th>
+          <th>Nhập</th>
+          <th>Xuất</th>
+          <th>Tồn</th>
+        </tr>
+      </thead>
+      <tbody id="sanpham-table-body"></tbody>
+    </table>
+  </div>`;
+
+  document.getElementById("container").innerHTML = s;
+
+  var listSanPham = renderArrSP();
+
+  var phieu_xuat = renderArrSPXuat();
+  var phieu_nhap =renderArrSPNhap();
+  var rows = "";
+  for (var i = 0; i < listSanPham.length; i++) {
+    var d = listSanPham[i];
+
+    var statusText = d.status == "1" ? "checked" : "";
+
+    var size = ``;
+    var arrSize = getSizeBySP(d.productId);
+    for (var s = 0; s < arrSize.length; s++) {
+      var c = "";
+      if (arrSize[s].status == "1") c = "#51a105";
+      else c = "red";
+      size += `<input type="button" class="btn-size" style="background:${c}; color:white" value="${arrSize[s].size}"/>
+       `;
+    }
+    // nhập: 
+  
+    // var PhieuNhap = JSON.parse(localStorage.PhieuNhap);
+    // PhieuNhap = PhieuNhap.filter(item=>(item.productId == d.productId && item.status == '1'));
+    // for(var i = 0 ;i <PhieuNhap.length;i++)
+    //   {
+    //     if(PhieuNhap.status == '1' && PhieuNhap.productId == d.productId )
+    //     {
+    //       nhap+=parseFloat(PhieuNhap[i].so_luong)
+    //     }
+    //   } 
+
+    var x =0 
+    var arrXuat=  phieu_xuat.filter(item=> item.productId == d.productId);
+    if(arrXuat.length>0)
+    {
+      x = arrXuat[0].quantity
+    }
+      var nhap=0;
+
+       var arrNhap=  phieu_nhap.filter(item=> item.productId == d.productId);
+    if(arrNhap.length>0)
+    {
+      x = arrNhap[0].so_luong
+    }
+    
+    rows += `
+      <tr onclick="selectID('${d.productId}')">
+       <td class="sanpham-name">${d.productId}</td>
+        <td class="user-cell">
+          <img src="${d.img}" class="user-avatar" alt="${d.name}">
+          <div class="user-info">
+            <div class="user-name">${d.name}</div>
+          </div>
+        </td>
+        <td class="sanpham-size">${size}</td>
+        <td class="team-cell">
+          <div class="team-avatars">
+            ${d.price_nhap}
+          </div>
+        </td>
+        <td class="status-cell">
+          ${x}
+        </td>
+    <!--    <td class="budget-cell"> <span class="status-badge"><input type="checkbox" ${statusText} onchange=""></span></td> -->
+        <td class="budget-cell">
+       ${d.quantity}
+        </td>
+      </tr>`;
+  }
+
+  document.getElementById("sanpham-table-body").innerHTML = rows;
+
+
+  
+if(dfrom != '')
+{
+  document.getElementById('dfrom').value = dfrom
+}
+
+
+if(dto != '')
+{
+  document.getElementById('dto').value = dto
+
+}
+
+}
+
 function quanlydonhang(status) {
   localStorage.setItem('statusOrder',status)
 var arr = getDonHangOfAcc();
@@ -906,6 +1109,7 @@ if(dfrom != '')
   var df = new Date(dfrom);
   arr = arr.filter(item=>(new Date(item.date0) >= df));
 }
+
 
 
 var dto  = document.getElementById('dto') != null ? document.getElementById('dto').value: '';
