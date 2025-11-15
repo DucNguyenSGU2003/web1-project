@@ -202,7 +202,34 @@ var type = [
   }
 ]
 
-
+var pn = [
+    {
+        "stt_rec": "PND10000000",
+        "productId": "N01",
+        "size": "39",
+        "gia_nhap": "1",
+        "so_luong": "1",
+        "tong_tien_sp": 1,
+        "tong_tien_phieu": 24,
+        "status": "0",
+        "ngay_nhap": "2025-11-15T00:00:00.000Z",
+        "date0": "2025-11-15T01:35:15.884Z",
+        "date2": "2025-11-15T01:35:15.884Z"
+    },
+    {
+        "stt_rec": "PND10000000",
+        "productId": "M01",
+        "size": "39",
+        "gia_nhap": "1",
+        "so_luong": "23",
+        "tong_tien_sp": 23,
+        "tong_tien_phieu": 24,
+        "status": "0",
+        "ngay_nhap": "2025-11-15T00:00:00.000Z",
+        "date0": "2025-11-15T01:35:15.884Z",
+        "date2": "2025-11-15T01:35:15.884Z"
+    }
+]
 
 
 var sanPham = [...nike,...adidas,...jordan,...men,...bitis]
@@ -235,7 +262,7 @@ localStorage.getItem("DonHang") ? 1 : localStorage.setItem("DonHang", '[]');
 localStorage.getItem("status") ? 1 : localStorage.setItem("status", JSON.stringify(status1));
 localStorage.getItem("statusPND") ? 1 : localStorage.setItem("statusPND", JSON.stringify(statusPND));
 localStorage.getItem("type") ? 1 : localStorage.setItem("type", JSON.stringify(type));
-localStorage.getItem("PhieuNhap") ? 1 : localStorage.setItem("PhieuNhap", JSON.stringify([]));
+localStorage.getItem("PhieuNhap") ? 1 : localStorage.setItem("PhieuNhap", JSON.stringify(pn));
 
 function xoaCache()
 {
