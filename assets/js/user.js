@@ -89,7 +89,7 @@ function dangNhap() {
         }
     }
     // Kiểm tra tài khoản đã tồn tại hay chưa
-
+    check = true;
     // tài khoản đã tồn tại
     if (check) {
         document.getElementById("mk").parentElement.querySelector(".error-message").innerText = "";
