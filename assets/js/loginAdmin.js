@@ -8,6 +8,7 @@
                 return item.taikhoan == un  && item.matkhau == pass && item.status == '1' && item.role == '2' 
         })
 
+        
         if(index >= 0 )
         {
             localStorage.setItem('userId',un);
